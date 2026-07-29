@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Email Verification Status - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Check your GrowthSpare IT Solutions account verification status, complete credential audits, or trigger registration confirmation links.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Email Verification Gateway Section -->
+<section class="min-h-screen relative flex items-center justify-center pt-28 pb-16 overflow-hidden px-4">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Entry Container -->
+    <div class="relative w-full max-w-md z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-10 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-6">
+            
+            {% if request.user.is_email_verified %}
+                <!-- Verification Success Display state -->
+                <div class="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center text-success text-2xl animate-pulse">
+                    <i class="fas fa-envelope-circle-check"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Identity Verified</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                        Your corporate email coordinates are fully validated. You have unlocked access to your workspace pipelines and direct developer scopes.
+                    </p>
+                </div>
+
+                <a href="{% url 'dashboard:index' %}" 
+                   class="block w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                    Access My Dashboard
+                </a>
+            {% else %}
+                <!-- Verification Pending / Action Required state -->
+                <div class="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl">
+                    <i class="fas fa-envelope-open-text animate-bounce"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Verification Pending</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                        Please inspect your registered corporate inbox. Click the activation link sent during signup to complete your workspace authentication sequence.
+                    </p>
+                </div>
+
+                <div class="text-xs text-slate-400 dark:text-slate-500 font-semibold space-y-1 bg-slate-900/10 dark:bg-black/20 p-4 rounded-xl leading-relaxed text-left">
+                    <p class="font-bold text-slate-500 dark:text-slate-400">Didn't find the email?</p>
+                    <p>The signed validation token is active for 24 hours. You can request a fresh token link dispatch below.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <a href="{% url 'accounts:verify_email_trigger' %}" 
+                       class="block w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                        Resend Verification Email
+                    </a>
+                    <a href="{% url 'accounts:profile' %}" 
+                       class="block w-full py-3 rounded-xl border border-slate-900/10 dark:border-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold font-poppins uppercase tracking-wider hover:bg-slate-500/5 transition-all">
+                        Go To My Profile
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

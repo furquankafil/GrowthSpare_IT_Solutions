@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>{% block title %}Workspace Dashboard - GrowthSpare IT Solutions{% endblock title %}</title>
+    
+    <!-- Google Fonts Integration (Poppins & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+
+    <!-- Tailwind CSS with Custom Configurations -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#0F172A',
+                        accent: '#06B6D4',
+                        success: '#22C55E',
+                        darkBackground: '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glassmorphism {
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .light .glassmorphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+        }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-darkBackground dark:text-slate-100 transition-colors duration-300 font-sans min-h-screen flex flex-col md:flex-row">
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="w-full md:w-64 bg-secondary dark:bg-slate-950 border-r border-slate-900/10 dark:border-white/5 flex flex-col justify-between shrink-0">
+        <div class="p-6 space-y-8">
+            <!-- Branding Header -->
+            <a href="{% url 'core:home' %}" class="flex items-center space-x-3 group" aria-label="GrowthSpare Homepage">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-white font-extrabold text-lg shadow-lg">
+                    G
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-poppins font-extrabold text-base leading-none tracking-tight text-white">GrowthSpare</span>
+                    <span class="text-[9px] text-slate-400 uppercase tracking-widest font-extrabold leading-none mt-1">Workspace</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="flex flex-col space-y-1.5 text-xs font-bold font-poppins text-slate-400">
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold px-3 mb-2">Main Panel</span>
+                <a href="{% url 'dashboard:index' %}" class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10 {% if request.resolver_match.view_name == 'dashboard:index' %}text-white bg-primary{% endif %}">
+                    <i class="fas fa-chart-line text-sm"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="{% url 'accounts:profile' %}" class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10 {% if request.resolver_match.view_name == 'accounts:profile' %}text-white bg-primary{% endif %}">
+                    <i class="fas fa-user-gear text-sm"></i>
+                    <span>My Profile</span>
+                </a>
+
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold px-3 pt-6 mb-2">Global Routing</span>
+                <a href="{% url 'core:home' %}" class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10">
+                    <i class="fas fa-house text-sm"></i>
+                    <span>Return to Site</span>
+                </a>
+
+                {% if request.user.is_staff %}
+                    <span class="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold px-3 pt-6 mb-2">Administrative Console</span>
+                    <a href="/admin/" target="_blank" class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10">
+                        <i class="fas fa-user-shield text-sm text-accent"></i>
+                        <span>Django Admin</span>
+                    </a>
+                {% endif %}
+            </nav>
+        </div>
+
+        <!-- Sidebar footer: user profile avatar and actions -->
+        <div class="p-6 border-t border-slate-900/10 dark:border-white/5 bg-slate-950/20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 overflow-hidden">
+                <div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm uppercase shrink-0">
+                    {{ request.user.first_name|first|default:request.user.username|first }}
+                </div>
+                <div class="leading-tight truncate">
+                    <span class="text-xs font-bold text-white block truncate">{{ request.user.get_full_name|default:request.user.username }}</span>
+                    <span class="text-[9px] text-slate-400 block font-medium uppercase tracking-wider">{{ request.user.get_role_display }}</span>
+                </div>
+            </div>
+            <form action="{% url 'accounts:logout' %}" method="post" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="text-slate-400 hover:text-red-500 transition-colors focus:outline-none" aria-label="Sign Out">
+                    <i class="fas fa-power-off text-sm"></i>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="flex-grow flex flex-col min-h-screen overflow-x-hidden">
+        
+        <!-- Header Bar -->
+        <header class="h-16 px-6 border-b border-slate-900/10 dark:border-white/5 flex items-center justify-between glassmorphism relative z-10">
+            <div class="flex items-center space-x-4">
+                <span class="text-xs font-bold text-slate-500 font-poppins">{{ COMPANY_NAME }} Operations Workspace</span>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle Button -->
+                <button id="dashboard-theme-toggle" class="p-2 rounded-xl text-slate-500 hover:bg-slate-500/10 focus:outline-none transition-colors" aria-label="Toggle Theme">
+                    <i class="fas fa-sun text-yellow-400 hidden dark:block text-sm"></i>
+                    <i class="fas fa-moon block dark:hidden text-sm"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace scrollable content container (Increased maximum content width to 1400px) -->
+        <main class="flex-grow p-6 sm:p-8 space-y-8 overflow-y-auto max-w-[1400px] w-full mx-auto">
+            
+            <!-- Global Django Messages within dashboard context -->
+            {% if messages %}
+                <div class="space-y-2">
+                    {% for message in messages %}
+                        <div class="flex items-center justify-between p-4 rounded-xl border {% if message.tags == 'success' %}border-success/20 text-success bg-success/5{% else %}border-red-500/20 text-red-500 bg-red-500/5{% endif %}" role="alert">
+                            <span class="text-xs font-semibold font-poppins">{{ message }}</span>
+                            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-100 focus:outline-none">
+                                <i class="fas fa-xmark"></i>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block dashboard_content %}{% endblock dashboard_content %}
+        </main>
+    </div>
+
+    <script>
+        // Synchronizes theme options locally inside the dashboard layer
+        const dashboardThemeToggle = document.getElementById('dashboard-theme-toggle');
+        const applyTheme = () => {
+            const cachedTheme = localStorage.getItem('theme');
+            if (cachedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+        };
+
+        dashboardThemeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        applyTheme();
+    </script>
+</body>
+</html>

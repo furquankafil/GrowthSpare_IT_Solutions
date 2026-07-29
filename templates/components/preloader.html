@@ -1,0 +1,47 @@
+<!-- High-Performance System Preloader Overlay Component -->
+<div id="global-preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-50 dark:bg-[#0F172A] transition-all duration-700 ease-out pointer-events-none opacity-100">
+    <div class="relative flex flex-col items-center space-y-6">
+        
+        <!-- Premium Dual-Ring Spin Animation -->
+        <div class="relative w-16 h-16">
+            <div class="absolute inset-0 rounded-full border-4 border-primary/10 border-t-primary animate-spin"></div>
+            <div class="absolute inset-1.5 rounded-full border-4 border-accent/10 border-b-accent animate-spin" style="animation-direction: reverse; animation-duration: 1.2s;"></div>
+        </div>
+
+        <!-- Typography Indicator -->
+        <div class="text-center space-y-1">
+            <p class="text-xs font-extrabold uppercase tracking-widest text-slate-900 dark:text-white font-poppins">
+                GrowthSpare
+            </p>
+            <span class="text-[9px] font-bold tracking-widest text-primary dark:text-accent uppercase font-poppins block">
+                Loading Workspace Environment
+            </span>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Performs safe page loading animation dismissal
+    (function () {
+        const handlePreloaderDismissal = () => {
+            const preloader = document.getElementById('global-preloader');
+            if (preloader) {
+                // Apply a slight delay to ensure browser rendering frames are fully cached
+                setTimeout(() => {
+                    preloader.classList.add('opacity-0');
+                    // Remove container from paint rendering calculations completely after fade completes
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 700);
+                }, 200);
+            }
+        };
+
+        if (document.readyState === 'complete') {
+            handlePreloaderDismissal();
+        } else {
+            window.addEventListener('load', handlePreloaderDismissal);
+        }
+    })();
+</script>

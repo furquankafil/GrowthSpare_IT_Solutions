@@ -1,0 +1,165 @@
+{% load static %}
+<!-- Premium Corporate Footer Segment -->
+<footer class="bg-secondary text-slate-400 dark:bg-darkBackground border-t border-slate-900/10 dark:border-white/5 pt-16 pb-8 transition-colors duration-300">
+    <!-- Increased maximum width of footer wrapper to 1400px for widescreen monitors -->
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        
+        <!-- Corporate Identity Column with Official Logo Ingestion -->
+        <div class="space-y-4">
+            <a href="{% url 'core:home' %}" class="flex items-center group" aria-label="GrowthSpare Homepage">
+                <!-- 
+                  FOOTER LOGO SIZE INCREASED BY 15-20% (Fixes Issue 1):
+                  - Height scaled to h-[56px] (mobile) and md:h-[66px] (tablet/desktop)
+                  - Proportions and baseline layouts completely matched
+                -->
+                <img src="{% static 'images/logo.png' %}" 
+                     alt="GrowthSpare IT Solutions" 
+                     class="h-[56px] md:h-[66px] w-auto block transition-all duration-300 group-hover:scale-[1.01] dark:filter dark:brightness-110">
+            </a>
+            <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400 font-medium pt-1">
+                {{ TAGLINE }} Our engineering teams deploy stable, production-grade cloud databases, dynamic automation engines, and secure web products globally.
+            </p>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                <p><span class="font-bold">Founder:</span> {{ FOUNDER_NAME }}</p>
+                <p><span class="font-bold">Offices:</span> {{ OFFICIAL_LOCATION }}</p>
+            </div>
+            
+            <!-- Upgraded Social Connections Icons (Fixes Issue 2) -->
+            <div class="flex items-center space-x-3.5 pt-3">
+                <!-- LinkedIn (Official Blue Badge) -->
+                <a href="https://www.linkedin.com/company/growthspareitsolution/" target="_blank" rel="noopener noreferrer" 
+                   class="w-11 h-11 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#0A66C2] bg-white dark:bg-slate-900 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] hover:scale-110 hover:shadow-lg hover:shadow-[#0A66C2]/20 transition-all duration-300 ease-out" aria-label="LinkedIn Profile Connection">
+                    <i class="fab fa-linkedin-in text-[22px]"></i>
+                </a>
+                <!-- Instagram (Official Gradient Badge) -->
+                <a href="https://www.instagram.com/growthspareitsolution/" target="_blank" rel="noopener noreferrer" 
+                   class="w-11 h-11 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#E4405F] bg-white dark:bg-slate-900 instagram-gradient-hover hover:scale-110 hover:shadow-lg hover:shadow-[#E4405F]/20 transition-all duration-300 ease-out" aria-label="Instagram Profile Connection">
+                    <i class="fab fa-instagram text-[22px]"></i>
+                </a>
+                <!-- Facebook (Official Blue Badge) -->
+                <a href="https://www.facebook.com/profile.php?id=61592462990102" target="_blank" rel="noopener noreferrer" 
+                   class="w-11 h-11 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#1877F2] bg-white dark:bg-slate-900 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:scale-110 hover:shadow-lg hover:shadow-[#1877F2]/20 transition-all duration-300 ease-out" aria-label="Facebook Profile Connection">
+                    <i class="fab fa-facebook-f text-[22px]"></i>
+                </a>
+                <!-- GitHub (Official Dark Badge) -->
+                <a href="https://github.com/furquankafil" target="_blank" rel="noopener noreferrer" 
+                   class="w-11 h-11 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#24292F] dark:text-white bg-white dark:bg-slate-900 hover:bg-[#24292F] dark:hover:bg-white hover:text-white dark:hover:text-[#24292F] hover:border-[#24292F] dark:hover:border-white hover:scale-110 hover:shadow-lg hover:shadow-black/20 transition-all duration-300 ease-out" aria-label="GitHub Repository Connection">
+                    <i class="fab fa-github text-[22px]"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Capability solutions Quick links -->
+        <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-300 font-poppins">Engineering Directory</span>
+            <ul class="mt-4 space-y-2.5 text-xs font-medium">
+                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">SaaS & CRM Engineering</a></li>
+                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">AI & WhatsApp Automation</a></li>
+                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Python & Django Development</a></li>
+                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Digital SEO & Google Ads Campaigns</a></li>
+                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Cybersecurity Assessment</a></li>
+            </ul>
+        </div>
+
+        <!-- Corporate Contact Desks -->
+        <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-300 font-poppins">Communications Desk</span>
+            <ul class="mt-4 space-y-3.5 text-xs font-medium">
+                <li class="flex items-center space-x-2.5">
+                    <i class="fas fa-phone text-primary dark:text-accent"></i>
+                    <a href="tel:{{ OFFICIAL_PHONE }}" class="hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_PHONE }}</a>
+                </li>
+                <li class="flex items-center space-x-2.5">
+                    <i class="fab fa-whatsapp text-success"></i>
+                    <a href="https://wa.me/{{ OFFICIAL_WHATSAPP }}?text=Hello%20GrowthSpare%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you." target="_blank" rel="noopener noreferrer" class="hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_WHATSAPP }}</a>
+                </li>
+                <li class="flex items-center space-x-2.5">
+                    <i class="fas fa-envelope text-primary dark:text-accent"></i>
+                    <a href="mailto:{{ OFFICIAL_EMAIL }}" class="hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_EMAIL }}</a>
+                </li>
+                <li class="flex items-start space-x-2.5">
+                    <i class="fas fa-location-dot text-primary dark:text-accent mt-0.5"></i>
+                    <span class="leading-relaxed">{{ OFFICIAL_LOCATION }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Bulletin Ingestion (Newsletter Form with AJAX) -->
+        <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-300 font-poppins">Corporate Publications</span>
+            <p class="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium">Subscribe to continuous system bulletins, service timelines, and technical software insights.</p>
+            
+            <form id="footer-newsletter-form" class="mt-4 flex flex-col space-y-2" method="POST" action="{% url 'core:newsletter_subscribe' %}">
+                {% csrf_token %}
+                <div class="relative">
+                    <input type="email" name="email" required placeholder="name@company.com" class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                    <button type="submit" class="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-accent focus:outline-none">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <span id="newsletter-response" class="text-[10px] font-semibold font-poppins block mt-1"></span>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Legal Compliance segment and copyright logs (Widescreen 1400px container supported) -->
+    <div class="max-w-[1400px] mx-auto px-6 mt-16 pt-8 border-t border-slate-900/10 dark:border-white/5 flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-500 font-medium">
+        <span>&copy; <span id="current-year">2026</span> {{ COMPANY_NAME }}. All corporate and system rights reserved.</span>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 justify-center">
+            <a href="{% url 'core:privacy' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Privacy Protocol</a>
+            <a href="{% url 'core:terms' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Terms of Operations</a>
+            <a href="{% url 'core:refund' %}" class="hover:text-primary dark:hover:text-accent transition-colors">SLA Refund Matrix</a>
+            <a href="{% url 'core:cookies' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Cookie Policies</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Handle dynamic copyright year calculations safely
+    const copyrightYear = document.getElementById('current-year');
+    if (copyrightYear) {
+        copyrightYear.textContent = new Date().getFullYear();
+    }
+
+    // Asynchronous newsletter submissions processing via simple native Javascript AJAX
+    const newsletterForm = document.getElementById('footer-newsletter-form');
+    const newsletterResponse = document.getElementById('newsletter-response');
+
+    if (newsletterForm && newsletterResponse) {
+        newsletterForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const emailInput = newsletterForm.querySelector('input[name="email"]');
+            const csrfToken = newsletterForm.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            const targetUrl = newsletterForm.action;
+
+            // Reset display status
+            newsletterResponse.textContent = "Processing subscription...";
+            newsletterResponse.className = "text-[10px] font-semibold text-primary dark:text-accent block mt-1";
+
+            fetch(targetUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: `email=${encodeURIComponent(emailInput.value)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                newsletterResponse.textContent = data.message;
+                if (data.success) {
+                    newsletterResponse.className = "text-[10px] font-semibold text-success block mt-1";
+                    emailInput.value = ""; 
+                } else {
+                    newsletterResponse.className = "text-[10px] font-semibold text-red-500 block mt-1";
+                }
+            })
+            .catch(error => {
+                newsletterResponse.textContent = "Technical connection error. Please try again.";
+                newsletterResponse.className = "text-[10px] font-semibold text-red-500 block mt-1";
+            });
+        });
+    }
+</script>

@@ -1,0 +1,96 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Team & Clients Directory - GrowthSpare Workspace{% endblock title %}
+
+{% block dashboard_content %}
+<div class="space-y-8 animate-fadeIn">
+
+    <!-- Access Validation Check: Enforce Role-Based Access controls -->
+    {% if request.user.role == "ADMIN" or request.user.role == "MANAGER" %}
+        
+        <!-- Header Block -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-extrabold font-poppins text-slate-900 dark:text-white">Workspace User Directory</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">View and manage registered corporate client profiles, software engineers, and pipeline managers.</p>
+            </div>
+        </div>
+
+        <!-- Directory Table Card (Scaled to 1400px container parameters) -->
+        <div class="glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 p-6 sm:p-8 space-y-6 shadow-sm max-w-[1400px] mx-auto w-full">
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-widest font-poppins">Registered Platform Users</h3>
+                <span class="text-xs font-bold text-slate-400 font-poppins">Sorted by newest registration</span>
+            </div>
+
+            <!-- Table responsive wrapper -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-medium">
+                    <thead>
+                        <tr class="border-b border-slate-900/10 dark:border-white/5 text-slate-400 uppercase tracking-wider font-poppins">
+                            <th class="pb-3 pr-2">Identity Profile</th>
+                            <th class="pb-3 pr-2">Role Assigned</th>
+                            <th class="pb-3 pr-2">Corporate Email</th>
+                            <th class="pb-3 pr-2">Verification Status</th>
+                            <th class="pb-3 text-right">Date Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-900/10 dark:divide-white/5 text-slate-600 dark:text-slate-300">
+                        {% for member in directory_users %}
+                        <tr>
+                            <td class="py-4 pr-2 font-bold text-slate-900 dark:text-white">
+                                {{ member.get_full_name|default:member.username }}
+                                <span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium block">{{ member.company_name|default:"—" }}</span>
+                            </td>
+                            <td class="py-4 pr-2">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider {% if member.role == 'ADMIN' %}bg-red-500/10 text-red-500{% elif member.role == 'MANAGER' %}bg-accent/10 text-accent{% else %}bg-primary/10 text-primary{% endif %}">
+                                    {{ member.get_role_display }}
+                                </span>
+                            </td>
+                            <td class="py-4 pr-2">{{ member.email }}</td>
+                            <td class="py-4 pr-2">
+                                {% if member.is_email_verified %}
+                                <span class="inline-flex items-center space-x-1 font-semibold text-success">
+                                    <i class="fas fa-circle-check"></i>
+                                    <span>Verified</span>
+                                </span>
+                                {% else %}
+                                <span class="inline-flex items-center space-x-1 font-semibold text-slate-400">
+                                    <i class="fas fa-circle-xmark"></i>
+                                    <span>Pending</span>
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="py-4 text-right text-slate-400">{{ member.date_joined|date:"F Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="py-8 text-center text-slate-400">No registered workspace users yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    {% else %}
+        <!-- Authorization Violation display block -->
+        <div class="glassmorphism p-12 rounded-3xl border border-slate-900/10 dark:border-white/5 text-center space-y-6 max-w-md mx-auto">
+            <div class="w-16 h-16 mx-auto rounded-full bg-red-500/10 flex items-center justify-center text-red-500 text-2xl animate-pulse">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-xl font-extrabold font-poppins text-slate-900 dark:text-white">Access Restricted</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    You do not hold administrative role permissions to view the global user directories. Contact your manager if this is an operational error.
+                </p>
+            </div>
+            <a href="{% url 'dashboard:index' %}" class="block w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg">
+                Return to Dashboard
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock dashboard_content %}

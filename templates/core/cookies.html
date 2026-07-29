@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Cookie Policy & Preference Settings - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Read the official Cookie Policy for GrowthSpare IT Solutions. Learn how we use persistent browser storage to improve site performance.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Standard Compliance Document Layout -->
+<section class="min-h-screen pt-32 pb-24 relative grid-bg px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dynamic background vector glow elements -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-900/10 dark:border-white/5 space-y-8">
+            
+            <!-- Document Header -->
+            <div class="border-b border-slate-900/10 dark:border-white/5 pb-6">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Legal & Compliance</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold font-poppins text-slate-900 dark:text-white mt-2">Cookie & Local Storage Policy</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-2">Last Updated: July 2026</p>
+            </div>
+
+            <!-- Legible prose copy -->
+            <div class="prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-6 leading-relaxed font-medium">
+                <p>
+                    This Cookie Policy explains how <span class="font-bold text-slate-900 dark:text-white">GrowthSpare IT Solutions</span> utilizes cookies, local browser storage coordinates, and comparable technical trackers to run, analyze, and optimize performance across our web platform and secure workspaces.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">1. What are Cookies and Local Storage?</h3>
+                <p>
+                    Cookies are tiny textual dataset files placed inside your device browser directories. Local Storage and Session Storage represent built-in browser structures used to save data locally. These tools enable the platform to retain configurations, maintain authenticated user sessions, and gather usage metrics safely.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">2. Core Trackers We Deploy</h3>
+                <p>
+                    Our web platforms deploy strictly configured categories of cookies:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><span class="font-bold text-slate-900 dark:text-white">Strictly Necessary trackers:</span> Essential tools protecting session security and CSRF compliance. For instance, storing the `csrftoken` to validate form posts, or cookie sessions to maintain active login profiles on user dashboards. Without these trackers, the workspace platform cannot function.</li>
+                    <li><span class="font-bold text-slate-900 dark:text-white">Preference Storage:</span> Local storage parameters used to cache your interface theme choice (Dark Mode or Light Mode configurations).</li>
+                    <li><span class="font-bold text-slate-900 dark:text-white">Analytical Performance tracking:</span> Integrates anonymous, aggregated tracking IDs (via Google Analytics) to monitor on-page navigation patterns and page load latency. This helps our engineers optimize Core Web Vitals performance.</li>
+                </ul>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">3. Customizing Your Settings</h3>
+                <p>
+                    Most web browsers enable you to restrict, block, or clear cookies via your browser settings. However, blocking strictly necessary cookies will prevent you from signing in to your GrowthSpare dashboard or completing multi-step consultation bookings.
+                </p>
+
+                <div class="bg-slate-900/10 dark:bg-black/20 p-6 rounded-2xl border border-slate-900/15 dark:border-white/5 space-y-2">
+                    <p class="font-bold text-slate-900 dark:text-white">{{ COMPANY_NAME }}</p>
+                    <p><span class="font-semibold">Delhi Offices:</span> {{ OFFICIAL_LOCATION }}</p>
+                    <p><span class="font-semibold">Contact Email:</span> {{ OFFICIAL_EMAIL }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

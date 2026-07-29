@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Contact Our Technical Offices - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Reach out to GrowthSpare IT Solutions. Contact our solutions desk in New Delhi, India for website development, AI automation, and custom CRM software.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Contact Section -->
+<section class="min-h-screen pt-44 pb-32 relative grid-bg px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[450px] h-[400px] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[450px] h-[400px] bg-accent/5 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- Increased max-width to 1400px for robust widescreen alignment -->
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start relative z-10 animate-fadeIn" data-aos="fade-up">
+        
+        <!-- Left Column: Founder Profile, Contact coordinates, offices details, embedded location maps -->
+        <div class="lg:col-span-5 space-y-10">
+            <div class="space-y-6">
+                <span class="text-xs font-extrabold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Get In Touch</span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins leading-tight">
+                    Let's scale your next project
+                </h1>
+                <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                    Have questions about system scoping, custom Django frameworks, or AI marketing integrations? Connect with our Delhi-based engineering architects.
+                </p>
+            </div>
+
+            <!-- Meet Our Founder Profile Card -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 flex flex-col sm:flex-row items-center gap-6 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent"></div>
+                <div class="w-28 h-28 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 p-1 bg-slate-100 dark:bg-slate-950 shadow-lg">
+                    <!-- Loads your uploaded professional portrait directly on the page -->
+                    <img src="{% static 'images/founder.png' %}" 
+                         alt="Mohammad Furqan Kafil" 
+                         class="w-full h-full object-cover rounded-full">
+                </div>
+                <div class="text-center sm:text-left space-y-1">
+                    <span class="text-[10px] font-extrabold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Founder & Chief Architect</span>
+                    <h3 class="text-base sm:text-lg font-bold font-poppins text-slate-900 dark:text-white">{{ FOUNDER_NAME }}</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
+                        Connect with me directly to coordinate custom enterprise system specifications, AI integrations, or software scoping.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Corporate Coordinates list with Business Hours, Response Time and updated Shaheen Bagh Address -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-5 shadow-2xl">
+                <!-- Response Time Badge -->
+                <div class="flex items-center space-x-4 pb-3.5 border-b border-slate-900/10 dark:border-white/5">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-primary dark:text-accent text-lg">
+                        <i class="fas fa-bolt-lightning"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Guaranteed Response Time</span>
+                        <span class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">Within 2 Hours (SLA Active)</span>
+                    </div>
+                </div>
+
+                <!-- Business Hours -->
+                <div class="flex items-center space-x-4 pt-1 pb-3.5 border-b border-slate-900/10 dark:border-white/5">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Business Operating Hours</span>
+                        <span class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">Monday - Saturday: 9:00 AM - 7:00 PM IST</span>
+                    </div>
+                </div>
+
+                <!-- Click to Call Phone -->
+                <div class="flex items-center space-x-4 pt-1 pb-3.5 border-b border-slate-900/10 dark:border-white/5">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg">
+                        <i class="fas fa-phone-volume"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Primary Contact Desk (Click To Call)</span>
+                        <a href="tel:{{ OFFICIAL_PHONE }}" class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_PHONE }}</a>
+                    </div>
+                </div>
+                
+                <!-- WhatsApp Button -->
+                <div class="flex items-center space-x-4 pt-1 pb-3.5 border-b border-slate-900/10 dark:border-white/5">
+                    <div class="w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center text-success text-lg">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">WhatsApp Coordination</span>
+                        <a href="https://wa.me/{{ OFFICIAL_WHATSAPP }}?text=Hello%20GrowthSpare%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you." target="_blank" rel="noopener noreferrer" class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white hover:text-success transition-colors">Start Live Chat Session</a>
+                    </div>
+                </div>
+
+                <!-- Corporate Email -->
+                <div class="flex items-center space-x-4 pt-1 pb-3.5 border-b border-slate-900/10 dark:border-white/5">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Corporate Email</span>
+                        <a href="mailto:{{ OFFICIAL_EMAIL }}" class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_EMAIL }}</a>
+                    </div>
+                </div>
+
+                <!-- Headquarters Location (Updated Shaheen Bagh Address) -->
+                <div class="flex items-start space-x-4 pt-1">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg shrink-0">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Corporate Office Address</span>
+                        <p class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white leading-relaxed">
+                            <strong>GrowthSpare IT Solutions</strong><br>
+                            D-50, Shaheen Bagh<br>
+                            Okhla, New Delhi – 110025<br>
+                            India
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Embedded dynamic maps visual frame (centered on OFFICIAL_LOCATION_ADDRESS / GOOGLE_MAPS_EMBED_QUERY env vars) -->
+            <div class="aspect-video w-full rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-2xl bg-slate-950">
+                <iframe class="w-full h-full grayscale dark:invert"
+                        src="{{ GOOGLE_MAPS_EMBED_SRC }}"
+                        title="{{ COMPANY_NAME }} office location map"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Right Column: Structured Lead Ingestion Form -->
+        <div class="lg:col-span-7 glassmorphism p-10 sm:p-12 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5">
+            <h3 class="text-xl font-bold font-poppins text-slate-900 dark:text-white mb-8 border-b border-slate-900/10 dark:border-white/5 pb-4">Send us a direct project brief</h3>
+            
+            <form method="POST" action="{% url 'contact:contact' %}" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Client Name input -->
+                    <div class="space-y-2">
+                        <label for="id_name" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Your Name</label>
+                        <input type="text" name="name" id="id_name" required placeholder="{{ form.name.field.widget.attrs.placeholder }}"
+                               class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium transition-theme">
+                    </div>
+
+                    <!-- Client Email input -->
+                    <div class="space-y-2">
+                        <label for="id_email" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Email Address</label>
+                        <input type="email" name="email" id="id_email" required placeholder="{{ form.email.field.widget.attrs.placeholder }}"
+                               class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium transition-theme">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Client Phone/WhatsApp Input -->
+                    <div class="space-y-2">
+                        <label for="id_phone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">WhatsApp / Phone</label>
+                        <input type="text" name="phone" id="id_phone" required placeholder="{{ form.phone.field.widget.attrs.placeholder }}"
+                               class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium transition-theme">
+                    </div>
+
+                    <!-- Corporate Company name Input -->
+                    <div class="space-y-2">
+                        <label for="id_company" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Company Name</label>
+                        <input type="text" name="company" id="id_company" placeholder="{{ form.company.field.widget.attrs.placeholder }}"
+                               class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium transition-theme">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Service Select Choices -->
+                    <div class="space-y-2">
+                        <label for="id_service" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Target Service</label>
+                        <select name="service" id="id_service" required
+                                class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium transition-theme">
+                            {% for val, display in form.fields.service.choices %}
+                                <option value="{{ val }}">{{ display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Budget Select Choices -->
+                    <div class="space-y-2">
+                        <label for="id_budget" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Allocated Budget Scale</label>
+                        <select name="budget" id="id_budget" required
+                                class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium transition-theme">
+                            {% for val, display in form.fields.budget.choices %}
+                                <option value="{{ val }}">{{ display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Custom Message Scope statement -->
+                <div class="space-y-2">
+                    <label for="id_message" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">System Scope & Details</label>
+                    <textarea name="message" id="id_message" required rows="5" placeholder="Briefly explain your business needs, current bottlenecks, or desired timeline targets."
+                              class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium resize-none transition-theme"></textarea>
+                </div>
+
+                <!-- Submit Control -->
+                <button type="submit" 
+                        class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-sm font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                    Send Project Briefing
+                </button>
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

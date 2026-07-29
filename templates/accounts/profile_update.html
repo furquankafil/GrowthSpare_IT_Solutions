@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Edit Workspace Profile - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Update your company contact coordinates, professional bio, LinkedIn links, location parameters, and profile avatar.">
+{% endblock seo %}
+
+{% block content %}
+<section class="min-h-screen pt-28 pb-16 relative grid-bg px-4 sm:px-6 lg:px-8">
+    
+    <!-- Decorative visual glow matrices -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/3 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/3 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-3xl mx-auto relative z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-10 rounded-3xl shadow-xl border border-slate-900/10 dark:border-white/5 space-y-8">
+            
+            <!-- Header Block -->
+            <div class="border-b border-slate-900/10 dark:border-white/5 pb-5">
+                <h1 class="text-2xl font-extrabold font-poppins text-slate-900 dark:text-white">Edit Profile Parameters</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Configure your corporate identity variables and destination contact points</p>
+            </div>
+
+            <!-- Double-Model Update Form (supporting files/avatars) -->
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+
+                <!-- Section 1: Core Account parameters -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-primary dark:text-accent uppercase tracking-wider font-poppins">1. Core Identity & Company Coordinates</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_first_name" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">First Name</label>
+                            <input type="text" name="first_name" id="id_first_name" required value="{{ user_form.first_name.value|default:'' }}" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_last_name" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Last Name</label>
+                            <input type="text" name="last_name" id="id_last_name" required value="{{ user_form.last_name.value|default:'' }}" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_phone_number" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Phone Number</label>
+                            <input type="text" name="phone_number" id="id_phone_number" required value="{{ user_form.phone_number.value|default:'' }}" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_company_name" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Company Name</label>
+                            <input type="text" name="company_name" id="id_company_name" value="{{ user_form.company_name.value|default:'' }}" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Personal Professional parameters -->
+                <div class="space-y-4 pt-6 border-t border-slate-900/10 dark:border-white/5">
+                    <h3 class="text-xs font-bold text-primary dark:text-accent uppercase tracking-wider font-poppins">2. Professional Profile & Social Coordinates</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_avatar" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Avatar Profile Image</label>
+                            <input type="file" name="avatar" id="id_avatar" accept="image/*" 
+                                   class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 file:cursor-pointer">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_designation" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Corporate Designation</label>
+                            <input type="text" name="designation" id="id_designation" value="{{ profile_form.designation.value|default:'' }}" placeholder="e.g. Director / Chief Architect" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_website" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Website URL</label>
+                            <input type="url" name="website" id="id_website" value="{{ profile_form.website.value|default:'' }}" placeholder="https://company.com" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_linkedin_profile" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">LinkedIn Profile</label>
+                            <input type="url" name="linkedin_profile" id="id_linkedin_profile" value="{{ profile_form.linkedin_profile.value|default:'' }}" placeholder="https://linkedin.com/in/username" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="id_bio" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Professional Bio / Summary</label>
+                        <textarea name="bio" id="id_bio" rows="3" placeholder="Brief professional overview of your background or software goals..." 
+                                  class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium resize-none">{{ profile_form.bio.value|default:'' }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Section 3: Geographic Coordinates parameters -->
+                <div class="space-y-4 pt-6 border-t border-slate-900/10 dark:border-white/5">
+                    <h3 class="text-xs font-bold text-primary dark:text-accent uppercase tracking-wider font-poppins">3. Geographic / Delivery Coordinates</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="space-y-1.5 sm:col-span-1">
+                            <label for="id_country" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Country</label>
+                            <input type="text" name="country" id="id_country" value="{{ profile_form.country.value|default:'India' }}" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5 sm:col-span-1">
+                            <label for="id_city" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">City</label>
+                            <input type="text" name="city" id="id_city" value="{{ profile_form.city.value|default:'' }}" placeholder="New Delhi" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5 sm:col-span-1">
+                            <label for="id_address" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-poppins">Corporate Address</label>
+                            <input type="text" name="address" id="id_address" value="{{ profile_form.address.value|default:'' }}" placeholder="Connaught Place" 
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit and cancel actions panel -->
+                <div class="pt-6 border-t border-slate-900/10 dark:border-white/5 flex items-center justify-end space-x-4">
+                    <a href="{% url 'accounts:profile' %}" class="px-5 py-3 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all">Cancel</a>
+                    <button type="submit" class="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold uppercase tracking-wider font-poppins shadow-md shadow-primary/10 hover:opacity-95 transition-all">Save Changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}

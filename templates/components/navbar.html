@@ -1,0 +1,186 @@
+{% load static %}
+<!-- Fixed Sticky Navigation Header with modern Glassmorphic styling -->
+<header id="masthead" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 glassmorphism border-b border-slate-900/10 dark:border-white/5 py-6">
+    <!-- Increased max-width container to 1400px to prevent compressed layouts on wide screens -->
+    <div class="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
+        
+        <!-- Official Brand Identity Logo Platform -->
+        <a href="{% url 'core:home' %}" class="flex items-center group" aria-label="GrowthSpare IT Solutions Homepage">
+            <!-- 
+              HEADER LOGO SIZE INCREASED BY 15-20% (Fixes Issue 1):
+              - Height set to custom h-[74px] (mobile) and sm:h-[92px] (desktop) for maximum readability.
+              - Maintains ideal aspect ratio, remains beautifully centered and professionally proportioned.
+            -->
+            <img src="{% static 'images/logo.png' %}" 
+                 id="navbar-logo"
+                 alt="GrowthSpare IT Solutions" 
+                 class="h-[74px] sm:h-[92px] w-auto block transition-all duration-300 group-hover:scale-[1.01] dark:filter dark:brightness-110">
+        </a>
+
+        <!-- Desktop Core Navigation Links (Larger font and expanded spacing) -->
+        <nav class="hidden md:flex items-center space-x-12 text-base font-semibold">
+            <a href="{% url 'core:home' %}" class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <a href="{% url 'core:about' %}" class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">About</a>
+            
+            {% if request.resolver_match.view_name == 'services:list' %}
+                <a href="{% url 'services:list' %}" class="text-primary dark:text-accent font-bold transition-colors py-2 border-b-2 border-primary dark:border-accent">Services</a>
+            {% else %}
+                <div class="relative group">
+                    <button class="flex items-center space-x-1.5 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent focus:outline-none transition-colors py-2">
+                        <span>Services</span>
+                        <i class="fas fa-chevron-down text-xs transform group-hover:rotate-180 transition-transform duration-300"></i>
+                    </button>
+                    
+                    <!-- Mega Dropdown Drawer (Glassmorphic design) -->
+                    <div class="absolute left-1/2 -translate-x-1/2 top-full w-[480px] p-4 rounded-2xl glassmorphism shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold tracking-wider text-primary dark:text-accent uppercase px-3 block">Engineering</span>
+                                <a href="{% url 'services:category' category_slug='web-solutions' %}" class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-500/10 transition-colors">
+                                    <i class="fas fa-laptop-code text-primary"></i>
+                                    <div class="flex flex-col"><span class="text-xs font-semibold text-slate-900 dark:text-white">Web Solutions</span></div>
+                                </a>
+                                <a href="{% url 'services:category' category_slug='ai-automations' %}" class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-500/10 transition-colors">
+                                    <i class="fas fa-brain text-accent"></i>
+                                    <div class="flex flex-col"><span class="text-xs font-semibold text-slate-900 dark:text-white">AI Automations</span></div>
+                                </a>
+                                <a href="{% url 'services:category' category_slug='saas-crm-systems' %}" class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-500/10 transition-colors">
+                                    <i class="fas fa-cubes text-primary"></i>
+                                    <div class="flex flex-col"><span class="text-xs font-semibold text-slate-900 dark:text-white">SaaS & CRM Systems</span></div>
+                                </a>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold tracking-wider text-primary dark:text-accent uppercase px-3 block">Digital Growth</span>
+                                <a href="{% url 'services:category' category_slug='digital-growth' %}" class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-500/10 transition-colors">
+                                    <i class="fas fa-chart-line text-success"></i>
+                                    <div class="flex flex-col"><span class="text-xs font-semibold text-slate-900 dark:text-white">Digital Growth</span></div>
+                                </a>
+                                <a href="{% url 'services:category' category_slug='seo-marketing' %}" class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-500/10 transition-colors">
+                                    <i class="fas fa-magnifying-glass-chart text-success"></i>
+                                    <div class="flex flex-col"><span class="text-xs font-semibold text-slate-900 dark:text-white">SEO & Marketing</span></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <a href="{% url 'portfolio:list' %}" class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Portfolio</a>
+            <a href="{% url 'blog:list' %}" class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Insights</a>
+            <a href="{% url 'faq:list' %}" class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">FAQs</a>
+            <a href="{% url 'contact:contact' %}" class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Contact</a>
+        </nav>
+
+        <!-- Desktop Action Controls & Theme Toggle -->
+        <div class="hidden md:flex items-center space-x-6">
+            <!-- Dark / Light theme toggle trigger -->
+            <button id="navbar-theme-toggle" class="p-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/10 transition-colors" aria-label="Toggle active theme mode">
+                <i class="fas fa-sun text-yellow-400 hidden dark:block"></i>
+                <i class="fas fa-moon block dark:hidden"></i>
+            </button>
+
+            <!-- Authentication links mapping dynamic state patterns -->
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'dashboard:index' %}" class="text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Dashboard</a>
+                <form action="{% url 'accounts:logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="px-6 py-3 rounded-full text-sm font-bold font-poppins border border-red-500/20 text-red-500 hover:bg-red-500/5 transition-all">Sign Out</button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Sign In</a>
+                <a href="{% url 'consultation:book' %}" class="px-6 py-3 rounded-full text-sm font-bold font-poppins bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">Consultation</a>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Header Action Controls & Hamburger Toggle -->
+        <div class="md:hidden flex items-center space-x-3">
+            <button id="mobile-theme-toggle" class="p-2.5 rounded-lg border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/10 transition-colors" aria-label="Toggle visual theme mode">
+                <i class="fas fa-sun text-yellow-400 hidden dark:block text-sm"></i>
+                <i class="fas fa-moon block dark:hidden text-sm"></i>
+            </button>
+            <button id="hamburger-btn" class="p-2.5 text-slate-600 dark:text-slate-300 hover:bg-slate-500/10 rounded-lg focus:outline-none" aria-label="Open global mobile drawer menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Mobile Drawer Menu Panel (Collapsible block with clean CSS transitions) -->
+    <div id="mobile-drawer" class="hidden md:hidden glassmorphism border-t border-slate-900/10 dark:border-white/5 py-6 px-6 space-y-4 shadow-2xl transition-all duration-300 animate-fadeIn">
+        <a href="{% url 'core:home' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Home</a>
+        <a href="{% url 'core:about' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">About</a>
+        <a href="{% url 'services:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Services Directory</a>
+        <a href="{% url 'portfolio:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Portfolio</a>
+        <a href="{% url 'blog:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Insights Blog</a>
+        <a href="{% url 'faq:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">FAQs</a>
+        <a href="{% url 'contact:contact' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Contact</a>
+        
+        <div class="pt-4 border-t border-slate-900/10 dark:border-white/5 flex flex-col space-y-3">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'dashboard:index' %}" class="block text-center py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-base font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-500/5">Dashboard</a>
+                <form action="{% url 'accounts:logout' %}" method="post" class="w-full">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full text-center py-2.5 rounded-xl bg-red-500/10 text-red-500 text-base font-semibold hover:bg-red-500/20 transition-colors">Sign Out</button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="block text-center py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-base font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-500/5">Sign In</a>
+                <a href="{% url 'consultation:book' %}" class="block text-center py-2.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-base font-bold shadow-lg">Consultation</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<script>
+    // Sticky header layout & responsive logo size transformations on page scroll
+    const masthead = document.getElementById('masthead');
+    const navLogo = document.getElementById('navbar-logo');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            masthead.classList.add('shadow-xl', 'py-3', 'bg-white/80', 'dark:bg-darkBackground/80');
+            masthead.classList.remove('py-6');
+            if (navLogo) {
+                // Scroll-shrink state values set to premium balanced heights (62px - 72px)
+                navLogo.classList.remove('h-[74px]', 'sm:h-[92px]');
+                navLogo.classList.add('h-[62px]', 'sm:h-[72px]');
+            }
+        } else {
+            masthead.classList.remove('shadow-xl', 'py-3', 'bg-white/80', 'dark:bg-darkBackground/80');
+            masthead.classList.add('py-6');
+            if (navLogo) {
+                // Restore default primary heights (+15-20% boost)
+                navLogo.classList.add('h-[74px]', 'sm:h-[92px]');
+                navLogo.classList.remove('h-[62px]', 'sm:h-[72px]');
+            }
+        }
+    });
+
+    // Mobile Hamburger Toggle triggers
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    if (hamburgerBtn && mobileDrawer) {
+        hamburgerBtn.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+    }
+
+    // Dual theme selectors logic mapping local storages
+    const navbarThemeBtn = document.getElementById('navbar-theme-toggle');
+    const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
+
+    const toggleThemeClass = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            localStorage.setItem('theme', 'dark');
+        }
+    };
+
+    if (navbarThemeBtn) navbarThemeBtn.addEventListener('click', toggleThemeClass);
+    if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleThemeClass);
+</script>

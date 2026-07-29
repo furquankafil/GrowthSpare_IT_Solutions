@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>SLA Billing & Refund Policy - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Review the billing, cancellation, milestone validation, and refund terms of service for software development and AI integration services.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Standard Compliance Document Layout -->
+<section class="min-h-screen pt-32 pb-24 relative grid-bg px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dynamic background vector glow elements -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-900/10 dark:border-white/5 space-y-8">
+            
+            <!-- Document Header -->
+            <div class="border-b border-slate-900/10 dark:border-white/5 pb-6">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Legal & Compliance</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold font-poppins text-slate-900 dark:text-white mt-2">Billing, Retention & SLA Refund Policy</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-2">Last Updated: July 2026</p>
+            </div>
+
+            <!-- Legible prose copy -->
+            <div class="prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-6 leading-relaxed font-medium">
+                <p>
+                    Because <span class="font-bold text-slate-900 dark:text-white">GrowthSpare IT Solutions</span> operates strictly in B2B technical segments, delivering highly-customized software development architectures (Python/Django), database design (PostgreSQL), and complex automated messaging structures, all financial transactions and work orders are governed under this Service Level Agreement (SLA).
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">1. Project Milestones & Verification</h3>
+                <p>
+                    Bespoke project deliverables are divided into explicit development milestones during the scoping phase. For each milestone, we supply staging and sandbox deployments for client testing and structural clearance.
+                </p>
+                <p>
+                    Approval of a specific staging sprint or milestone constitutes formal clearance. Once a milestone is approved by your team, the corresponding payments allocated to that specific stage are completed, logged, and considered final and non-refundable.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">2. Retainers & Subscriptions</h3>
+                <p>
+                    Continuous monthly retainers (e.g., SEO campaigns, API maintenance, and DevOps server support plans) operate on an advance billing cycle. You may terminate active recurring services at any time by requesting cancellation via your account profile or emailing our desk at least 15 calendar days before your next billing cycle.
+                </p>
+                <p>
+                    We do not provide prorated refunds or credits for partially completed monthly billing cycles.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">3. Custom Software Disputes</h3>
+                <p>
+                    If a dispute arises during active project development, we halt progress immediately to re-verify work orders and requirements. If we fail to deliver a specified milestone based on verified technical scope parameters, we will issue a refund or credit for that specific pending work order.
+                </p>
+
+                <div class="bg-slate-900/10 dark:bg-black/20 p-6 rounded-2xl border border-slate-900/15 dark:border-white/5 space-y-2">
+                    <p class="font-bold text-slate-900 dark:text-white">{{ COMPANY_NAME }}</p>
+                    <p><span class="font-semibold">Billing Coordination Desk:</span> {{ OFFICIAL_EMAIL }}</p>
+                    <p><span class="font-semibold">Delhi Offices:</span> {{ OFFICIAL_LOCATION }}</p>
+                    <p><span class="font-semibold">Direct Desk:</span> {{ OFFICIAL_PHONE }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

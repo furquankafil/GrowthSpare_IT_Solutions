@@ -1,0 +1,31 @@
+{% load static %}
+<!-- ==============================================================================
+     GrowthSpare IT Solutions - Modular System Scripts Include
+     Houses master runtime animation dependencies and visual theme sync bindings.
+     ============================================================================== -->
+
+<!-- AOS (Animate On Scroll) Framework JS Library -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<!-- GSAP (GreenSock Animation Platform) Timeline Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- Swiper JS Interactive Touch Sliders Library -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Typed.js Core Library -->
+<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+<!-- Custom Theme Toggle, Main Interactions, and GSAP Timelines -->
+<script src="{% static 'js/theme_toggle.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/animations.js' %}"></script>
+
+<script>
+    // Initialize standard AOS triggers with specific parameters
+    AOS.init({
+        duration: 800,
+        once: true,
+        mirror: false,
+    });
+</script>

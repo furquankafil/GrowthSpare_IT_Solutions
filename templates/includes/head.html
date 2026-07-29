@@ -1,0 +1,36 @@
+{% load static %}
+{% load seo_tags %}
+<!-- ==============================================================================
+     GrowthSpare IT Solutions - Modular System Header Include
+     Houses meta tag optimizations, responsive configurations, and global font/style CDNs.
+     ============================================================================== -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Structured JSON-LD SEO Meta tags generator -->
+{% block seo %}
+    {% render_seo_meta title=seo_title description=seo_description %}
+{% endblock seo %}
+
+{% if schema_data %}
+    {% render_json_ld "Organization" schema_data %}
+{% endif %}
+
+<!-- Premium typography integrations (Inter & Poppins) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- FontAwesome Icons vector graphics CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- AOS (Animate on Scroll) Engine styles -->
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+<!-- SwiperJS sliders layout styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+<!-- Custom styled stylesheets compilation overrides -->
+<link rel="stylesheet" href="{% static 'css/theme.css' %}" />
+<link rel="stylesheet" href="{% static 'css/main.css' %}" />

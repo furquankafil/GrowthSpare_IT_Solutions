@@ -1,0 +1,14 @@
+# ==============================================================================
+# Robots configurations rules for search engine crawlers - GrowthSpare IT Solutions
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /accounts/login/
+Disallow: /accounts/register/
+Disallow: /accounts/password-reset/
+Disallow: /dashboard/
+
+# Dynamic absolute sitemap index map location
+Sitemap: https://growthspareitsolutions.com/sitemap.xml

@@ -1,0 +1,848 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. HERO SECTION (Stripe-Style Fluid Layout with Multi-CTA Controls)
+     ============================================================================== -->
+<section class="relative min-h-screen flex items-center justify-center pt-44 pb-32 overflow-hidden grid-bg">
+    <!-- Animated background ambient vector lights -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[140px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[140px]"></div>
+    </div>
+
+    <!-- Increased max-width to 1400px for robust widescreen alignment -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <!-- Left Column: Primary Copy & Dynamic Funnel Action buttons -->
+        <div class="lg:col-span-7 space-y-10 text-center lg:text-left" data-aos="fade-right">
+            <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+                <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Enterprise Technology Integration</span>
+            </div>
+            
+            <h1 class="text-5xl sm:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-none text-slate-900 dark:text-white font-poppins">
+                Build Websites,<br>
+                Automate Business &<br>
+                <span class="bg-gradient-to-r from-primary via-accent to-success bg-clip-text text-transparent">
+                    Grow Online with Confidence
+                </span>
+            </h1>
+
+            <!-- Subtitle with expanded size for premium readability -->
+            <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                GrowthSpare IT Solutions helps startups and businesses build modern websites, improve online visibility, automate workflows with AI, and develop custom software solutions.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                <a href="{% url 'consultation:book' %}" 
+                   class="w-full sm:w-auto text-center px-10 py-5 rounded-xl font-bold font-poppins text-white bg-gradient-to-r from-primary to-accent shadow-xl shadow-primary/25 hover:opacity-95 hover:scale-[1.01] transition-all">
+                    Get Free Consultation
+                </a>
+                <a href="{% url 'portfolio:list' %}" 
+                   class="w-full sm:w-auto text-center px-10 py-5 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all">
+                    View Portfolio
+                </a>
+                <a href="{% url 'contact:contact' %}" 
+                   class="w-full sm:w-auto text-center px-10 py-5 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all">
+                    Request a Free Quote
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Column: Glowing Systems Matrix visualization card -->
+        <div class="lg:col-span-5 relative w-full aspect-square max-w-md mx-auto lg:max-w-none" data-aos="fade-left">
+            <div class="absolute inset-0 bg-gradient-to-tr from-primary to-accent rounded-3xl opacity-10 blur-2xl"></div>
+            <div class="relative w-full h-full glassmorphism rounded-3xl p-8 border border-slate-900/10 dark:border-white/5 overflow-hidden shadow-2xl flex flex-col justify-between">
+                <div class="flex items-center justify-between border-b border-slate-900/10 dark:border-white/5 pb-4">
+                    <div class="flex space-x-1.5">
+                        <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-success"></span>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-400 dark:text-slate-500">growthspare-core-engine.py</span>
+                </div>
+
+                <div class="font-mono text-xs text-slate-600 dark:text-slate-300 space-y-4 py-6 overflow-y-auto max-h-[300px]">
+                    <p class="text-primary dark:text-accent font-bold">// Initializing GrowthSpare systems...</p>
+                    <p class="text-success">$ python -m growthspare --optimize --production</p>
+                    <p class="text-slate-500">→ Analysing multi-region database replication... OK</p>
+                    <p class="text-slate-500">→ Hardening CSP and security request headers... OK</p>
+                    <p class="text-slate-500">→ Configuring automated lead pipelines... OK</p>
+                    <p class="text-accent dark:text-success font-bold">✓ Target nodes online. Region: New Delhi [IST]</p>
+                </div>
+
+                <div class="border-t border-slate-900/10 dark:border-white/5 pt-4 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 font-medium">
+                    <span>Active Latency: 14ms</span>
+                    <span>Uptime metric: 99.9%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     TRUSTED COMPANIES SECTION
+     Backed by the ClientLogo model (apps.core.models.ClientLogo). Renders each
+     client's uploaded logo image if present; otherwise renders the premium
+     static SVG wordmark placeholder for known demo clients (see
+     ClientLogo.STATIC_PLACEHOLDER_LOGOS); finally falls back to a plain
+     initials badge so the section never looks broken either way.
+     ============================================================================== -->
+{% if client_logos %}
+<section class="py-16 border-b border-slate-900/10 dark:border-white/5 relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-10 font-poppins" data-aos="fade-up">
+            Trusted by growing businesses across India, Europe &amp; the Middle East
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 items-stretch">
+            {% for client in client_logos %}
+            <div class="group relative flex items-center justify-center h-24 rounded-2xl bg-white dark:bg-white/[0.03] border border-slate-900/10 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-primary/30 dark:hover:border-accent/30 transition-all duration-300"
+                 data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'50' }}">
+                {% if client.logo %}
+                    {% if client.website_url %}
+                    <a href="{{ client.website_url }}" target="_blank" rel="noopener noreferrer nofollow" aria-label="{{ client.name }}" class="flex items-center justify-center w-full h-full px-4">
+                    {% endif %}
+                        <img src="{{ client.logo.url }}" alt="{{ client.name }}" title="{{ client.name }}"
+                             class="max-h-10 w-auto max-w-[120px] object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                    {% if client.website_url %}
+                    </a>
+                    {% endif %}
+                {% else %}
+                    {% with placeholder=client.get_static_placeholder %}
+                    {% if placeholder %}
+                        {% if client.website_url %}
+                        <a href="{{ client.website_url }}" target="_blank" rel="noopener noreferrer nofollow" aria-label="{{ client.name }}" class="flex items-center justify-center w-full h-full px-4">
+                        {% endif %}
+                            <img src="{% static placeholder %}" alt="{{ client.name }}" title="{{ client.name }}"
+                                 class="max-h-9 w-auto max-w-[130px] object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                        {% if client.website_url %}
+                        </a>
+                        {% endif %}
+                    {% else %}
+                        <!-- Final fallback: only rendered when neither an uploaded logo nor a static placeholder exists -->
+                        <span class="w-11 h-11 rounded-xl bg-slate-900/5 dark:bg-white/5 border border-slate-900/10 dark:border-white/10 flex items-center justify-center text-xs font-extrabold text-slate-500 dark:text-slate-400 font-poppins"
+                              title="{{ client.name }}">
+                            {{ client.get_initials }}
+                        </span>
+                    {% endif %}
+                    {% endwith %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==============================================================================
+     2. BUSINESS STATISTICS SECTION (Dynamic Counter Metrics)
+     ============================================================================== -->
+<section class="py-20 border-y border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/20 relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
+            <div data-aos="fade-up" data-aos-delay="100">
+                <div class="text-4xl sm:text-5xl font-extrabold text-primary dark:text-accent font-poppins">20+</div>
+                <p class="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mt-2">Demo Projects</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <div class="text-4xl sm:text-5xl font-extrabold text-success font-poppins">100%</div>
+                <p class="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mt-2">Responsive Websites</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <div class="text-4xl sm:text-5xl font-extrabold text-primary dark:text-accent font-poppins">Fast</div>
+                <p class="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mt-2">Delivery Track</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <div class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white font-poppins">Modern</div>
+                <p class="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mt-2">Technology Stack</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="500">
+                <div class="text-4xl sm:text-5xl font-extrabold text-success font-poppins">Focus</div>
+                <p class="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mt-2">Customer Satisfaction</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="600">
+                <div class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white font-poppins">24/7</div>
+                <p class="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mt-2">Support Available</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     3. INDUSTRIES WE SERVE SECTION (Symmetric Corporate Vectors/Icons Grid)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Industries We Serve</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">B2B Vertical Implementations</h2>
+            <p class="text-base text-slate-500 dark:text-slate-400 font-medium">Helping businesses across different industries grow with modern websites, AI automation, digital marketing, and custom software solutions.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+            <!-- Card 1: Restaurants & Cafes -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="50">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-utensils"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Restaurants & Cafés</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Interactive menus, automated reservation tables, and local organic SEO findability.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 2: Clinics & Hospitals -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-hospital"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Clinics & Hospitals</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Secure patient booking databases, HIPAA compliance records, and automated Twilio alert triggers.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 3: Schools & Coaching -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="150">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-graduation-cap"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Schools & Institutes</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Custom course curriculum databases, Student LMS logins, and parent feedback loops.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 4: Gyms & Fitness -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-dumbbell"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Gyms & Fitness</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Class scheduler displays, recurring membership billing, and automated customer trackers.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 5: Real Estate -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="250">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-building"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Real Estate Agencies</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Dynamic Mapbox directory listings, automated client briefs pipelines, and lead captures.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 6: Law Firms -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-scale-balanced"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Law Firms</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Client consulting portals, encrypted file sharing, and landing pages.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 7: Retail & E-commerce -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="350">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-shopping-bag"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Retail & E-commerce</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Symmetric checkout systems, Stripe payment webhooks, and automatic stock alerts.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 8: Startups & Small Businesses -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-rocket"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Startups & SMBs</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Rapid web development, automated customer funnels, and technical SEO setups.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 9: Corporate Businesses -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="450">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-briefcase"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Corporate Businesses</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Custom ERP/CRM architectures, API integrations, and robust database clustering.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+
+            <!-- Card 10: Hotels & Travel Agencies -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 hover:-translate-y-2 hover:border-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="500">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg"><i class="fas fa-hotel"></i></div>
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white">Hotels & Travel</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">Property reservation portals, booking schedule managers, and dynamic local map finders.</p>
+                <a href="{% url 'contact:contact' %}" class="text-xs font-bold text-primary dark:text-accent hover:underline block pt-2">Learn More <i class="fas fa-chevron-right text-[8px] ml-1"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     4. SOLUTIONS MATRIX SECTIONS (Displaying 5 Core Services with pricing pointers)
+     ============================================================================== -->
+<section id="services" class="py-24 relative overflow-hidden bg-slate-100/50 dark:bg-slate-950/40 border-t border-slate-900/10 dark:border-white/5">
+    <!-- Restructured container width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Solutions Matrix</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Our Core Capabilities</h2>
+            <p class="text-base text-slate-500 dark:text-slate-400 font-medium">We design and maintain client software matrices exclusively on validated modern frameworks.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in featured_services %}
+                <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                    <div class="space-y-5">
+                        <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-xl">
+                            <i class="{{ service.icon_class }}"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white leading-snug">{{ service.title }}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">{{ service.overview }}</p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-slate-900/10 dark:border-white/5 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-poppins">{{ service.pricing_estimate }}</span>
+                        <a href="{{ service.get_absolute_url }}" class="text-xs font-bold text-primary dark:text-accent hover:underline inline-flex items-center space-x-2">
+                            <span>Details & Process</span> <i class="fas fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-slate-500">Corporate solutions pool initializing...</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     5. FEATURED PROJECTS SECTION (Symmetric Demo Case Studies with Unsplash hotlinks)
+     ============================================================================== -->
+<section id="portfolio" class="py-24 relative overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-6">
+            <div class="space-y-4 max-w-xl">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Featured Projects</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Engineering Milestones</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Explore a collection of professional websites, CRM systems, AI automation solutions, and digital marketing projects designed to help businesses grow.</p>
+            </div>
+            <a href="{% url 'portfolio:list' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                Explore All Projects
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {% for project in featured_projects|slice:":3" %}
+                <div class="glassmorphism rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                    <div>
+                        <!-- Project Banner image frame with remote / local fallback checks -->
+                        <div class="relative aspect-video overflow-hidden bg-slate-900">
+                            {% if project.featured_image %}
+                                <img src="{% if 'http' in project.featured_image.name %}{{ project.featured_image.name }}{% else %}{{ project.featured_image.url }}{% endif %}" 
+                                     alt="{{ project.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy">
+                            {% endif %}
+                            <div class="absolute top-4 left-4 flex flex-col space-y-2">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
+                                    {% for category in project.categories.all|slice:":1" %}
+                                        {{ category.name }}
+                                    {% endfor %}
+                                </span>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
+                                    Demo Project
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest block font-poppins">Client: {{ project.client_name }}</span>
+                            <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white leading-snug">{{ project.title }}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
+                                {{ project.problem_statement }}
+                            </p>
+                            <!-- Tech badges -->
+                            <div class="flex flex-wrap gap-1.5 pt-2">
+                                {% for tech in project.get_tech_list|slice:":3" %}
+                                    <span class="px-2 py-1 rounded bg-slate-900/10 dark:bg-black/20 text-[9px] font-bold text-slate-400 uppercase">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-900/10 dark:border-white/5 mt-6 flex items-center justify-between">
+                        <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-poppins">{{ project.project_duration }}</span>
+                        <a href="{{ project.get_absolute_url }}" class="px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold font-poppins hover:bg-accent hover:scale-[1.02] transition-all inline-flex items-center space-x-2 shadow-md">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-slate-500">Case studies list catalog initializing...</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     6. OUR TECHNOLOGY STACK SECTION (Interactive cards with tooltips and borders)
+     ============================================================================== -->
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Our Tech Stack</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Technologies We Deploy</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">We design and maintain client software matrices exclusively on validated modern frameworks.</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            <!-- Card 1: HTML5 -->
+            <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-2 hover:-translate-y-1.5 transition-all duration-300 relative group" data-aos="zoom-in" data-aos-delay="50">
+                <i class="fab fa-html5 text-4xl text-[#E34F26]"></i>
+                <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mt-2 font-poppins">HTML5</h4>
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-slate-950 text-[10px] text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Semantic Document Structures</div>
+            </div>
+
+            <!-- Card 2: CSS3 -->
+            <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-2 hover:-translate-y-1.5 transition-all duration-300 relative group" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fab fa-css3-alt text-4xl text-[#1572B6]"></i>
+                <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mt-2 font-poppins">CSS3</h4>
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-slate-950 text-[10px] text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Responsive Layout Cascades</div>
+            </div>
+
+            <!-- Card 3: JS -->
+            <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-2 hover:-translate-y-1.5 transition-all duration-300 relative group" data-aos="zoom-in" data-aos-delay="150">
+                <i class="fab fa-js text-4xl text-[#F7DF1E]"></i>
+                <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mt-2 font-poppins">JavaScript</h4>
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-slate-950 text-[10px] text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Dynamic Client Actions</div>
+            </div>
+
+            <!-- Card 4: Tailwind -->
+            <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-2 hover:-translate-y-1.5 transition-all duration-300 relative group" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-wind text-4xl text-[#06B6D4]"></i>
+                <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mt-2 font-poppins">Tailwind CSS</h4>
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-slate-950 text-[10px] text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Rapid Utility Styling</div>
+            </div>
+
+            <!-- Card 5: Python -->
+            <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-2 hover:-translate-y-1.5 transition-all duration-300 relative group" data-aos="zoom-in" data-aos-delay="250">
+                <i class="fab fa-python text-4xl text-[#3776AB]"></i>
+                <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mt-2 font-poppins">Python</h4>
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-slate-950 text-[10px] text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Robust Algorithmic Business Logic</div>
+            </div>
+
+            <!-- Card 6: Django -->
+            <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-2 hover:-translate-y-1.5 transition-all duration-300 relative group" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fas fa-cubes text-4xl text-[#092E20]"></i>
+                <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 mt-2 font-poppins">Django</h4>
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-slate-950 text-[10px] text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Rapid, Secure Web Backends</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     7. WHY CHOOSE GROWTHSPARE SECTION (10 Value Cards with icons)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Why Choose GrowthSpare</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Strategic Partnership Value</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">We deliver enterprise-grade performance, high reliability, and data transparency across all deployments.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            <!-- Card 1: Affordable Pricing -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="50">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-tags"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Affordable Pricing</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Enterprise software capabilities built around SME budget metrics.</p>
+            </div>
+
+            <!-- Card 2: Professional Design -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-compass-drafting"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Professional Design</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Sleek, fluid interfaces styled in Figma with custom design tokens.</p>
+            </div>
+
+            <!-- Card 3: SEO Optimized -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="150">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-magnifying-glass-chart"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">SEO Optimized</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Dynamic structured JSON-LD schemas and search-ready configurations.</p>
+            </div>
+
+            <!-- Card 4: AI Powered -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-robot"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">AI Powered</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Intelligent conversational agents and WhatsApp automations.</p>
+            </div>
+
+            <!-- Card 5: Fast Delivery -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="250">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-truck-fast"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Fast Delivery</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Agile development cycles designed to ship lightweight MVPs to market rapidly.</p>
+            </div>
+
+            <!-- Card 6: Mobile Responsive -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-mobile-screen-button"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Mobile Responsive</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Perfect layout scaling across standard mobile viewports.</p>
+            </div>
+
+            <!-- Card 7: Modern Technology -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="350">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-cubes"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Modern Tech</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Python, Django 6, and secure PostgreSQL databases on Linux.</p>
+            </div>
+
+            <!-- Card 8: Dedicated Support -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-headset"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Dedicated Support</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Direct support channels to resolve technical queries or updates.</p>
+            </div>
+
+            <!-- Card 9: Secure Development -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="450">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-shield-halved"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Secure Development</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Strict CSP header configurations and database injection blocks.</p>
+            </div>
+
+            <!-- Card 10: Scalable Architecture -->
+            <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3 hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay="500">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm"><i class="fas fa-infinity"></i></div>
+                <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white uppercase tracking-wider">Scalable Architecture</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Containerized pipelines built to expand to custom CRM and SaaS needs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     8. OUR PROCESS TIMELINE SECTION (8-Step Animated Timeline)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Symmetric Workflow</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Our Engineering Process</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">We design and execute custom tech solutions through structured milestones.</p>
+        </div>
+
+        <div class="relative pl-6 border-l-2 border-primary/20 space-y-8 max-w-2xl mx-auto">
+            <!-- Step 1 -->
+            <div class="relative space-y-2" data-aos="fade-up">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">1</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Free Consultation</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Initial video session to evaluate current systems workflows and define business objectives.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="50">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">2</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Requirement Analysis</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Technical analysis of database structures, third-party API configurations, and traffic scaling goals.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="100">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">3</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Planning</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Mapping out agile sprint milestones, system ERDs, and delivery spec sheets.</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="150">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">4</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">UI/UX Design</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Drafting responsive visual layouts in Figma to guarantee smooth interfaces and conversion rates.</p>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="200">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">5</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Development</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Symmetric, object-oriented coding utilizing Django framework rules and secure databases.</p>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="250">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">6</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Testing</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Running automated regression assessments, security middleware checks, and load validations.</p>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="300">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">7</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Launch</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Containerized production deployment behind Nginx reverse proxies with automated SSL setup.</p>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="relative space-y-2" data-aos="fade-up" data-aos-delay="350">
+                <span class="absolute -left-[35px] top-0 w-6 h-6 rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center">8</span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider">Support & Maintenance</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Continuous library upgrades, automated backups, and emergency support.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     9. TESTIMONIALS SLIDER SECTION (SwiperJS Implementation with Demo helper label)
+     ============================================================================== -->
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 overflow-hidden relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">What Our Clients Say</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Verified B2B Feedback</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Read certified ratings and reviews direct from our partners and clients globally.</p>
+        </div>
+
+        <!-- Dynamic Swiper container layout -->
+        <div class="swiper testimonials-slider w-full" data-aos="fade-up">
+            <div class="swiper-wrapper">
+                {% for review in testimonials %}
+                    <div class="swiper-slide p-2">
+                        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-6 max-w-2xl mx-auto relative overflow-hidden">
+                            <span class="absolute top-4 right-4 text-[9px] font-bold tracking-widest uppercase text-slate-400 bg-slate-900/10 dark:bg-black/20 px-2 py-0.5 rounded">
+                                Sample Review
+                            </span>
+                            
+                            <!-- Star ratings display -->
+                            <div class="flex text-yellow-400 text-sm space-x-1">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+
+                            <p class="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300 italic">
+                                "{{ review.review }}"
+                            </p>
+
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-900/10 dark:border-white/5">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold font-poppins uppercase">
+                                        {{ review.client_name|first }}
+                                    </div>
+                                    <div class="leading-none">
+                                        <h4 class="text-xs font-extrabold text-slate-900 dark:text-white font-poppins">{{ review.client_name }}</h4>
+                                        <p class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mt-1">{{ review.designation }}, {{ review.company_name }}</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-poppins">{{ review.created_at|date:"M Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="swiper-slide p-2">
+                        <p class="text-center text-slate-400">Reviews initializing...</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Pagination bullets -->
+            <div class="swiper-pagination mt-8 relative"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     10. EDITORIAL LATEST POSTS FEED PREVIEW
+     ============================================================================== -->
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-6">
+            <div class="space-y-4 max-w-xl">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Latest Insights & Resources</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Recent publication releases</h2>
+            </div>
+            <a href="{% url 'blog:list' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                Explore Insights
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in recent_blogs|slice:":3" %}
+                <div class="glassmorphism rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                    <div>
+                        <!-- Blog Banner image frame with remote / local fallback checks -->
+                        <div class="relative aspect-video overflow-hidden bg-slate-900">
+                            {% if post.featured_image %}
+                                <img src="{% if 'http' in post.featured_image.name %}{{ post.featured_image.name }}{% else %}{{ post.featured_image.url }}{% endif %}" 
+                                     alt="{{ post.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy">
+                            {% endif %}
+                            <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md">
+                                {{ post.category.name }}
+                            </span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest block">{{ post.published_at|date:"M d, Y" }} — {{ post.reading_time }} min read</span>
+                            <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white leading-snug hover:text-primary transition-colors"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 mt-4 border-t border-slate-900/10 dark:border-white/5 pt-4">
+                        <a href="{{ post.get_absolute_url }}" class="text-xs font-bold text-primary dark:text-accent hover:underline inline-flex items-center space-x-2">
+                            <span>Read More</span> <i class="fas fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-slate-500">Corporate publication entries pipeline initializing...</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     11. FAQ ACCORDION SECTION (Attractive, Animated accordion)
+     ============================================================================== -->
+<section id="faq" class="py-24 relative overflow-hidden bg-slate-100/50 dark:bg-slate-950/40 border-t border-slate-900/10 dark:border-white/5 relative z-10">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-16 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Inquiries Center</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white font-poppins">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="space-y-4">
+            <!-- FAQ 1 -->
+            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                    <span>How long does it take to build a website?</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                </button>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        A standard, responsive brochure website can launch within 3 to 4 weeks. Highly specialized web applications and SaaS development milestones average between 2 to 3 months depending on complexity.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                    <span>Do you redesign existing websites?</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                </button>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Yes, we re-engineer legacy websites, migrating old codebases to modern Django and Tailwind setups while preserving active search rankings and improving Core Web Vitals.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                    <span>Can you improve my Google ranking?</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                </button>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Yes. By executing semantic SEO setups, auditing and improving site speed, optimizing schemas, and structuring content, we help grow organic search visibility.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                    <span>Do you develop CRM software?</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                </button>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Yes. We build custom, secure, private CRM software designed around your specific team permissions, lead stages, invoicing cycles, and communication rules.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                    <span>Do you provide maintenance?</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                </button>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Yes, we provide SLA-backed support contracts that include automated database backups, security patch updates, server monitoring, and emergency support.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                    <span>Can you automate my business using AI?</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                </button>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Yes, we integrate OpenAI model pipelines, construct custom Retrieval-Augmented Generation (RAG) indices, and configure automated WhatsApp Cloud API lead capture receivers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     12. HIGH-CONVERTING CALL TO ACTION (CTA) SECTION
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8 relative z-10">
+    <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight font-poppins">Ready to Grow Your Business?</h2>
+        <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
+            Let's discuss your project and create a solution tailored to your goals.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 font-poppins">
+                Book Free Consultation
+            </a>
+            <a href="{% url 'contact:contact' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-white/10 text-white font-bold text-xs tracking-wider uppercase hover:bg-white/5 transition-all font-poppins">
+                Request Free Quote
+            </a>
+            <a href="https://wa.me/{{ OFFICIAL_WHATSAPP }}?text=Hello%20GrowthSpare%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-success text-white font-bold text-xs tracking-wider uppercase hover:opacity-90 transition-all font-poppins inline-flex items-center justify-center space-x-2 shadow-lg">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp Us</span>
+            </a>
+            <a href="tel:{{ OFFICIAL_PHONE }}" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-white/10 text-white font-bold text-xs tracking-wider uppercase hover:bg-white/5 transition-all font-poppins inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-phone-volume"></i>
+                <span>Call Now</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 13. NEWSLETTER SECTION -->
+<section class="py-20 border-t border-slate-900/10 dark:border-white/5 relative z-10">
+    <div class="max-w-4xl mx-auto px-6" data-aos="fade-up">
+        {% include 'components/newsletter.html' %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block extra_js %}
+<!-- Initialize Swiper and FAQ transitions -->
+<script>
+    // Swiper Testimonials Slider Setup
+    new Swiper('.testimonials-slider', {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+
+    // FAQ Accordion Toggle Logic
+    function toggleLocalFaq(button) {
+        const icon = button.querySelector('i');
+        const content = button.nextElementSibling;
+        
+        button.parentElement.classList.toggle('border-primary/20');
+        button.parentElement.classList.toggle('bg-slate-500/5');
+
+        if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            content.style.maxHeight = '0px';
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
+</script>
+{% endblock extra_js %}

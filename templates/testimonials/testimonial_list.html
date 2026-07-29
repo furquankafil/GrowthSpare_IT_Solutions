@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Certified Client Reviews & Testimonials - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Read certified B2B client reviews and success testimonials regarding AI integrations, custom Django systems, and SEO results.">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. TESTIMONIALS DIRECTORY HEADER
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Increased container max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Social Proof</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            Client Success Records
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
+            Read verified reviews and performance ratings submitted by enterprise partners, business founders, and project directors globally.
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. DYNAMIC TESTIMONIAL FEED INDEX GRID
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <!-- Increased container max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 space-y-16">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for testimonial in testimonials %}
+                <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl relative overflow-hidden" data-aos="fade-up">
+                    <span class="absolute top-4 right-4 text-[9px] font-bold tracking-widest uppercase text-slate-400 bg-slate-900/10 dark:bg-black/20 px-2 py-0.5 rounded">
+                        Sample Review
+                    </span>
+                    <div class="space-y-6">
+                        
+                        <!-- Top details: Rating stars matching model indicator -->
+                        <div class="flex text-yellow-400 text-sm space-x-1">
+                            {% if testimonial.rating == 5 %}
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            {% elif testimonial.rating == 4 %}
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star text-slate-400"></i>
+                            {% elif testimonial.rating == 3 %}
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star text-slate-400"></i><i class="far fa-star text-slate-400"></i>
+                            {% else %}
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star text-slate-400"></i><i class="far fa-star text-slate-400"></i><i class="far fa-star text-slate-400"></i>
+                            {% endif %}
+                        </div>
+
+                        <!-- Review copy -->
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 italic leading-relaxed font-medium">
+                            "{{ testimonial.review }}"
+                        </p>
+                    </div>
+
+                    <!-- Client Identity info -->
+                    <div class="pt-6 mt-6 border-t border-slate-900/10 dark:border-white/5 flex items-center space-x-4">
+                        <div class="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 p-0.5 bg-slate-100 dark:bg-slate-950 flex items-center justify-center text-primary font-bold">
+                            {% if testimonial.client_avatar %}
+                                <img src="{{ testimonial.client_avatar.url }}" alt="{{ testimonial.client_name }}" class="w-full h-full object-cover rounded-full">
+                            {% else %}
+                                {{ testimonial.client_name|first|upper }}
+                            {% endif %}
+                        </div>
+                        <div class="leading-tight">
+                            <h4 class="text-xs font-extrabold text-slate-900 dark:text-white font-poppins">{{ testimonial.client_name }}</h4>
+                            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mt-0.5">
+                                {{ testimonial.designation }}, {{ testimonial.company_name }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-24 glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 text-slate-500">
+                    <i class="fas fa-award text-3xl mb-4 block"></i>
+                    <p class="font-bold text-slate-900 dark:text-white">Active Testimonials Coming Soon</p>
+                    <p class="text-xs text-slate-400 mt-1">Our support desk is verifying certified customer entries.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination interfaces controls -->
+        {% if is_paginated %}
+            <div class="flex items-center justify-center space-x-2 pt-8 border-t border-slate-900/10 dark:border-white/5 relative z-10" data-aos="fade-up">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                        <i class="fas fa-chevron-left mr-2"></i>Previous
+                    </a>
+                {% endif %}
+                
+                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 font-poppins px-4">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                        Next<i class="fas fa-chevron-right ml-2"></i>
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- ==============================================================================
+     3. CALL TO ACTION SECTION
+     ============================================================================== -->
+<section class="py-24 bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8">
+    <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-poppins">Ready to experience these technical results firsthand?</h2>
+        <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
+            Every business requirements context holds distinct challenges. Schedule an intake session with Mohammad Furqan Kafil to blueprint your custom framework integration.
+        </p>
+        <a href="{% url 'consultation:book' %}" class="px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 inline-block font-poppins">
+            Book Scoping Audit
+        </a>
+    </div>
+</section>
+{% endblock content %}

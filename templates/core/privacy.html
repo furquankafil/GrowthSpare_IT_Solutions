@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Corporate Privacy Protocol - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Read the GrowthSpare IT Solutions data protection parameters, compliance protocols, and strict user security rules.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Standard Compliance Document Layout -->
+<section class="min-h-screen pt-32 pb-24 relative grid-bg px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dynamic background vector glow elements -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-900/10 dark:border-white/5 space-y-8">
+            
+            <!-- Document Header -->
+            <div class="border-b border-slate-900/10 dark:border-white/5 pb-6">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Legal & Compliance</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold font-poppins text-slate-900 dark:text-white mt-2">Privacy Protocol & Data Protection</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-2">Last Updated: July 2026</p>
+            </div>
+
+            <!-- Legible prose copy -->
+            <div class="prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-6 leading-relaxed font-medium">
+                <p>
+                    At <span class="font-bold text-slate-900 dark:text-white">GrowthSpare IT Solutions</span>, operational integrity and data protection are fundamental pillars of our engineering methodologies. This Privacy Protocol outlines the specific parameters and measures we execute to govern, compile, securely process, and safeguard the information you provide across our platform workspaces.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">1. Information We Compile</h3>
+                <p>
+                    To configure your enterprise pipelines and scheduling slots, we collect distinct parameter types:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><span class="font-bold text-slate-900 dark:text-white">Profile Coordinates:</span> Name, corporate email address, direct contact phone numbers, company context parameters, and geographic locations collected during registration or update actions.</li>
+                    <li><span class="font-bold text-slate-900 dark:text-white">Project Scope Parameters:</span> Project criteria statements, budget metrics, and preferred scheduling windows provided during multi-step consultation bookings.</li>
+                    <li><span class="font-bold text-slate-900 dark:text-white">System Logs:</span> Direct server parameters, IP addresses, cookie values, and on-page navigation patterns collected automatically to optimize Core Web Vitals performance.</li>
+                </ul>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">2. Processing Methodologies</h3>
+                <p>
+                    Your information is strictly processed in service of executing direct platform agreements and communications:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>To authenticate and maintain secure logins to your custom client and developer dashboards.</li>
+                    <li>To transmit signed confirmation handshakes and recover password credentials.</li>
+                    <li>To dispatch calendar meeting coordinates (Zoom/Google Meet URLs) for project scoping.</li>
+                    <li>To process async subscriptions to corporate publication channels and technical insights.</li>
+                </ul>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">3. Hardened Security Safeguards</h3>
+                <p>
+                    GrowthSpare IT Solutions enforces strict architectural and procedural security measures. This includes standard SSL/TLS transmission channels, secure Cookie directives, CSRF validations, SQL parameterizations, and Gunicorn-level sandboxing configurations.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">4. Compliance & Contact</h3>
+                <p>
+                    For questions regarding this protocol, data deletions requests, or GDPR/compliance audits, contact our compliance desk:
+                </p>
+                <div class="bg-slate-900/10 dark:bg-black/20 p-6 rounded-2xl border border-slate-900/15 dark:border-white/5 space-y-2">
+                    <p class="font-bold text-slate-900 dark:text-white">{{ COMPANY_NAME }}</p>
+                    <p><span class="font-semibold">Compliance Email:</span> {{ OFFICIAL_EMAIL }}</p>
+                    <p><span class="font-semibold">Delhi Offices:</span> {{ OFFICIAL_LOCATION }}</p>
+                    <p><span class="font-semibold">Phone Coordination:</span> {{ OFFICIAL_PHONE }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

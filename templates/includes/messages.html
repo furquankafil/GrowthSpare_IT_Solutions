@@ -1,0 +1,53 @@
+<!-- Reusable High-Performance System Toast/Messages Notification Include -->
+{% if messages %}
+<div class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-lg px-4 space-y-2 pointer-events-none" id="modular-messages-container">
+    {% for message in messages %}
+        <div class="pointer-events-auto flex items-center justify-between p-4 rounded-xl border glassmorphism transition-all duration-500 transform translate-y-0 opacity-100 shadow-xl {% if message.tags == 'success' %}border-success/30 text-success bg-success/5{% elif message.tags == 'error' %}border-red-500/30 text-red-500 bg-red-500/5{% else %}border-primary/30 text-primary bg-primary/5{% endif %}" role="alert">
+            <div class="flex items-center space-x-3">
+                {% if message.tags == 'success' %}
+                    <i class="fas fa-circle-check text-lg"></i>
+                {% elif message.tags == 'error' %}
+                    <i class="fas fa-triangle-exclamation text-lg"></i>
+                {% else %}
+                    <i class="fas fa-circle-info text-lg"></i>
+                {% endif %}
+                <span class="text-xs sm:text-sm font-medium font-poppins">{{ message }}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-100 ml-4 focus:outline-none transition-colors">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    // Performs safe self-dismissal of messages toasts over a timed interval sequence
+    (function () {
+        const dismissMessages = () => {
+            const container = document.getElementById('modular-messages-container');
+            if (!container) return;
+
+            const toasts = container.querySelectorAll('div[role="alert"]');
+            toasts.forEach(toast => {
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        toast.remove();
+                        // Delete parent element if empty of siblings
+                        if (container.querySelectorAll('div[role="alert"]').length === 0) {
+                            container.remove();
+                        }
+                    }, 500);
+                }, 5000);
+            });
+        };
+
+        if (document.readyState === 'complete') {
+            dismissMessages();
+        } else {
+            window.addEventListener('load', dismissMessages);
+        }
+    })();
+</script>
+{% endif %}

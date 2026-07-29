@@ -1,0 +1,37 @@
+<!-- Accessibility-compliant Schema.org Breadcrumb Navigation Component -->
+<nav aria-label="Breadcrumb" class="py-4 relative z-10">
+    <ol class="flex flex-wrap items-center space-x-2 text-[11px] font-bold font-poppins tracking-wider uppercase text-slate-400 dark:text-slate-500" 
+        itemscope itemtype="https://schema.org/BreadcrumbList">
+        
+        <!-- Standard anchor node pointing back to root home -->
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+            <a itemprop="item" href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">
+                <span itemprop="name"><i class="fas fa-house text-[10px] mr-1"></i>Home</span>
+            </a>
+            <meta itemprop="position" content="1" />
+        </li>
+
+        {% if breadcrumbs %}
+            {% for crumb in breadcrumbs %}
+                <li class="flex items-center space-x-2">
+                    <!-- Standard separator node -->
+                    <span class="text-[9px] text-slate-400 dark:text-slate-600"><i class="fas fa-chevron-right"></i></span>
+                    
+                    <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+                        {% if not forloop.last %}
+                            <a itemprop="item" href="{{ crumb.url }}" class="hover:text-primary dark:hover:text-accent transition-colors">
+                                <span itemprop="name">{{ crumb.name }}</span>
+                            </a>
+                        {% else %}
+                            <!-- Final/Active Node: unlinked for strict accessibility metrics -->
+                            <span itemprop="name" class="text-slate-900 dark:text-white" aria-current="page">{{ crumb.name }}</span>
+                        {% endif %}
+                        <!-- Dynamic schema index count tracking (starting at offset index 2) -->
+                        <meta itemprop="position" content="{{ forloop.counter|add:1 }}" />
+                    </div>
+                </li>
+            {% endfor %}
+        {% endif %}
+
+    </ol>
+</nav>

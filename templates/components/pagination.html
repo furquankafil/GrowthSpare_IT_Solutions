@@ -1,0 +1,55 @@
+<!-- Reusable Query-Preserving Pagination Navigation Component -->
+{% if is_paginated %}
+<nav aria-label="Pagination Navigation" class="flex items-center justify-center space-x-2 pt-8 border-t border-slate-900/10 dark:border-white/5 relative z-10" data-aos="fade-up">
+    
+    <!-- Previous Page Controller -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+           class="px-4 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all inline-flex items-center" 
+           aria-label="Go to previous page">
+            <i class="fas fa-chevron-left mr-2"></i>Previous
+        </a>
+    {% else %}
+        <span class="px-4 py-2.5 rounded-xl border border-slate-900/5 dark:border-white/5 text-xs font-bold font-poppins text-slate-300 dark:text-slate-700 cursor-not-allowed inline-flex items-center" aria-disabled="true">
+            <i class="fas fa-chevron-left mr-2"></i>Previous
+        </span>
+    {% endif %}
+
+    <!-- Paginated Page Number Bullets/Indexes -->
+    <div class="hidden sm:flex items-center space-x-1">
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <!-- Active Page State -->
+                <span class="px-3.5 py-2.5 rounded-xl bg-primary text-white text-xs font-bold font-poppins shadow-md" aria-current="page">
+                    {{ num }}
+                </span>
+            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                <!-- Page Range Buffer state -->
+                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+                   class="px-3.5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                    {{ num }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Active Indicator for Mobile views -->
+    <span class="sm:hidden text-xs font-bold text-slate-500 font-poppins px-2">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+
+    <!-- Next Page Controller -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+           class="px-4 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all inline-flex items-center" 
+           aria-label="Go to next page">
+            Next<i class="fas fa-chevron-right ml-2"></i>
+        </a>
+    {% else %}
+        <span class="px-4 py-2.5 rounded-xl border border-slate-900/5 dark:border-white/5 text-xs font-bold font-poppins text-slate-300 dark:text-slate-700 cursor-not-allowed inline-flex items-center" aria-disabled="true">
+            Next<i class="fas fa-chevron-right ml-2"></i>
+        </span>
+    {% endif %}
+
+</nav>
+{% endif %}

@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+<!-- ==============================================================================
+     GrowthSpare IT Solutions - Hardened Django Admin Panel Branding Template
+     Replaces default Django administration tags with your official corporate logo.
+     ============================================================================== -->
+
+{% block title %}{{ title }} | GrowthSpare IT Solutions Console{% endblock %}
+
+{% block branding %}
+<div style="display: flex; align-items: center; padding: 10px 0;">
+    <a href="{% url 'admin:index' %}" style="display: flex; align-items: center; text-decoration: none;">
+        <!-- Loads your official company logo directly inside the administrative dashboard -->
+        <img src="{% static 'images/logo.png' %}" 
+             alt="GrowthSpare IT Solutions" 
+             style="height: 36px; width: auto; vertical-align: middle; margin-right: 12px; filter: brightness(0) invert(1);">
+        <span style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; color: #f1f5f9; letter-spacing: -0.025em; text-transform: uppercase;">
+            Admin Console
+        </span>
+    </a>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+<!-- Optional admin global navigation links if required, keeping it clean and minimal -->
+{% endblock %}

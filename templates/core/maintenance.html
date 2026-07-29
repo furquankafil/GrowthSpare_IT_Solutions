@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Scheduled System Maintenance - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Our platform systems are currently undergoing scheduled database optimizations and security hardening. We will restore full operations shortly.">
+    <meta name="robots" content="noindex, follow">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Maintenance Landing Section -->
+<section class="min-h-screen relative flex items-center justify-center pt-28 pb-16 overflow-hidden px-4">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Entry Container -->
+    <div class="relative w-full max-w-xl z-10" data-aos="zoom-in">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-8">
+            
+            <!-- Dynamic Vector rotating gear icon -->
+            <div class="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl">
+                <i class="fas fa-gears animate-spin" style="animation-duration: 6s;"></i>
+            </div>
+
+            <!-- Branding Header -->
+            <div class="space-y-3">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest block font-poppins">System Operations</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">
+                    Scheduled Maintenance Underway
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-md mx-auto">
+                    We are currently executing scheduled database migrations, caching optimizations, and network security updates on our Gunicorn containers. We apologize for this brief interruption.
+                </p>
+            </div>
+
+            <!-- Operational Status Details Card -->
+            <div class="text-xs text-slate-600 dark:text-slate-400 font-medium space-y-3 bg-slate-900/5 dark:bg-black/20 p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-left leading-relaxed max-w-md mx-auto">
+                <p class="font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider text-[10px] border-b border-slate-900/10 dark:border-white/5 pb-2">Operational Scope</p>
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-success"></span>
+                    <p><span class="font-bold text-slate-900 dark:text-white">Active Database Backups:</span> Completed safely [SQLite / Postgres]</p>
+                </div>
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+                    <p><span class="font-bold text-slate-900 dark:text-white">Network Socket Hardening:</span> Port 8080/80 proxy validation</p>
+                </div>
+            </div>
+
+            <!-- Direct Support Communication channels -->
+            <div class="space-y-3">
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium font-poppins">Need immediate assistance with active development projects?</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="mailto:{{ OFFICIAL_EMAIL }}" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold font-poppins hover:bg-slate-500/5 transition-all">
+                        Email support desk
+                    </a>
+                    <a href="https://wa.me/{{ OFFICIAL_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-success text-white text-xs font-bold font-poppins hover:opacity-90 transition-all inline-flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Direct WhatsApp Channel</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

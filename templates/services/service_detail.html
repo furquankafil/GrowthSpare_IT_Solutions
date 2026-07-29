@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>{{ service.title }} Services - GrowthSpare IT Solutions</title>
+    <meta name="description" content="{{ service.meta_description|default:service.overview|truncatewords:25 }}">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. SOLUTIONS DETAIL HEADER (With dynamic icons and overview)
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Increased max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+            <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">
+                {% for category in service.categories.all %}
+                    {{ category.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            {{ service.title }}
+        </h1>
+        
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
+            {{ service.overview }}
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. SPLIT LAYOUT VIEWS (Detailed specs vs conversion sidebar)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <!-- Increased max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left Pane: Technical copy, process steps, tools, FAQs -->
+        <div class="lg:col-span-8 space-y-12" data-aos="fade-right">
+            
+            <!-- Description narrative -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Overview & Capabilities</h3>
+                <div class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-medium space-y-4">
+                    {{ service.detailed_description|safe }}
+                </div>
+            </div>
+
+            <!-- Workflow / Process Steps timeline -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-8">
+                <div>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Our Project Workflow</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Our step-by-step engineering and integration methodology</p>
+                </div>
+                
+                <div class="relative pl-6 border-l border-slate-900/10 dark:border-white/10 space-y-8">
+                    {% for step in service.get_process_list %}
+                        <div class="relative space-y-1">
+                            <!-- Bullet identifier step count -->
+                            <span class="absolute -left-[37px] top-0 w-[22px] h-[22px] rounded-full bg-primary text-white text-[10px] font-extrabold flex items-center justify-center font-poppins">
+                                {{ forloop.counter }}
+                            </span>
+                            <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins">Stage {{ forloop.counter }}</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                                {{ step }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Technology Stack Pills -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Technologies Deployed</h3>
+                <div class="flex flex-wrap gap-2.5">
+                    {% for tech in service.get_tech_list %}
+                        <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold tracking-wide uppercase bg-slate-900/10 dark:bg-black/20 text-slate-600 dark:text-slate-300">
+                            {{ tech }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Use Cases: real-world scenarios this service applies to -->
+            {% if service.get_use_cases_list %}
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Where This Service Fits</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Real-world use cases we regularly deliver on</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {% for use_case in service.get_use_cases_list %}
+                        <div class="flex items-start space-x-2.5 bg-slate-500/5 rounded-xl p-3.5">
+                            <i class="fas fa-bullseye text-primary dark:text-accent mt-0.5 shrink-0 text-xs"></i>
+                            <span class="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">{{ use_case }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Why Choose Us for this specific service -->
+            {% if service.get_why_choose_list %}
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Why Choose GrowthSpare for This</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">What sets our delivery apart on this specific service</p>
+                </div>
+                <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300 font-medium">
+                    {% for reason in service.get_why_choose_list %}
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fas fa-star text-primary dark:text-accent mt-0.5 shrink-0"></i>
+                            <span>{{ reason }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Dynamic Service-level FAQs accordions -->
+            {% if service.service_faqs.all %}
+                <div class="space-y-6">
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Service Specific FAQs</h3>
+                    
+                    <div class="space-y-4">
+                        {% for faq in service.service_faqs.all %}
+                            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300">
+                                <button class="w-full p-5 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-sm sm:text-base focus:outline-none" 
+                                        onclick="toggleServiceFaq(this)">
+                                    <span>{{ faq.question }}</span>
+                                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                                </button>
+                                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                                    <p class="p-5 pt-0 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                                        {{ faq.answer }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Right Pane: Conversion Sidebar Card (Sticky support) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6" data-aos="fade-left">
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent"></div>
+                
+                <!-- Pricing context -->
+                <div class="space-y-1.5 text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Billing parameters</span>
+                    <div class="text-2xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ service.pricing_estimate }}</div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Custom Retainer Plans Available</p>
+                </div>
+
+                <!-- Features checklists -->
+                <div class="space-y-4 border-t border-slate-900/10 dark:border-white/5 pt-6">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Key Capabilities Included</span>
+                    <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300 font-medium">
+                        {% for feature in service.get_features_list %}
+                            <li class="flex items-start space-x-2.5">
+                                <i class="fas fa-circle-check text-success mt-0.5 shrink-0"></i>
+                                <span>{{ feature }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Benefits checklists -->
+                <div class="space-y-4 border-t border-slate-900/10 dark:border-white/5 pt-6">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Commercial Outcomes</span>
+                    <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300 font-medium">
+                        {% for benefit in service.get_benefits_list %}
+                            <li class="flex items-start space-x-2.5">
+                                <i class="fas fa-circle-check text-primary dark:text-accent mt-0.5 shrink-0"></i>
+                                <span>{{ benefit }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Conversion action triggers -->
+                <div class="space-y-3 pt-6 border-t border-slate-900/10 dark:border-white/5">
+                    <a href="{% url 'consultation:book' %}" 
+                       class="block w-full text-center py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-md shadow-primary/10 transition-all hover:scale-[1.01]">
+                        Schedule Scoping Session
+                    </a>
+                    <a href="{% url 'contact:contact' %}?service={{ service.title|urlencode }}" 
+                       class="block w-full text-center py-3.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold font-poppins uppercase tracking-wider hover:bg-slate-500/5 transition-all">
+                        Inquire Directly
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==============================================================================
+     3. SERVICE-SPECIFIC CALL-TO-ACTION BANNER
+     ============================================================================== -->
+<section class="py-24 bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8">
+    <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-poppins">
+            {{ service.cta_headline|default:"Ready to get started on this service?" }}
+        </h2>
+        <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
+            {{ service.cta_subtext|default:"Book a scoping session and we'll map out the fastest path to results." }}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20">
+                Book Scoping Consultation
+            </a>
+            <a href="{% url 'contact:contact' %}?service={{ service.title|urlencode }}" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-white/10 text-white font-bold text-xs tracking-wider uppercase hover:bg-white/5 transition-all">
+                Inquire About {{ service.title }}
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     4. RELATED SERVICES SECTION
+     ============================================================================== -->
+{% if related_services %}
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
+    <!-- Increased container max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 space-y-12">
+        <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4 text-center">Related Services</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for related in related_services %}
+                <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                    <div class="space-y-4">
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent"><i class="{{ related.icon_class }}"></i></div>
+                        <h4 class="text-sm font-bold font-poppins text-slate-900 dark:text-white leading-snug">{{ related.title }}</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">{{ related.overview }}</p>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-900/10 dark:border-white/5 mt-4 pt-4 flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins">{{ related.pricing_estimate }}</span>
+                        <a href="{{ related.get_absolute_url }}" class="text-xs font-bold text-primary dark:text-accent hover:underline inline-flex items-center space-x-2">
+                            <span>Learn More</span> <i class="fas fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Plain JS to control Service detail accordions toggling -->
+<script>
+    function toggleServiceFaq(button) {
+        const icon = button.querySelector('i');
+        const content = button.nextElementSibling;
+        
+        button.parentElement.classList.toggle('border-primary/20');
+        button.parentElement.classList.toggle('bg-slate-500/5');
+
+        if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            content.style.maxHeight = '0px';
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
+</script>
+{% endblock content %}

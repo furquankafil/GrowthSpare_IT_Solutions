@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Scoping Booking Success - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Your corporate tech scoping consult booking has been successfully logged inside the GrowthSpare operational database pipeline.">
+    <meta name="robots" content="noindex, follow">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Success Confirmation Gateway Section -->
+<section class="min-h-screen relative flex items-center justify-center pt-28 pb-16 overflow-hidden px-4">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Entry Container -->
+    <div class="relative w-full max-w-lg z-10" data-aos="zoom-in">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-6">
+            
+            <!-- Dynamic Vector schedule calendar success icon -->
+            <div class="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center text-success text-2xl animate-pulse">
+                <i class="far fa-calendar-check"></i>
+            </div>
+
+            <!-- Branding Header -->
+            <div class="space-y-2">
+                <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Scoping Session Requested</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Your technical discovery data has been securely logged and processed into our scheduling pipeline. Our Delhi-based coordination offices will review your metrics shortly.
+                </p>
+            </div>
+
+            <!-- Operational Next Steps Card -->
+            <div class="text-xs text-slate-600 dark:text-slate-400 font-medium space-y-3 bg-slate-900/5 dark:bg-black/20 p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-left leading-relaxed">
+                <p class="font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider text-[10px] border-b border-slate-900/10 dark:border-white/5 pb-2">What Happens Next?</p>
+                <div class="flex items-start space-x-2.5">
+                    <span class="w-4 h-4 rounded bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold shrink-0">1</span>
+                    <p>An automated coordination request has been dispatched to Mohammad Furqan Kafil's direct desk for time-slot mapping.</p>
+                </div>
+                <div class="flex items-start space-x-2.5">
+                    <span class="w-4 h-4 rounded bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold shrink-0">2</span>
+                    <p>Our solutions desk will confirm your scheduled time-slot and send video-call coordinates (Zoom / Google Meet URL) directly via your corporate email.</p>
+                </div>
+            </div>
+
+            <!-- Action controls -->
+            <div class="space-y-3">
+                <a href="{% url 'dashboard:index' %}" 
+                   class="block w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                    Go to Workspace Dashboard
+                </a>
+                <a href="https://wa.me/919811579273" target="_blank" rel="noopener noreferrer" 
+                   class="block w-full py-3 rounded-xl border border-success/30 text-success text-xs font-bold font-poppins uppercase tracking-wider hover:bg-success/5 transition-all inline-flex items-center justify-center space-x-2">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Connect Live on WhatsApp</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

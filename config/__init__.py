@@ -1,0 +1,1 @@
+"""GrowthSpare IT Solutions Django configuration package."""

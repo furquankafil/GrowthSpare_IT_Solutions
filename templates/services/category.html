@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>{{ category_name }} Solutions - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Explore our high-performance suite of {{ category_name }} services, engineered to help modern businesses automate workflows and scale faster.">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. SOLUTIONS CATEGORY HEADER
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+            <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Solutions Category</span>
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            {{ category_name }}
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
+            Discover tailored business-first services and software frameworks designed specifically to streamline your {{ category_name }} requirements.
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     1B. CATEGORY FILTER TABS (real ServiceCategory-backed navigation)
+     ============================================================================== -->
+<section class="py-8 border-b border-slate-900/10 dark:border-white/5 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-3">
+        <a href="{% url 'services:list' %}" class="px-4 py-2 rounded-xl text-xs font-bold font-poppins transition-all border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/10">
+            All Services
+        </a>
+        {% for cat in categories %}
+        <a href="{% url 'services:category' category_slug=cat.slug %}" class="px-4 py-2 rounded-xl text-xs font-bold font-poppins transition-all {% if cat.slug == category.slug %}bg-primary text-white shadow-md{% else %}border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/10{% endif %}">
+            {{ cat.name }}
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. CATEGORIZED SOLUTIONS GRID
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <div class="max-w-7xl mx-auto px-6 space-y-16">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+                <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                    <div class="space-y-5">
+                        
+                        <!-- Top details: icon & indicator -->
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-lg">
+                                <i class="{{ service.icon_class }}"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-poppins">
+                                {{ service.pricing_estimate }}
+                            </span>
+                        </div>
+
+                        <!-- Solution Info -->
+                        <div class="space-y-2">
+                            <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">{{ service.title }}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-4">
+                                {{ service.overview }}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- CTA Detail redirect anchor -->
+                    <div class="pt-8 mt-8 border-t border-slate-900/10 dark:border-white/5 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-poppins">Starting Rate</span>
+                        <a href="{{ service.get_absolute_url }}" class="px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold font-poppins hover:bg-accent hover:scale-[1.02] transition-all inline-flex items-center space-x-2 shadow-md">
+                            <span>Details & Process</span>
+                            <i class="fas fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-24 glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 text-slate-500">
+                    <i class="fas fa-cubes text-3xl mb-4 block"></i>
+                    <p class="font-bold text-slate-900 dark:text-white">Active Solutions Coming Soon</p>
+                    <p class="text-xs text-slate-400 mt-1">Our engineering office is preparing technical details for this category.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Back to main services directory -->
+        <div class="text-center pt-8 border-t border-slate-900/10 dark:border-white/5 relative z-10">
+            <a href="{% url 'services:list' %}" class="px-6 py-3.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all inline-flex items-center space-x-2">
+                <i class="fas fa-chevron-left text-[10px]"></i>
+                <span>Return to Solutions Catalog</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Frequently Asked Questions & Support - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Find answers to common questions about our AI workflows, CRM software developments, custom Django applications, and organic SEO.">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. KNOWLEDGE BASE HEADER
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Increased container max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Inquiries Desk</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            General FAQs & Support
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
+            Find immediate answers regarding project scoping milestones, billing retainers, developer communications, and data-protection protocols.
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. DYNAMIC TABBED CATEGORIES SELECTION BAR
+     ============================================================================== -->
+<section class="py-6 border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10 backdrop-blur-md">
+    <!-- Increased container max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 flex flex-wrap gap-2 justify-center items-center" id="faq-categories-bar">
+        <!-- Interactive trigger button showing all categories -->
+        <button data-target="all" 
+                class="faq-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 bg-primary text-white shadow-md">
+            All Questions
+        </button>
+        
+        <!-- Category-specific trigger buttons -->
+        {% for category in categories %}
+            <button data-target="{{ category.slug }}" 
+                    class="faq-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/5">
+                {{ category.name }}
+            </button>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ==============================================================================
+     3. INTERACTIVE ACCORDIONS FEED SECTION
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <div class="max-w-4xl mx-auto px-6 space-y-8" id="faq-accordions-container">
+        
+        {% for category in categories %}
+            <!-- Loop over pre-fetched category faqs wrapping inside category-bound sections -->
+            {% for faq in category.active_faqs %}
+                <div class="faq-item-card glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300 transform translate-y-0 opacity-100 block" 
+                     data-category="{{ category.slug }}" data-aos="fade-up">
+                    
+                    <!-- Accordion Trigger Button Header -->
+                    <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-base focus:outline-none" 
+                            onclick="toggleGlobalFaq(this)">
+                        <span>{{ faq.question }}</span>
+                        <!-- Visual chevron arrow transition anchor -->
+                        <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                    </button>
+                    
+                    <!-- Collapsible Answer Panel -->
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
+                        <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                            {{ faq.answer }}
+                        </p>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% empty %}
+            <div class="text-center py-24 glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 text-slate-500">
+                <i class="fas fa-clipboard-question text-3xl mb-4 block"></i>
+                <p class="font-bold text-slate-900 dark:text-white">FAQ Platform Initializing</p>
+                <p class="text-xs text-slate-400 mt-1">Our support desk is preparing knowledge base matrices.</p>
+            </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+<!-- ==============================================================================
+     4. CALL TO ACTION SECTION
+     ============================================================================== -->
+<section class="py-24 bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8">
+    <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-poppins">Still have unresolved questions?</h2>
+        <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
+            Reach out directly. Our Delhi offices and support coordination teams are available 24/7 to resolve technical concerns and billing parameters.
+        </p>
+        <a href="{% url 'contact:contact' %}" class="px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 inline-block font-poppins">
+            Contact Support Desk
+        </a>
+    </div>
+</section>
+{% endblock content %}
+
+{% block extra_js %}
+<!-- Pure JavaScript logic controlling tab filtering and accordion toggle states instantly -->
+<script>
+    // Handles collapsible FAQ accordion expansion animations
+    function toggleGlobalFaq(button) {
+        const icon = button.querySelector('i');
+        const content = button.nextElementSibling;
+        
+        button.parentElement.classList.toggle('border-primary/20');
+        button.parentElement.classList.toggle('bg-slate-500/5');
+
+        if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            content.style.maxHeight = '0px';
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
+
+    // Handles instant dynamic front-end category tabbed filtering
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabBtns = document.querySelectorAll(".faq-tab-btn");
+        const faqCards = document.querySelectorAll(".faq-item-card");
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetCategory = btn.getAttribute("data-target");
+
+                // Reset all button styles to unchecked state
+                tabBtns.forEach(b => {
+                    b.className = "faq-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/5";
+                });
+
+                // Apply active styles to clicked tab
+                btn.className = "faq-tab-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 bg-primary text-white shadow-md";
+
+                // Filter FAQ cards based on target categories datasets
+                faqCards.forEach(card => {
+                    // Collapse any active/expanded pane states when filtering changes
+                    const content = card.querySelector("div");
+                    const icon = card.querySelector("i");
+                    content.style.maxHeight = "0px";
+                    icon.style.transform = "rotate(0deg)";
+                    card.classList.remove('border-primary/20', 'bg-slate-500/5');
+
+                    const cardCategory = card.getAttribute("data-category");
+                    if (targetCategory === "all" || cardCategory === targetCategory) {
+                        card.style.display = "block";
+                        card.classList.add("animate-fadeIn");
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock extra_js %}

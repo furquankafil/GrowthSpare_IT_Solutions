@@ -1,0 +1,123 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Workspace Profile - GrowthSpare IT Solutions{% endblock title %}
+
+{% block dashboard_content %}
+<div class="space-y-8 animate-fadeIn">
+
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-extrabold font-poppins text-slate-900 dark:text-white">Workspace Profile Parameters</h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Manage your corporate credentials, personal designations, and communication preferences.</p>
+        </div>
+        <a href="{% url 'accounts:profile_update' %}" class="px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-bold font-poppins hover:bg-accent transition-all shadow-md shadow-primary/10">
+            <i class="fas fa-user-pen mr-2"></i>Edit Parameters
+        </a>
+    </div>
+
+    <!-- Active Verification Warning banner if user email is unverified -->
+    {% if not request.user.is_email_verified %}
+        <div class="flex flex-col sm:flex-row items-center justify-between p-5 rounded-2xl border border-yellow-500/20 bg-yellow-500/5 text-yellow-600 dark:text-yellow-400 shadow-xl backdrop-blur-md">
+            <div class="flex items-center space-x-4 text-center sm:text-left mb-4 sm:mb-0">
+                <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-xl shrink-0">
+                    <i class="fas fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <h4 class="font-poppins font-bold text-sm">Action Required: Verify Email Address</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Please confirm your email address to unlock unrestricted access to workspace pipelines.</p>
+                </div>
+            </div>
+            <a href="{% url 'accounts:verify_email_trigger' %}" class="px-5 py-2.5 rounded-xl bg-yellow-500 text-slate-900 text-xs font-bold font-poppins hover:bg-yellow-400 transition-all shadow-md">
+                Resend Handshake Link
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Workspace Details Grid (Scaled to 1400px container parameters) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-[1400px] mx-auto w-full">
+        
+        <!-- Left: Identity summary Card -->
+        <div class="lg:col-span-4 space-y-6">
+            <div class="glassmorphism p-6 rounded-3xl text-center border border-slate-900/10 dark:border-white/5 relative overflow-hidden shadow-sm">
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent"></div>
+                
+                <!-- Avatar Frame -->
+                <div class="relative w-24 h-24 mx-auto mt-4 mb-4 rounded-full overflow-hidden border-2 border-primary/20 p-1 bg-slate-100 dark:bg-slate-950 flex items-center justify-center text-primary text-3xl font-extrabold uppercase font-poppins">
+                    {% if request.user.profile.avatar %}
+                        <img src="{{ request.user.profile.avatar.url }}" alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover rounded-full">
+                    {% else %}
+                        {{ request.user.first_name|first|default:request.user.username|first }}
+                    {% endif %}
+                </div>
+
+                <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white truncate">
+                    {{ request.user.get_full_name|default:request.user.username }}
+                </h3>
+                
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary/10 text-primary dark:text-accent font-poppins mt-1">
+                    {{ request.user.get_role_display }}
+                </span>
+
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-4 px-2 italic">
+                    "{{ request.user.profile.bio|default:'Corporate client profile established.' }}"
+                </p>
+
+                <!-- Social coordinates summary -->
+                <div class="pt-6 mt-6 border-t border-slate-900/10 dark:border-white/5 flex justify-center space-x-4">
+                    {% if request.user.profile.linkedin_profile %}
+                        <a href="{{ request.user.profile.linkedin_profile }}" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin text-lg"></i>
+                        </a>
+                    {% endif %}
+                    {% if request.user.profile.website %}
+                        <a href="{{ request.user.profile.website }}" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-accent transition-colors">
+                            <i class="fas fa-globe text-lg"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Profile Parameters Overview table -->
+        <div class="lg:col-span-8 space-y-6">
+            <div class="glassmorphism p-6 sm:p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-6 shadow-sm">
+                <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-widest font-poppins">Detailed Account Specifications</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 border-t border-slate-900/10 dark:border-white/5 pt-6">
+                    <div class="space-y-1">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Company Context</span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">{{ request.user.company_name|default:"Not Configured" }}</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Corporate Email Address</span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">{{ request.user.email }}</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Primary contact Phone</span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">{{ request.user.phone_number|default:"Not Configured" }}</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Workspace Status</span>
+                        <span class="inline-flex items-center space-x-1.5 text-xs font-semibold {% if request.user.is_active %}text-success{% else %}text-red-500{% endif %}">
+                            <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+                            <span>{% if request.user.is_active %}Active & Verified{% else %}Suspended{% endif %}</span>
+                        </span>
+                    </div>
+                    <div class="space-y-1 sm:col-span-2">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Workspace Geographic Address</span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">
+                            {% if request.user.profile.address %}{{ request.user.profile.address }}, {% endif %}
+                            {% if request.user.profile.city %}{{ request.user.profile.city }}, {% endif %}
+                            {{ request.user.profile.country|default:'India' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock dashboard_content %}

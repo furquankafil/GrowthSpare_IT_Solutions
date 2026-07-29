@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>{{ project.title }} - Client Case Study - GrowthSpare IT Solutions</title>
+    <meta name="description" content="{{ project.meta_description|default:project.problem_statement|truncatewords:25 }}">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. CASE STUDY HERO HEADER (Overview Metadata indicators)
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Increased container max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+            <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Case Study Showcase</span>
+        </div>
+        
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            {{ project.title }}
+        </h1>
+        
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest font-poppins">
+            Client Profile: {{ project.client_name }} — Industry Sector: {{ project.industry }}
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. PERFORMANCE METRIC STATS OVERVIEW BAR
+     ============================================================================== -->
+<section class="py-12 border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10 backdrop-blur-md">
+    <div class="max-w-[1400px] mx-auto px-6 text-center">
+        <div class="inline-flex flex-col items-center space-y-3">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins block">Verified Outcome Metric</span>
+            <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-success font-poppins uppercase tracking-wide leading-none">
+                <i class="fas fa-chart-line mr-2"></i>{{ project.results_statement }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     3. SPLIT BODY GRID LAYOUT (Narratives vs specs sidebar)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <!-- Increased container max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left Pane: Problem, Solution, Results details narratives & media galleries -->
+        <div class="lg:col-span-8 space-y-12" data-aos="fade-right">
+            
+            <!-- Problem statement block -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div class="flex items-center space-x-3 text-red-500">
+                    <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center"><i class="fas fa-triangle-exclamation"></i></div>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">1. The Strategic Bottleneck</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                    {{ project.problem_statement }}
+                </p>
+            </div>
+
+            <!-- Solution statement block -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div class="flex items-center space-x-3 text-primary dark:text-accent">
+                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary dark:text-accent"><i class="fas fa-screwdriver-wrench"></i></div>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">2. Our Engineering Action</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                    {{ project.solution_statement }}
+                </p>
+            </div>
+
+            <!-- Outcome results statement block -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div class="flex items-center space-x-3 text-success">
+                    <div class="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center text-success"><i class="fas fa-circle-check"></i></div>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">3. Commercial Growth Outcomes</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                    {{ project.results_statement }}
+                </p>
+            </div>
+
+            <!-- Dynamic Multi-Image Gallery Slider -->
+            {% if project.gallery_images.all %}
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Interface Screen Captures</h3>
+                    
+                    <div class="swiper project-gallery-slider w-full rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-xl bg-slate-900">
+                        <div class="swiper-wrapper">
+                            {% for img in project.gallery_images.all %}
+                                <div class="swiper-slide relative aspect-video flex flex-col justify-end">
+                                    <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" class="absolute inset-0 w-full h-full object-cover">
+                                    {% if img.caption %}
+                                        <div class="relative z-10 bg-slate-950/80 p-4 border-t border-white/5 backdrop-blur-md text-xs text-white font-medium font-poppins">
+                                            {{ img.caption }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="swiper-pagination relative mt-4"></div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Embedded Dynamic Video Demo -->
+            {% if project.video_url %}
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Dynamic Action walkthrough</h3>
+                    
+                    <div class="aspect-video w-full rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-xl bg-slate-950 relative">
+                        <iframe class="w-full h-full" 
+                                src="{{ project.video_url }}" 
+                                title="GrowthSpare Code Execution Walkthrough" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Right Pane: Technical Specs box and consultation trigger -->
+        <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6" data-aos="fade-left">
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent"></div>
+                
+                <!-- Project Parameters metadata lists -->
+                <div class="space-y-4">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Development profile</span>
+                    
+                    <ul class="space-y-3.5 text-xs text-slate-600 dark:text-slate-300 font-medium">
+                        <li class="flex items-center justify-between py-1 border-b border-slate-900/10 dark:border-white/5">
+                            <span class="text-slate-400">Industry Sector</span>
+                            <span class="font-semibold text-slate-900 dark:text-white">{{ project.industry }}</span>
+                        </li>
+                        <li class="flex items-center justify-between py-1 border-b border-slate-900/10 dark:border-white/5">
+                            <span class="text-slate-400">Standard Duration</span>
+                            <span class="font-semibold text-slate-900 dark:text-white">{{ project.project_duration }}</span>
+                        </li>
+                        <li class="flex items-center justify-between py-1 border-b border-slate-900/10 dark:border-white/5">
+                            <span class="text-slate-400">Class Branch</span>
+                            <span class="font-semibold text-slate-900 dark:text-white">
+                                {% for category in project.categories.all %}
+                                    {{ category.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Technologies lists -->
+                <div class="space-y-4 border-t border-slate-900/10 dark:border-white/5 pt-6">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Technology Stack</span>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tech in project.get_tech_list %}
+                            <span class="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase bg-slate-900/10 dark:bg-black/20 text-slate-600 dark:text-slate-300 font-poppins font-semibold">
+                                {{ tech }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- CTA trigger elements -->
+                <div class="space-y-3 pt-6 border-t border-slate-900/10 dark:border-white/5">
+                    <a href="{% url 'consultation:book' %}" 
+                       class="block w-full text-center py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-md shadow-primary/10 transition-all hover:scale-[1.01]">
+                        Discuss Similar Project
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==============================================================================
+     4. RELATED CASE STUDIES LAYOUT
+     ============================================================================== -->
+{% if related_projects %}
+    <section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
+        <!-- Increased container max-width to 1400px -->
+        <div class="max-w-[1400px] mx-auto px-6 space-y-12">
+            <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4 text-center">Similar Technical Deployments</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {% for related in related_projects %}
+                    <div class="glassmorphism rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                        <div>
+                            <div class="relative aspect-video overflow-hidden bg-slate-900">
+                                {% if related.featured_image %}
+                                    <img src="{% if 'http' in related.featured_image.name %}{{ related.featured_image.name }}{% else %}{{ related.featured_image.url }}{% endif %}" alt="{{ related.title }}" class="w-full h-full object-cover opacity-80" loading="lazy">
+                                {% endif %}
+                                <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
+                                    {% for category in related.categories.all|slice:":1" %}
+                                        {{ category.name }}
+                                    {% endfor %}
+                                </span>
+                            </div>
+                            <div class="p-6 space-y-2">
+                                <h4 class="text-sm font-bold font-poppins text-slate-900 dark:text-white leading-snug truncate">{{ related.title }}</h4>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <a href="{{ related.get_absolute_url }}" class="text-xs font-bold text-primary dark:text-accent hover:underline inline-flex items-center space-x-2">
+                                <span>Read Case Study</span> <i class="fas fa-chevron-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Instantiate Swiper dynamic gallery configurations safely
+    new Swiper('.project-gallery-slider', {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        loop: true,
+        autoplay: {
+            delay: 4500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+</script>
+{% endblock extra_js %}

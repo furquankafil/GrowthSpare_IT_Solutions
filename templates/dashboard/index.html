@@ -1,0 +1,239 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Operations Overview - GrowthSpare Workspace{% endblock title %}
+
+{% block dashboard_content %}
+<div class="space-y-8 animate-fadeIn">
+
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-extrabold font-poppins text-slate-900 dark:text-white">Workspace Overview</h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Welcome back, {{ request.user.first_name|default:request.user.username }}. Review active pipeline tasks and broadcasts.</p>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span class="text-xs font-bold font-poppins text-slate-400">Current Role:</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary/10 text-primary dark:text-accent font-poppins">
+                {{ request.user.get_role_display }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Active Bulletins Announcements panel -->
+    {% if announcements %}
+        <div class="space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 font-poppins">System Broadcasts</h3>
+            <div class="grid grid-cols-1 gap-4">
+                {% for ann in announcements %}
+                    <div class="p-5 rounded-2xl border border-primary/20 bg-primary/5 flex items-start space-x-4 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1.5 h-full bg-primary"></div>
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary dark:text-accent text-sm shrink-0">
+                            <i class="fas fa-bullhorn animate-pulse"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-xs font-extrabold text-slate-900 dark:text-white font-poppins">{{ ann.title }}</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{{ ann.content }}</p>
+                            <span class="text-[9px] text-slate-400 font-poppins block pt-1">Dispatched on {{ ann.created_at|date:"M d, Y — h:i A" }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- ==============================================================================
+         ROLE-BASED WORKSPACE INTERFACE METRICS (Staff Dashboard View)
+         ============================================================================== -->
+    {% if is_staff_dashboard %}
+        <!-- Stats counter metrics grids -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Total Platform Users</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ total_accounts }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Registered identities pool</div>
+            </div>
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Total General Leads</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ total_leads }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Inbound inquiries captures</div>
+            </div>
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Pending Scoping Audits</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ pending_bookings }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Scheduled pipeline triage</div>
+            </div>
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Total Custom Bookings</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ total_bookings }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Scoping sessions records</div>
+            </div>
+        </div>
+
+        <!-- Recent activities listings lists -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <!-- General Leads Table -->
+            <div class="glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 p-6 space-y-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-widest font-poppins">Recent Inbound Leads</h3>
+                    <a href="/admin/contact/contactmessage/" target="_blank" class="text-[11px] font-bold text-primary dark:text-accent hover:underline">Manage All</a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs font-medium">
+                        <thead>
+                            <tr class="border-b border-slate-900/10 dark:border-white/5 text-slate-400 uppercase tracking-wider font-poppins">
+                                <th class="pb-3 pr-2">Stakeholder</th>
+                                <th class="pb-3 pr-2">Target Service</th>
+                                <th class="pb-3 pr-2">Budget Scope</th>
+                                <th class="pb-3 text-right">Logged At</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-900/10 dark:divide-white/5 text-slate-600 dark:text-slate-300">
+                            {% for lead in recent_leads %}
+                                <tr>
+                                    <td class="py-3.5 pr-2 font-bold text-slate-900 dark:text-white">{{ lead.name }}<span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium block">{{ lead.company }}</span></td>
+                                    <td class="py-3.5 pr-2">{{ lead.get_service_display }}</td>
+                                    <td class="py-3.5 pr-2"><span class="px-2 py-0.5 rounded bg-slate-900/10 dark:bg-black/20 text-[10px] font-bold uppercase">{{ lead.get_budget_display }}</span></td>
+                                    <td class="py-3.5 text-right text-slate-400">{{ lead.created_at|date:"M d" }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="py-8 text-center text-slate-400">No inbound leads recorded yet.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Consultation Bookings Table -->
+            <div class="glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 p-6 space-y-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-widest font-poppins">Recent Scoping Requests</h3>
+                    <a href="/admin/consultation/consultationbooking/" target="_blank" class="text-[11px] font-bold text-primary dark:text-accent hover:underline">Manage All</a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs font-medium">
+                        <thead>
+                            <tr class="border-b border-slate-900/10 dark:border-white/5 text-slate-400 uppercase tracking-wider font-poppins">
+                                <th class="pb-3 pr-2">Prospect</th>
+                                <th class="pb-3 pr-2">Branch Focus</th>
+                                <th class="pb-3 pr-2">Triage Status</th>
+                                <th class="pb-3 text-right">Logged At</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-900/10 dark:divide-white/5 text-slate-600 dark:text-slate-300">
+                            {% for booking in recent_bookings %}
+                                <tr>
+                                    <td class="py-3.5 pr-2 font-bold text-slate-900 dark:text-white">{{ booking.name }}<span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium block">{{ booking.company }}</span></td>
+                                    <td class="py-3.5 pr-2">{{ booking.get_services_required_display }}</td>
+                                    <td class="py-3.5 pr-2">
+                                        <span class="inline-flex items-center space-x-1.5 font-bold {% if booking.status == 'PENDING' %}text-yellow-500{% elif booking.status == 'SCHEDULED' %}text-primary dark:text-accent{% else %}text-success{% endif %}">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+                                            <span>{{ booking.get_status_display }}</span>
+                                        </span>
+                                    </td>
+                                    <td class="py-3.5 text-right text-slate-400">{{ booking.created_at|date:"M d" }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="py-8 text-center text-slate-400">No consultation bookings recorded yet.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    <!-- ==============================================================================
+         ROLE-BASED WORKSPACE INTERFACE METRICS (Client Dashboard View)
+         ============================================================================== -->
+    {% else %}
+        <!-- Stats counter metrics grids -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">My Bookings</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ total_bookings }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Total sessions created</div>
+            </div>
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Pending Scoping</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ pending_bookings }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Sessions in validation triage</div>
+            </div>
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-2 relative overflow-hidden shadow-sm">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Scheduled Audits</span>
+                <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-poppins">{{ scheduled_bookings }}</div>
+                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Confirmed direct sessions</div>
+            </div>
+        </div>
+
+        <!-- Client specific bookings queue panel -->
+        <div class="glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 p-6 sm:p-8 space-y-6 shadow-sm">
+            <div>
+                <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-widest font-poppins">My Project Scoping Sessions</h3>
+                <p class="text-xs text-slate-400 mt-1">Review active status, confirmed meeting coordinates, or dynamic video-conference links.</p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs font-medium">
+                    <thead>
+                        <tr class="border-b border-slate-900/10 dark:border-white/5 text-slate-400 uppercase tracking-wider font-poppins">
+                            <th class="pb-3 pr-2">Branch Focus</th>
+                            <th class="pb-3 pr-2">Allocated Budget</th>
+                            <th class="pb-3 pr-2">Triage Status</th>
+                            <th class="pb-3 pr-2">Confirmed Slot</th>
+                            <th class="pb-3 text-right">Meeting Coordinates</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-900/10 dark:divide-white/5 text-slate-600 dark:text-slate-300">
+                        {% for booking in my_bookings %}
+                            <tr>
+                                <td class="py-4 pr-2 font-bold text-slate-900 dark:text-white">{{ booking.get_services_required_display }}</td>
+                                <td class="py-4 pr-2"><span class="px-2 py-0.5 rounded bg-slate-900/10 dark:bg-black/20 text-[10px] font-bold uppercase">{{ booking.get_budget_display }}</span></td>
+                                <td class="py-4 pr-2">
+                                    <span class="inline-flex items-center space-x-1.5 font-bold {% if booking.status == 'PENDING' %}text-yellow-500{% elif booking.status == 'SCHEDULED' %}text-primary dark:text-accent{% else %}text-success{% endif %}">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+                                        <span>{{ booking.get_status_display }}</span>
+                                    </span>
+                                </td>
+                                <td class="py-4 pr-2 font-semibold text-slate-900 dark:text-white">
+                                    {% if booking.scheduled_time %}
+                                        {{ booking.scheduled_time|date:"M d, Y — h:i A" }}
+                                    {% else %}
+                                        <span class="text-slate-400 italic">Pending Slot Assignment</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 text-right">
+                                    {% if booking.meeting_link %}
+                                        <a href="{{ booking.meeting_link }}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-success text-white font-bold tracking-wide uppercase text-[10px] hover:scale-[1.02] transition-transform inline-flex items-center space-x-2 shadow-md">
+                                            <i class="fas fa-video"></i>
+                                            <span>Join Zoom Session</span>
+                                        </a>
+                                    {% else %}
+                                        <span class="text-slate-400 italic text-[10px]">Awaiting Link Activation</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="py-12 text-center text-slate-400">
+                                    <i class="far fa-calendar-check text-2xl mb-3 block"></i>
+                                    <p class="font-bold">No strategic consultation requests logged.</p>
+                                    <a href="{% url 'consultation:book' %}" class="text-primary dark:text-accent font-bold hover:underline mt-1 block">Book Your Scoping Audit Session Now</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock dashboard_content %}

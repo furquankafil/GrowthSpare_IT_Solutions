@@ -1,0 +1,57 @@
+# Google Cloud Build pipeline for GrowthSpare IT Solutions -> Cloud Run
+# Trigger: `gcloud builds submit --config deployment/gcloud/cloudbuild.yaml`
+# or connect this file as a Cloud Build trigger on push to main.
+#
+# Prerequisites (one-time, via gcloud CLI or Console):
+#   - Artifact Registry repo:  gcloud artifacts repositories create growthspare --repository-format=docker --location=asia-south1
+#   - Cloud SQL (PostgreSQL) instance + database
+#   - Memorystore (Redis) instance, or an external managed Redis
+#   - Secret Manager secrets: growthspare-secret-key, growthspare-db-url, growthspare-redis-url,
+#     growthspare-email-user, growthspare-email-password
+#   - Cloud Run service account granted "Secret Manager Secret Accessor"
+#
+# gunicorn.conf.py already binds to $PORT, which Cloud Run injects automatically —
+# no changes needed there. Cloud Run's default container startup check (TCP on
+# $PORT) is used here; /ping is available at deploy time if you later want to
+# configure an HTTP startup/liveness probe via a full service YAML spec
+# (`gcloud run services replace`), which the simple `gcloud run deploy` CLI
+# flags used below don't support directly.
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "asia-south1-docker.pkg.dev/$PROJECT_ID/growthspare/web:$COMMIT_SHA"
+      - "-t"
+      - "asia-south1-docker.pkg.dev/$PROJECT_ID/growthspare/web:latest"
+      - "."
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "push"
+      - "asia-south1-docker.pkg.dev/$PROJECT_ID/growthspare/web:$COMMIT_SHA"
+
+  - name: "gcr.io/google-cloud-sdk/slim"
+    entrypoint: "gcloud"
+    args:
+      - "run"
+      - "deploy"
+      - "growthspare-web"
+      - "--image=asia-south1-docker.pkg.dev/$PROJECT_ID/growthspare/web:$COMMIT_SHA"
+      - "--region=asia-south1"
+      - "--platform=managed"
+      - "--allow-unauthenticated"
+      - "--min-instances=1"
+      - "--max-instances=10"
+      - "--cpu=1"
+      - "--memory=512Mi"
+      - "--set-env-vars=DJANGO_SETTINGS_MODULE=config.settings.production,DEBUG=False,SECURE_SSL_REDIRECT=True,SESSION_COOKIE_SECURE=True,CSRF_COOKIE_SECURE=True,SECURE_HSTS_SECONDS=31536000,SECURE_HSTS_INCLUDE_SUBDOMAINS=True,SECURE_HSTS_PRELOAD=True,ALLOWED_HOSTS=growthspareitsolutions.com,www.growthspareitsolutions.com"
+      - "--set-secrets=SECRET_KEY=growthspare-secret-key:latest,DATABASE_URL=growthspare-db-url:latest,REDIS_URL=growthspare-redis-url:latest,EMAIL_HOST_USER=growthspare-email-user:latest,EMAIL_HOST_PASSWORD=growthspare-email-password:latest"
+
+images:
+  - "asia-south1-docker.pkg.dev/$PROJECT_ID/growthspare/web:$COMMIT_SHA"
+  - "asia-south1-docker.pkg.dev/$PROJECT_ID/growthspare/web:latest"
+
+options:
+  logging: CLOUD_LOGGING_ONLY

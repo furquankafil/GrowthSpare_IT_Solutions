@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Inquiry Received - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Thank you for contacting GrowthSpare IT Solutions. Your general business lead has been securely processed and queued.">
+    <meta name="robots" content="noindex, follow">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Thank You Confirmation Section -->
+<section class="min-h-screen relative flex items-center justify-center pt-28 pb-16 overflow-hidden px-4">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Entry Container -->
+    <div class="relative w-full max-w-lg z-10" data-aos="zoom-in">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5 text-center space-y-6">
+            
+            <!-- Dynamic Vector envelope open success icon -->
+            <div class="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center text-success text-2xl animate-pulse">
+                <i class="fas fa-circle-check"></i>
+            </div>
+
+            <!-- Branding Header -->
+            <div class="space-y-2">
+                <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Message Received</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Thank you! Your strategic business inquiry has been recorded and safely processed into our B2B communication dashboard. Our solutions engineers are reviewing your targets.
+                </p>
+            </div>
+
+            <!-- Operational Next Steps Card -->
+            <div class="text-xs text-slate-600 dark:text-slate-400 font-medium space-y-3 bg-slate-900/5 dark:bg-black/20 p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 text-left leading-relaxed">
+                <p class="font-bold text-slate-900 dark:text-white font-poppins uppercase tracking-wider text-[10px] border-b border-slate-900/10 dark:border-white/5 pb-2">What Happens Next?</p>
+                <div class="flex items-start space-x-2.5">
+                    <span class="w-4 h-4 rounded bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold shrink-0">1</span>
+                    <p>Our Delhi team reviews your project's technical scope and budget metrics.</p>
+                </div>
+                <div class="flex items-start space-x-2.5">
+                    <span class="w-4 h-4 rounded bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold shrink-0">2</span>
+                    <p>A solutions architect will reply directly via your corporate email address within 24 business hours.</p>
+                </div>
+            </div>
+
+            <!-- Action controls -->
+            <div class="space-y-3">
+                <a href="{% url 'core:home' %}" 
+                   class="block w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                    Return to Homepage
+                </a>
+                <a href="{% url 'services:list' %}" 
+                   class="block w-full py-3 rounded-xl border border-slate-900/10 dark:border-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold font-poppins uppercase tracking-wider hover:bg-slate-500/5 transition-all">
+                    Explore Solutions Catalog
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Business Inquiry - GrowthSpare IT Solutions</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -size-adjust: 100%; -ms-text-size-adjust: 100%;">
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                <!-- Main Email Card -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    
+                    <!-- Header Accent Bar -->
+                    <tr>
+                        <td style="background-color: #2563eb; height: 6px; line-height: 6px; font-size: 6px;">&nbsp;</td>
+                    </tr>
+
+                    <!-- Corporate Header branding -->
+                    <tr>
+                        <td align="center" style="padding: 40px 40px 20px 40px;">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center" style="background-color: #2563eb; width: 44px; height: 44px; border-radius: 12px; font-weight: bold; font-size: 20px; color: #ffffff; line-height: 44px; text-align: center;">
+                                        G
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding-top: 12px; font-size: 18px; font-weight: 800; color: #0f172a; letter-spacing: -0.025em;">
+                                        GrowthSpare IT Solutions
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; padding-top: 4px;">
+                                        Lead Capture Desk
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Email Body Narrative -->
+                    <tr>
+                        <td style="padding: 20px 40px 40px 40px; color: #334155; font-size: 14px; line-height: 1.6;">
+                            <p style="margin: 0 0 20px 0; font-weight: 500;">
+                                System Administrators,
+                            </p>
+                            <p style="margin: 0 0 24px 0;">
+                                A new B2B business inquiry has been recorded inside the platform's lead ingestion pipeline. Below are the registered stakeholder parameters and scoping requirements:
+                            </p>
+
+                            <!-- Scoping Parameters Table Grid -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f1f5f9; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                                <tr>
+                                    <td style="padding-bottom: 12px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; width: 35%;">Stakeholder</td>
+                                    <td style="padding-bottom: 12px; font-size: 13px; font-weight: 600; color: #0f172a;">{{ lead.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 12px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Email Address</td>
+                                    <td style="padding-bottom: 12px; font-size: 13px; font-weight: 600; color: #2563eb;"><a href="mailto:{{ lead.email }}" style="color: #2563eb; text-decoration: none;">{{ lead.email }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 12px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Phone Number</td>
+                                    <td style="padding-bottom: 12px; font-size: 13px; font-weight: 600; color: #0f172a;">{{ lead.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 12px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Company Name</td>
+                                    <td style="padding-bottom: 12px; font-size: 13px; font-weight: 600; color: #0f172a;">{{ lead.company|default:"SME Client / N/A" }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 12px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Target Service</td>
+                                    <td style="padding-bottom: 12px; font-size: 13px; font-weight: 600; color: #0f172a;">{{ lead.get_service_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Budget Scope</td>
+                                    <td style="font-size: 13px; font-weight: 700; color: #16a34a;">{{ lead.get_budget_display }}</td>
+                                </tr>
+                            </table>
+
+                            <!-- Detailed message scope -->
+                            <div style="margin-bottom: 30px;">
+                                <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Project Scope & Brief</p>
+                                <blockquote style="margin: 0; padding: 16px; background-color: #ffffff; border-left: 3px solid #2563eb; border-radius: 0 8px 8px 0; font-size: 13px; color: #475569; line-height: 1.6; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                                    {{ lead.message }}
+                                </blockquote>
+                            </div>
+
+                            <!-- Dashboard Redirect CTA -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center" style="padding-top: 10px;">
+                                        <a href="https://growthspareitsolutions.com/admin/contact/contactmessage/" target="_blank" style="display: inline-block; background-color: #0f172a; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 14px 30px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.15);">
+                                            Process Lead In Admin
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer regulatory terms -->
+                    <tr>
+                        <td align="center" style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 24px; color: #94a3b8; font-size: 11px; line-height: 1.4;">
+                            <p style="margin: 0 0 4px 0; font-weight: 600;">GrowthSpare IT Solutions — New Delhi, India</p>
+                            <p style="margin: 0;">This communication was automatically generated by secure database model triggers.</p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Terms of Service & SLA - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Review the official Terms of Service and Service Level Agreements governing GrowthSpare IT Solutions technology deployments and platforms.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Standard Compliance Document Layout -->
+<section class="min-h-screen pt-32 pb-24 relative grid-bg px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dynamic background vector glow elements -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-900/10 dark:border-white/5 space-y-8">
+            
+            <!-- Document Header -->
+            <div class="border-b border-slate-900/10 dark:border-white/5 pb-6">
+                <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Legal & Compliance</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold font-poppins text-slate-900 dark:text-white mt-2">Terms of Service & Operation Agreements</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-2">Last Updated: July 2026</p>
+            </div>
+
+            <!-- Legible prose copy -->
+            <div class="prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-6 leading-relaxed font-medium">
+                <p>
+                    These Terms of Service & Operation Agreements govern your access and usage of the corporate workspace platform, software services, and solutions designed and deployed by <span class="font-bold text-slate-900 dark:text-white">GrowthSpare IT Solutions</span> (referred to as "Company", "we", "us", or "our").
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">1. Authorization & Workspace Usage</h3>
+                <p>
+                    By registering an enterprise workspace account, requesting a system-wide audit, or subscribing to our service matrices, you validate that you hold full legal and business authorization to coordinate agreements on behalf of your company context.
+                </p>
+                <p>
+                    You are strictly responsible for preserving the confidentiality of your workspace password credentials and managing permission layers for internal teams accessing your active dashboards.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">2. Professional Engagements & Retainers</h3>
+                <p>
+                    Our software development (Python/Django frameworks), AI integrations (WhatsApp cloud APIs, custom LLM fine-tunings), and digital marketing (SEO/SEM) operations are provided based on formalized scope briefs, work orders, or contract agreements.
+                </p>
+                <p>
+                    All estimated pricing matrices, budgets, and scheduling times presented on this platform are subject to formal work specification sign-offs. Retainers and billing cycles operate according to terms specified in individual Service Level Agreements (SLAs).
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">3. Intellectual Property Protocols</h3>
+                <p>
+                    Unless otherwise specified in a signed agreement, all custom client software, custom codebase implementations, database structures, and platform designs deployed by us remain the property of their respective owners. Intellectual property parameters transition completely to the client upon full payment and clearance of project billing milestones.
+                </p>
+
+                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white pt-4">4. Liability & Jurisdiction</h3>
+                <p>
+                    GrowthSpare IT Solutions is not liable for operational latency, system downtime, search performance volatility, or campaign metric drops resulting from changes to foreign platform APIs (including OpenAI, Meta, WhatsApp, Google Search Console, or web hosts).
+                </p>
+                <p>
+                    These terms are governed and construed under the legal jurisdiction of New Delhi, India.
+                </p>
+
+                <div class="bg-slate-900/10 dark:bg-black/20 p-6 rounded-2xl border border-slate-900/15 dark:border-white/5 space-y-2">
+                    <p class="font-bold text-slate-900 dark:text-white">{{ COMPANY_NAME }}</p>
+                    <p><span class="font-semibold">Delhi Offices:</span> {{ OFFICIAL_LOCATION }}</p>
+                    <p><span class="font-semibold">Official Contact:</span> {{ OFFICIAL_EMAIL }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

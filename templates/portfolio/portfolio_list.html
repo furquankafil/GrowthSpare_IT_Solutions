@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Enterprise Demo Projects & Portfolio - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Explore our complete collection of 100% responsive websites, secure CRM dashboards, AI-powered WhatsApp automations, and digital marketing portfolios.">
+    
+    <style>
+        /* Smooth, hardware-accelerated 300ms transition rules preventing layout jumps */
+        .portfolio-card-transition {
+            transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
+        }
+    </style>
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. PORTFOLIO SHOWCASE HEADER
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Increased max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Case Studies</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            Featured Projects Showcase
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
+            Explore a collection of professional websites, CRM systems, AI automation solutions, and digital marketing projects designed to help businesses grow.
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. CATEGORY TABS FILTER BAR (Widescreen 1400px container supported)
+     ============================================================================== -->
+<section class="py-6 border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10 backdrop-blur-md">
+    <div class="max-w-[1400px] mx-auto px-6 flex flex-wrap gap-2 justify-center items-center" id="portfolio-filter-bar">
+        <!-- All projects trigger button -->
+        <button data-filter="all" 
+                class="portfolio-filter-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 bg-primary text-white shadow-md focus:outline-none">
+            All
+        </button>
+        
+        <!-- Categorized list loops as interactive trigger buttons -->
+        {% for category in categories %}
+            <button data-filter="{{ category.slug }}" 
+                    class="portfolio-filter-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 focus:outline-none">
+                {{ category.name }}
+            </button>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ==============================================================================
+     3. CASE STUDIES GRID WITH SEAMLESS 300ms TRANSITIONS (No Layout Jumps)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <!-- Height remains stable during transitions, preventing visual layout jumps -->
+    <div class="max-w-[1400px] mx-auto px-6 space-y-16 min-h-[600px]">
+        
+        <!-- Grid layout container -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid-layout">
+            {% for project in projects %}
+                <!-- Project Card wrapper with many-to-many category target mapping -->
+                <div class="portfolio-item-card portfolio-card-transition glassmorphism rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 shadow-xl opacity-100 scale-100" 
+                     data-categories="{% for c in project.categories.all %}{{ c.slug }} {% endfor %}" data-aos="fade-up">
+                    <div>
+                        <!-- Project Image Frame with checking capabilities -->
+                        <div class="relative aspect-video overflow-hidden bg-slate-900">
+                            {% if project.featured_image %}
+                                <img src="{% if 'http' in project.featured_image.name %}{{ project.featured_image.name }}{% else %}{{ project.featured_image.url }}{% endif %}" 
+                                     alt="{{ project.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy">
+                            {% else %}
+                                <div class="w-full h-full bg-gradient-to-tr from-primary/20 to-accent/20 flex items-center justify-center">
+                                    <i class="fas fa-image text-3xl text-slate-500"></i>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Category and Demo Project Badges -->
+                            <div class="absolute top-4 left-4 flex flex-col space-y-2">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
+                                    {% for category in project.categories.all|slice:":1" %}
+                                        {{ category.name }}
+                                    {% endfor %}
+                                </span>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
+                                    Demo Project
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Body copy details -->
+                        <div class="p-6 space-y-4">
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest block font-poppins">
+                                Client: {{ project.client_name }} — Duration: {{ project.project_duration }}
+                            </span>
+                            <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white leading-snug">
+                                {{ project.title }}
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
+                                {{ project.problem_statement }}
+                            </p>
+
+                            <!-- Technology Pills Badges -->
+                            <div class="flex flex-wrap gap-1.5 pt-2">
+                                {% for tech in project.get_tech_list|slice:":3" %}
+                                    <span class="px-2 py-0.5 rounded bg-slate-900/10 dark:bg-black/20 text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase">
+                                        {{ tech }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Actions panel (GitHub link and icon completely removed) -->
+                    <div class="p-6 pt-0 border-t border-slate-900/10 dark:border-white/5 mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <a href="{{ project.get_absolute_url }}" class="px-3 py-2 rounded-xl bg-primary text-white text-[10px] font-bold font-poppins uppercase tracking-wider hover:bg-accent transition-all inline-flex items-center space-x-1.5 shadow-md">
+                            <span>View Details</span> <i class="fas fa-chevron-right text-[8px]"></i>
+                        </a>
+                        {% if project.video_url %}
+                            <div class="flex items-center space-x-2">
+                                <!-- Live Demo redirection link -->
+                                <a href="{{ project.video_url }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-xl border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-all" title="View Live Demo Video">
+                                    <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-24 glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 text-slate-500">
+                    <i class="fas fa-box-archive text-3xl mb-4 block animate-bounce"></i>
+                    <p class="font-bold text-slate-900 dark:text-white">Active Case Studies Initializing</p>
+                    <p class="text-xs text-slate-400 mt-1">Our development office is documenting engineering milestones.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Dynamic Load More Controller -->
+        <div class="flex justify-center items-center pt-8 border-t border-slate-900/10 dark:border-white/5 relative z-10" id="load-more-holder">
+            <button id="load-more-btn" 
+                    class="px-8 py-4 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-700 dark:text-slate-300 hover:bg-slate-500/5 hover:scale-[1.01] active:scale-[0.99] focus:outline-none transition-all uppercase tracking-wider">
+                Load More Projects
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==============================================================================
+     4. GENERAL CONVERSION CTA
+     ============================================================================== -->
+<section class="py-24 bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8 relative z-10">
+    <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-poppins">Want to achieve similar scalability results?</h2>
+        <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
+            Get in touch to arrange an analysis of your tech stack, outline required CRM structures, or launch campaign strategies directly with our Delhi offices.
+        </p>
+        <a href="{% url 'consultation:book' %}" class="px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 inline-block font-poppins">
+            Book Scoping Audit
+        </a>
+    </div>
+</section>
+{% endblock content %}
+
+{% block extra_js %}
+<!-- Pure JavaScript logic controlling the 300ms fade-out/fade-in category filtering -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const filterBtns = document.querySelectorAll(".portfolio-filter-btn");
+        const itemCards = document.querySelectorAll(".portfolio-item-card");
+        const loadMoreHolder = document.getElementById("load-more-holder");
+        const loadMoreBtn = document.getElementById("load-more-btn");
+
+        const initialLimit = 9;
+        let currentLimit = initialLimit;
+        let activeFilter = "all";
+
+        const applyFiltering = () => {
+            let matchedCount = 0;
+            let hiddenMatchesExist = false;
+
+            itemCards.forEach(card => {
+                const categories = card.getAttribute("data-categories").trim().split(" ");
+                const matchesFilter = (activeFilter === "all" || categories.includes(activeFilter));
+
+                if (matchesFilter) {
+                    matchedCount++;
+                    if (matchedCount <= currentLimit) {
+                        card.style.display = "flex";
+                        setTimeout(() => {
+                            card.classList.remove("opacity-0", "scale-95");
+                            card.classList.add("opacity-100", "scale-100");
+                        }, 50);
+                    } else {
+                        card.style.display = "none";
+                        hiddenMatchesExist = true;
+                    }
+                } else {
+                    card.style.display = "none";
+                    card.classList.add("opacity-0", "scale-95");
+                    card.classList.remove("opacity-100", "scale-100");
+                }
+            });
+
+            if (loadMoreHolder) {
+                loadMoreHolder.style.display = hiddenMatchesExist ? "flex" : "none";
+            }
+        };
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetFilter = btn.getAttribute("data-filter");
+                if (targetFilter === activeFilter) return;
+
+                activeFilter = targetFilter;
+                currentLimit = initialLimit;
+
+                filterBtns.forEach(b => {
+                    b.className = "portfolio-filter-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 focus:outline-none";
+                });
+                btn.className = "portfolio-filter-btn px-5 py-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide uppercase transition-all duration-300 bg-primary text-white shadow-md focus:outline-none";
+
+                itemCards.forEach(card => {
+                    card.classList.add("opacity-0", "scale-95");
+                    card.classList.remove("opacity-100", "scale-100");
+                });
+
+                setTimeout(() => {
+                    applyFiltering();
+                    if (typeof AOS !== "undefined") {
+                        AOS.refresh();
+                    }
+                }, 300);
+            });
+        });
+
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener("click", () => {
+                currentLimit += 6;
+                applyFiltering();
+                if (typeof AOS !== "undefined") {
+                    AOS.refresh();
+                }
+            });
+        }
+
+        applyVisibility = applyFiltering;
+        applyVisibility();
+    });
+</script>
+{% endblock extra_js %}

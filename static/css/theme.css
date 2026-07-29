@@ -1,0 +1,82 @@
+/* ==============================================================================
+   GrowthSpare IT Solutions - Core Theme Utility & Styling Palette
+   Defines global variables, luxury glassmorphic metrics, neon glows, and 
+   smooth transition boundaries across Light and Dark system settings.
+   ============================================================================== */
+
+@layer base {
+    :root {
+        /* Primary Light Theme variables mapping corporate colors */
+        --color-primary: 37 99 235;     /* #2563EB */
+        --color-secondary: 15 23 42;    /* #0F172A */
+        --color-accent: 6 182 212;     /* #06B6D4 */
+        --color-success: 34 197 94;     /* #22C55E */
+        --color-background: 255 255 255; /* #FFFFFF */
+        --color-card-border: 15 23 42 / 0.05;
+        --color-text-base: 15 23 42;
+    }
+
+    .dark {
+        /* Strictly enforced Dark Theme variables overriding base parameters */
+        --color-primary: 37 99 235;
+        --color-secondary: 15 23 42;
+        --color-accent: 6 182 212;
+        --color-success: 34 197 94;
+        --color-background: 15 23 42;   /* #0F172A */
+        --color-card-border: 255 255 255 / 0.05;
+        --color-text-base: 241 245 249;
+    }
+}
+
+/* ==============================================================================
+   Modern Structural Class Modifications (Glow Cards, Grids, and Custom Animations)
+   ============================================================================== */
+
+/* Luxury Neon Glow Cards */
+.neon-glow-primary {
+    box-shadow: 0 0 25px -5px rgba(37, 99, 235, 0.15);
+}
+.dark .neon-glow-primary {
+    box-shadow: 0 0 40px -10px rgba(37, 99, 235, 0.25);
+}
+
+.neon-glow-accent {
+    box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.15);
+}
+.dark .neon-glow-accent {
+    box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.25);
+}
+
+/* Base custom font overrides enforcing Inter & Poppins combinations */
+body {
+    font-family: 'Inter', sans-serif;
+    color: rgb(var(--color-text-base));
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Standard structural animations to power smooth transitions on theme switch */
+.transition-theme {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom CSS Keyframe animation classes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

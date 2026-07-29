@@ -1,0 +1,71 @@
+<!-- Reusable Sidebar Navigation Component for Dashboards & Portals -->
+<aside id="dashboard-sidebar" class="w-full md:w-64 bg-secondary dark:bg-slate-950 border-r border-slate-900/10 dark:border-white/5 flex flex-col justify-between shrink-0 transition-all duration-300">
+    <div class="p-6 space-y-8">
+        <!-- Brand Identity Logo Platform -->
+        <a href="{% url 'core:home' %}" class="flex items-center space-x-3 group" aria-label="GrowthSpare IT Solutions Homepage">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-primary/20">
+                G
+            </div>
+            <div class="flex flex-col">
+                <span class="font-poppins font-extrabold text-base leading-none tracking-tight text-white">GrowthSpare</span>
+                <span class="text-[9px] text-slate-400 uppercase tracking-widest font-extrabold leading-none mt-1">Workspace</span>
+            </div>
+        </a>
+
+        <!-- Interactive Navigation Links -->
+        <nav class="flex flex-col space-y-1.5 text-xs font-bold font-poppins text-slate-400">
+            <span class="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold px-3 mb-2">Workspace Controls</span>
+            
+            <!-- Dashboard Home Link -->
+            <a href="{% url 'dashboard:index' %}" 
+               class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10 {% if request.resolver_match.view_name == 'dashboard:index' %}text-white bg-primary{% endif %}">
+                <i class="fas fa-chart-line text-sm"></i>
+                <span>Dashboard Overview</span>
+            </a>
+            
+            <!-- User Profile Link -->
+            <a href="{% url 'accounts:profile' %}" 
+               class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10 {% if request.resolver_match.view_name == 'accounts:profile' %}text-white bg-primary{% endif %}">
+                <i class="fas fa-user-gear text-sm"></i>
+                <span>Account Parameters</span>
+            </a>
+
+            <!-- Return to Landing Page Link -->
+            <span class="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold px-3 pt-6 mb-2">Global Access</span>
+            <a href="{% url 'core:home' %}" class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10">
+                <i class="fas fa-house text-sm"></i>
+                <span>Return to Landing Site</span>
+            </a>
+
+            <!-- Admin Shortcut Panel -->
+            {% if request.user.is_staff %}
+                <span class="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold px-3 pt-6 mb-2">Operational Access</span>
+                <a href="/admin/" target="_blank" class="flex items-center space-x-3 px-3 py-3 rounded-xl transition-colors hover:text-white hover:bg-slate-500/10">
+                    <i class="fas fa-user-shield text-sm text-accent"></i>
+                    <span>Django Admin Panel</span>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+
+    <!-- User Profile Drawer Card Footer -->
+    <div class="p-6 border-t border-slate-900/10 dark:border-white/5 bg-slate-950/20 flex items-center justify-between">
+        <div class="flex items-center space-x-3 overflow-hidden">
+            <!-- Dynamic Initial Avatar Fallback -->
+            <div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm uppercase shrink-0">
+                {{ request.user.first_name|first|default:request.user.username|first }}
+            </div>
+            <div class="leading-tight truncate">
+                <span class="text-xs font-bold text-white block truncate">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="text-[9px] text-slate-400 block font-medium uppercase tracking-wider">{{ request.user.get_role_display }}</span>
+            </div>
+        </div>
+        <!-- Logout Post Action Form -->
+        <form action="{% url 'accounts:logout' %}" method="post" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="text-slate-400 hover:text-red-500 transition-colors focus:outline-none" aria-label="Sign Out of Session">
+                <i class="fas fa-power-off text-sm"></i>
+            </button>
+        </form>
+    </div>
+</aside>

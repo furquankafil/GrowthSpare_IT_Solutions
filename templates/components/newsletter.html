@@ -1,0 +1,79 @@
+<!-- Reusable High-Converting Newsletter Subscription Card -->
+<div class="glassmorphism p-8 sm:p-10 rounded-3xl border border-slate-900/10 dark:border-white/5 relative overflow-hidden shadow-2xl">
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-primary/10 rounded-full blur-2xl"></div>
+        <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-accent/5 rounded-full blur-2xl"></div>
+    </div>
+
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <!-- Text details -->
+        <div class="md:col-span-7 space-y-3">
+            <span class="text-[10px] font-bold text-primary dark:text-accent uppercase tracking-widest block font-poppins">Get Instant Updates</span>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white font-poppins leading-tight">Subscribe to GrowthSpare Bulletins</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                Receive continuous system releases, technical framework guides, and digital marketing insights curated by our Delhi solutions desks.
+            </p>
+        </div>
+
+        <!-- Subscription Form -->
+        <div class="md:col-span-5">
+            <form id="standalone-newsletter-form" class="space-y-3" method="POST" action="{% url 'core:newsletter_subscribe' %}">
+                {% csrf_token %}
+                <div class="flex flex-col space-y-2.5">
+                    <input type="email" name="email" required placeholder="name@company.com" 
+                           class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                    <button type="submit" 
+                            class="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] transition-all focus:outline-none">
+                        Join Platform Bulletin
+                    </button>
+                </div>
+                <span id="standalone-newsletter-response" class="text-[10px] font-semibold font-poppins block mt-2"></span>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Asynchronous isolated newsletter submission logic
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById('standalone-newsletter-form');
+        const responseSpan = document.getElementById('standalone-newsletter-response');
+
+        if (form && responseSpan) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const emailInput = form.querySelector('input[name="email"]');
+                const csrfToken = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                const targetUrl = form.action;
+
+                // Loading State
+                responseSpan.textContent = "Processing submission...";
+                responseSpan.className = "text-[10px] font-semibold text-primary dark:text-accent block mt-2";
+
+                fetch(targetUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: `email=${encodeURIComponent(emailInput.value)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    responseSpan.textContent = data.message;
+                    if (data.success) {
+                        responseSpan.className = "text-[10px] font-semibold text-success block mt-2";
+                        emailInput.value = ""; 
+                    } else {
+                        responseSpan.className = "text-[10px] font-semibold text-red-500 block mt-2";
+                    }
+                })
+                .catch(error => {
+                    responseSpan.textContent = "Technical connection error. Please try again.";
+                    responseSpan.className = "text-[10px] font-semibold text-red-500 block mt-2";
+                });
+            });
+        }
+    });
+</script>

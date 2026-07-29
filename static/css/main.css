@@ -1,0 +1,94 @@
+/* ==============================================================================
+   GrowthSpare IT Solutions - Main Compilation Stylesheet
+   Component styles layered on top of the Tailwind Play CDN (see base.html).
+   NOTE: this file intentionally has no Tailwind package-style import
+   directives. This project uses the Tailwind CDN's runtime compiler, not a
+   PostCSS build step, so those directives never resolved to anything and
+   were removed (they also broke WhiteNoise's CompressedManifestStaticFilesStorage,
+   which tried to resolve them as real relative file paths).
+   ============================================================================== */
+
+@layer components {
+    /* Standardized premium typography & section spacings */
+    .section-spacing {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        max-width: 80rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    @media (min-width: 768px) {
+        .section-spacing {
+            padding-left: 3rem;
+            padding-right: 3rem;
+        }
+    }
+
+    /* Core grid background parameters matching dynamic layout matrices */
+    .grid-bg {
+        background-size: 40px 40px;
+        background-image: linear-gradient(to right, rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+    }
+    
+    .dark .grid-bg {
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    }
+
+    /* Modern active input focus parameters matching corporate branding */
+    .input-focus {
+        outline: none;
+        ring-width: 2px;
+    }
+    
+    .input-focus:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        border-color: #2563EB;
+    }
+    
+    .dark .input-focus:focus {
+        box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+        border-color: #06B6D4;
+    }
+}
+
+/* ==============================================================================
+   SwiperJS Pagination & Bullet Override Customizations
+   ============================================================================== */
+.swiper-pagination-bullet {
+    background: #0F172A !important;
+    opacity: 0.3 !important;
+    width: 10px !important;
+    height: 10px !important;
+    transition: all 0.3s ease !important;
+}
+
+.dark .swiper-pagination-bullet {
+    background: #FFFFFF !important;
+    opacity: 0.2 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #2563EB !important;
+    opacity: 1 !important;
+    width: 24px !important;
+    border-radius: 5px !important;
+}
+
+.dark .swiper-pagination-bullet-active {
+    background: #06B6D4 !important;
+    opacity: 1 !important;
+    width: 24px !important;
+    border-radius: 5px !important;
+}
+
+/* Ensure absolute image positioning and rendering within Swiper frameworks */
+.swiper-slide img {
+    user-select: none;
+    pointer-events: none;
+}

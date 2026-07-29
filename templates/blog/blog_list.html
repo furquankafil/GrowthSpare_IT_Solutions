@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Publications & Tech Insights - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Explore modern software development, AI automation, and technical marketing insights written directly by the GrowthSpare team.">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. PUBLICATION DIRECTORY HEADER
+     ============================================================================== -->
+<section class="relative pt-32 pb-16 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Ambient vector background illumination glow cards -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Increased container max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Marketing Insights</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            Insights & Resources
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
+            Read engineering guides, software development tutorials, automation strategies, and corporate technology reviews written directly by the GrowthSpare team.
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. BLOG WORKSPACE SPLIT (Feed Grid vs Sidebar Search / Categories)
+     ============================================================================== -->
+<section class="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <!-- Increased container max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left: Main Articles Feed & Pagination block -->
+        <div class="lg:col-span-8 space-y-12" data-aos="fade-right">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {% for post in posts %}
+                    <div class="glassmorphism rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
+                        <div>
+                            <!-- Article Banner image frame with remote / local fallback checks -->
+                            <div class="relative aspect-video overflow-hidden bg-slate-900">
+                                {% if post.featured_image %}
+                                    <img src="{% if 'http' in post.featured_image.name %}{{ post.featured_image.name }}{% else %}{{ post.featured_image.url }}{% endif %}" 
+                                         alt="{{ post.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy">
+                                {% else %}
+                                    <div class="w-full h-full bg-gradient-to-tr from-primary/20 to-accent/20 flex items-center justify-center">
+                                        <i class="fas fa-image text-3xl text-slate-500"></i>
+                                    </div>
+                                {% endif %}
+                                <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
+                                    {{ post.category.name }}
+                                </span>
+                            </div>
+                            
+                            <div class="p-6 space-y-3">
+                                <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest block font-poppins">
+                                    {{ post.published_at|date:"M d, Y" }} — {{ post.reading_time }} min read
+                                </span>
+                                <h3 class="text-base font-bold font-poppins text-slate-900 dark:text-white leading-snug hover:text-primary transition-colors">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
+                                    {{ post.content|striptags }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 pt-0 border-t border-slate-900/10 dark:border-white/5 mt-6 flex items-center justify-between">
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-poppins">Author: {{ post.author.first_name }}</span>
+                            <a href="{{ post.get_absolute_url }}" class="px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold font-poppins hover:bg-accent hover:scale-[1.02] transition-all inline-flex items-center space-x-2 shadow-md">
+                                <span>Read More</span>
+                                <i class="fas fa-chevron-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-span-full text-center py-24 glassmorphism rounded-3xl border border-slate-900/10 dark:border-white/5 text-slate-500">
+                        <i class="fas fa-file-pen text-3xl mb-4 block animate-bounce"></i>
+                        <p class="font-bold text-slate-900 dark:text-white">Active Publications Initializing</p>
+                        <p class="text-xs text-slate-400 mt-1">Our editors are compiling technical insight reviews.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination controls interface -->
+            {% if is_paginated %}
+                <div class="flex items-center justify-center space-x-2 pt-8 border-t border-slate-900/10 dark:border-white/5" data-aos="fade-up">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if active_category %}&category={{ active_category }}{% endif %}" class="px-4 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                            <i class="fas fa-chevron-left mr-2"></i>Previous
+                        </a>
+                    {% endif %}
+                    
+                    <span class="text-xs font-bold text-slate-400 dark:text-slate-500 font-poppins px-4">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if active_category %}&category={{ active_category }}{% endif %}" class="px-4 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 transition-all">
+                            Next<i class="fas fa-chevron-right ml-2"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Right Sidebar pane (Search tools, topics categories, featured highlights) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6" data-aos="fade-left">
+            
+            <!-- Global Search Widget -->
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Search insights</span>
+                
+                <form method="GET" action="{% url 'blog:list' %}" class="relative">
+                    <input type="text" name="q" placeholder="Enter keywords..." value="{{ search_query }}"
+                           class="w-full pl-4 pr-11 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                    <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary focus:outline-none">
+                        <i class="fas fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Taxonomical Categories selector (Divided into 6 exact categories) -->
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Insights Categories</span>
+                
+                <div class="flex flex-col space-y-2">
+                    <a href="{% url 'blog:list' %}" 
+                       class="flex items-center justify-between p-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide transition-all {% if not active_category %}text-primary dark:text-accent bg-slate-500/10{% else %}text-slate-600 dark:text-slate-300 hover:bg-slate-500/5{% endif %}">
+                        <span>All Topics</span>
+                        <i class="fas fa-chevron-right text-[8px]"></i>
+                    </a>
+                    {% for cat in categories %}
+                        <a href="{% url 'blog:list' %}?category={{ cat.slug }}" 
+                           class="flex items-center justify-between p-2.5 rounded-xl text-xs font-bold font-poppins tracking-wide transition-all {% if active_category == cat.slug %}text-primary dark:text-accent bg-slate-500/10{% else %}text-slate-600 dark:text-slate-300 hover:bg-slate-500/5{% endif %}">
+                            <span>{{ cat.name }}</span>
+                            <i class="fas fa-chevron-right text-[8px]"></i>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Featured Articles Mini-loop lists -->
+            {% if featured_posts %}
+                <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Featured Articles</span>
+                    
+                    <div class="space-y-4">
+                        {% for fp in featured_posts %}
+                            <div class="flex items-center space-x-3.5 group">
+                                <div class="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-900/10 dark:border-white/5">
+                                    <img src="{% if 'http' in fp.featured_image.name %}{{ fp.featured_image.name }}{% else %}{{ fp.featured_image.url }}{% endif %}" 
+                                         alt="{{ fp.title }}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
+                                </div>
+                                <div class="space-y-1 truncate">
+                                    <h4 class="text-xs font-bold text-slate-900 dark:text-white font-poppins group-hover:text-primary dark:group-hover:text-accent transition-colors truncate">
+                                        <a href="{{ fp.get_absolute_url }}">{{ fp.title }}</a>
+                                    </h4>
+                                    <span class="text-[9px] text-slate-400 block font-poppins">{{ fp.published_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

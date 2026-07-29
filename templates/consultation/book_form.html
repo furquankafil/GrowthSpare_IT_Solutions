@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Book Strategic Consultation - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Engage our engineering teams through our multi-step project discovery funnel. Outline your timeline, technologies, and target budget.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Multi-Step Booking Funnel Section -->
+<section class="min-h-screen pt-32 pb-24 relative grid-bg flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="relative w-full max-w-2xl z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5 space-y-8">
+            
+            <!-- Branding Header and Steps Progress Tracker -->
+            <div class="space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Audit Scheduling Funnel</span>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">
+                        Book Your Strategic Consultation
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-lg mx-auto">
+                        Complete our dynamic discovery questionnaire. Our engineering offices will review your project parameters prior to scheduling our session.
+                    </p>
+                </div>
+
+                <!-- Horizontal Step Progress Bar Indicators -->
+                <div class="relative pt-2">
+                    <div class="flex mb-2 items-center justify-between text-xs font-bold font-poppins text-slate-400 dark:text-slate-500">
+                        <span id="step-indicator-text">Step 1 of 3: Identity Details</span>
+                        <span id="step-percentage">33%</span>
+                    </div>
+                    <div class="overflow-hidden h-2 text-xs flex rounded-full bg-slate-900/10 dark:bg-black/40">
+                        <div id="progress-bar-fill" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-primary to-accent transition-all duration-500" style="width: 33.33%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Validation Errors Display -->
+            {% if form.errors %}
+                <div class="p-4 rounded-xl border border-red-500/20 bg-red-500/5 text-red-500 text-xs font-semibold">
+                    <p class="font-bold">Please correct the validation errors below to proceed.</p>
+                </div>
+            {% endif %}
+
+            <!-- Multi-Step Scope Request POST Form -->
+            <form id="scoping-multi-step-form" method="POST" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- STEP 1: IDENTITY & COORDINATES -->
+                <div class="step-pane space-y-5" id="pane-1">
+                    <span class="text-[10px] font-bold text-primary dark:text-accent uppercase tracking-wider font-poppins block">Step 1: Contact Coordinates</span>
+                    
+                    <div class="space-y-1.5">
+                        <label for="id_name" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Your Full Name</label>
+                        <input type="text" name="name" id="id_name" required value="{{ form.name.value|default:'' }}" placeholder="{{ form.name.field.widget.attrs.placeholder }}"
+                               class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_email" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Corporate Email</label>
+                            <input type="email" name="email" id="id_email" required value="{{ form.email.value|default:'' }}" placeholder="{{ form.email.field.widget.attrs.placeholder }}"
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_phone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Phone / WhatsApp</label>
+                            <input type="text" name="phone" id="id_phone" required value="{{ form.phone.value|default:'' }}" placeholder="{{ form.phone.field.widget.attrs.placeholder }}"
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: CORPORATE CONTEXT -->
+                <div class="step-pane space-y-5 hidden" id="pane-2">
+                    <span class="text-[10px] font-bold text-primary dark:text-accent uppercase tracking-wider font-poppins block">Step 2: Business & Industry Profile</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_company" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Company Name</label>
+                            <input type="text" name="company" id="id_company" value="{{ form.company.value|default:'' }}" placeholder="{{ form.company.field.widget.attrs.placeholder }}"
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_industry" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Industry Sector</label>
+                            <input type="text" name="industry" id="id_industry" required value="{{ form.industry.value|default:'' }}" placeholder="{{ form.industry.field.widget.attrs.placeholder }}"
+                                   class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="id_services_required" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Core Service Branch Required</label>
+                        <select name="services_required" id="id_services_required" required
+                                class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                            {% for val, display in form.fields.services_required.choices %}
+                                <option value="{{ val }}">{{ display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- STEP 3: SCOPE & TIMELINES -->
+                <div class="step-pane space-y-5 hidden" id="pane-3">
+                    <span class="text-[10px] font-bold text-primary dark:text-accent uppercase tracking-wider font-poppins block">Step 3: Budget & Scope Logistics</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="id_budget" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Allocated Project Budget</label>
+                            <select name="budget" id="id_budget" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                                {% for val, display in form.fields.budget.choices %}
+                                    <option value="{{ val }}">{{ display }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="id_preferred_contact_time" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Preferred Call Time (IST)</label>
+                            <select name="preferred_contact_time" id="id_preferred_contact_time" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                                {% for val, display in form.fields.preferred_contact_time.choices %}
+                                    <option value="{{ val }}">{{ display }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="id_project_details" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Project Scope Details & Goals</label>
+                        <textarea name="project_details" id="id_project_details" required rows="4" placeholder="{{ form.project_details.field.widget.attrs.placeholder }}"
+                                  class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium resize-none">{{ form.project_details.value|default:'' }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Dynamic Navigation controls panel -->
+                <div class="pt-6 border-t border-slate-900/10 dark:border-white/5 flex items-center justify-between">
+                    <button type="button" id="prev-step-btn" class="hidden px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold font-poppins text-slate-600 dark:text-slate-300 hover:bg-slate-500/5 focus:outline-none transition-colors">
+                        Previous Step
+                    </button>
+                    
+                    <button type="button" id="next-step-btn" class="px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-bold font-poppins hover:bg-accent ml-auto focus:outline-none transition-colors">
+                        Next Step
+                    </button>
+                    
+                    <button type="submit" id="submit-form-btn" class="hidden px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-success text-white text-xs font-bold font-poppins uppercase tracking-wider shadow-md hover:scale-[1.01] ml-auto focus:outline-none transition-all">
+                        Schedule Scoping Audit
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block extra_js %}
+<!-- Pure JavaScript logic controlling step transitions, validation, and progress calculations -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let currentStep = 1;
+        const totalSteps = 3;
+        
+        const panes = document.querySelectorAll(".step-pane");
+        const prevBtn = document.getElementById("prev-step-btn");
+        const nextBtn = document.getElementById("next-step-btn");
+        const submitBtn = document.getElementById("submit-form-btn");
+        
+        const progressBarFill = document.getElementById("progress-bar-fill");
+        const stepIndicatorText = document.getElementById("step-indicator-text");
+        const stepPercentage = document.getElementById("step-percentage");
+
+        const indicators = [
+            "Step 1 of 3: Contact Coordinates",
+            "Step 2 of 3: Business & Industry Profile",
+            "Step 3 of 3: Scope & Timelines"
+        ];
+
+        const updateUI = () => {
+            // Update Pane views
+            panes.forEach((pane, idx) => {
+                if (idx + 1 === currentStep) {
+                    pane.classList.remove("hidden");
+                    pane.classList.add("animate-fadeIn");
+                } else {
+                    pane.classList.add("hidden");
+                }
+            });
+
+            // Update Progress states
+            const pct = Math.round((currentStep / totalSteps) * 100);
+            progressBarFill.style.width = `${pct}%`;
+            stepPercentage.textContent = `${pct}%`;
+            stepIndicatorText.textContent = indicators[currentStep - 1];
+
+            // Toggle Navigation buttons
+            if (currentStep === 1) {
+                prevBtn.classList.add("hidden");
+                nextBtn.classList.remove("hidden");
+                submitBtn.classList.add("hidden");
+            } else if (currentStep === totalSteps) {
+                prevBtn.classList.remove("hidden");
+                nextBtn.classList.add("hidden");
+                submitBtn.classList.remove("hidden");
+            } else {
+                prevBtn.classList.remove("hidden");
+                nextBtn.classList.remove("hidden");
+                submitBtn.classList.add("hidden");
+            }
+        };
+
+        const validateCurrentPane = () => {
+            const activePane = document.getElementById(`pane-${currentStep}`);
+            const inputs = activePane.querySelectorAll("[required]");
+            let isPaneValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isPaneValid = false;
+                    input.classList.add("border-red-500", "focus:border-red-500");
+                } else {
+                    input.classList.remove("border-red-500", "focus:border-red-500");
+                }
+            });
+            return isPaneValid;
+        };
+
+        nextBtn.addEventListener("click", () => {
+            if (validateCurrentPane()) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateUI();
+                }
+            }
+        });
+
+        prevBtn.addEventListener("click", () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateUI();
+            }
+        });
+    });
+</script>
+{% endblock extra_js %}

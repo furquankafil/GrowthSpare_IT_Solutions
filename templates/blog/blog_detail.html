@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>{{ post.title }} - GrowthSpare IT Solutions Insights</title>
+    <meta name="description" content="{{ post.meta_description|default:post.title }}">
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. ARTICLE HEADER HERO SECTION
+     ============================================================================== -->
+<section class="relative pt-32 pb-12 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <!-- Increased container max-width to 1400px -->
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        
+        <!-- Category and Metadata -->
+        <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-bold tracking-widest uppercase font-poppins text-slate-500">
+            <span class="text-primary dark:text-accent font-extrabold">{{ post.category.name }}</span>
+            <span>•</span>
+            <span>{{ post.published_at|date:"M d, Y" }}</span>
+            <span>•</span>
+            <span class="flex items-center space-x-1.5 text-slate-400">
+                <i class="far fa-clock"></i>
+                <span>{{ post.reading_time }} min read</span>
+            </span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
+            {{ post.title }}
+        </h1>
+        
+        <!-- Author Profile brief -->
+        <div class="flex items-center justify-center space-x-3 pt-2">
+            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold font-poppins text-sm uppercase">
+                {{ post.author.first_name|first|default:post.author.username|first }}
+            </div>
+            <div class="text-left leading-tight">
+                <span class="text-xs font-bold text-slate-900 dark:text-white block font-poppins">
+                    {{ post.author.first_name }} {{ post.author.last_name }}
+                </span>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold font-poppins">Systems Engineer</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. ARTICLE MAIN SPLIT CONTAINER
+     ============================================================================== -->
+<section class="py-16 relative overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <!-- Increased container max-width to 1400px -->
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left: Main article body narratives, tag sets, comments -->
+        <div class="lg:col-span-8 space-y-12" data-aos="fade-right">
+            
+            <!-- Featured Image Frame with double-prefix verification safeguards -->
+            {% if post.featured_image %}
+                <div class="aspect-video w-full rounded-3xl overflow-hidden shadow-2xl border border-slate-900/10 dark:border-white/5 bg-slate-900">
+                    <img src="{% if 'http' in post.featured_image.name %}{{ post.featured_image.name }}{% else %}{{ post.featured_image.url }}{% endif %}" 
+                         alt="{{ post.title }}" class="w-full h-full object-cover">
+                </div>
+            {% endif %}
+
+            <!-- Rich Content Body -->
+            <article class="glassmorphism p-8 sm:p-10 rounded-3xl border border-slate-900/10 dark:border-white/5 prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium space-y-6">
+                {{ post.content|safe }}
+            </article>
+
+            <!-- Metadata tags list -->
+            {% if post.get_tags_list %}
+                <div class="flex items-center space-x-3 flex-wrap">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins">Topic Tags:</span>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in post.get_tags_list %}
+                            <span class="px-3 py-1 rounded-lg text-[10px] font-bold bg-slate-900/10 dark:bg-black/20 text-slate-600 dark:text-slate-300 uppercase font-poppins">
+                                #{{ tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Social sharing panel -->
+            <div class="p-6 rounded-2xl bg-slate-900/5 dark:bg-black/10 border border-slate-900/10 dark:border-white/5 flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-900 dark:text-white font-poppins">Liked this article? Share it</span>
+                <div class="flex space-x-3">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ SITE_URL }}{{ post.get_absolute_url }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-900/10 dark:border-white/10 hover:text-primary dark:hover:text-accent flex items-center justify-center transition-colors">
+                        <i class="fab fa-linkedin-in text-xs"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ SITE_URL }}{{ post.get_absolute_url }}&text={{ post.title }}" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-900/10 dark:border-white/10 hover:text-accent flex items-center justify-center transition-colors">
+                        <i class="fab fa-x-twitter text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Comments Moderator threads -->
+            <div class="space-y-6 pt-6 border-t border-slate-900/10 dark:border-white/5">
+                <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">
+                    Comments Thread ({{ approved_comments.count }})
+                </h3>
+
+                <!-- Active Comments list -->
+                <div class="space-y-4">
+                    {% for comment in approved_comments %}
+                        <div class="glassmorphism p-5 rounded-2xl border border-slate-900/10 dark:border-white/5 space-y-3">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold text-slate-900 dark:text-white font-poppins">{{ comment.name }}</span>
+                                <span class="text-slate-400 dark:text-slate-500 font-poppins">{{ comment.created_at|date:"M d, Y — h:i A" }}</span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                                {{ comment.content }}
+                            </p>
+                        </div>
+                    {% empty %}
+                        <p class="text-xs text-slate-400 dark:text-slate-500 italic pl-4">No comments posted yet. Be the first to share your insights!</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Comment Creation Form -->
+                <div class="glassmorphism p-6 sm:p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-6">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white font-poppins">Post a Response</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-1">Note: Comments are moderated before display in order to filter spam.</p>
+                    </div>
+
+                    <form method="POST" action="{% url 'blog:comment_create' post.slug %}" class="space-y-4">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label for="comment_name" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest font-poppins">Your Name</label>
+                                <input type="text" name="name" id="comment_name" required placeholder="Mohammad Furqan Kafil"
+                                       class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label for="comment_email" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest font-poppins">Email Address</label>
+                                <input type="email" name="email" id="comment_email" required placeholder="name@company.com"
+                                       class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="comment_content" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest font-poppins">Response Statement</label>
+                            <textarea name="content" id="comment_content" rows="4" required placeholder="Share your perspective, reviews, or technical questions..."
+                                      class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="px-5 py-3 rounded-xl bg-primary text-white text-xs font-bold uppercase tracking-wider font-poppins shadow-md">
+                            Submit response
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right: Sidebar details (Author card, similar listings) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6" data-aos="fade-left">
+            
+            <!-- Author Biography Card -->
+            <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4 shadow-xl">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">About the Author</span>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold font-poppins">
+                        {{ post.author.first_name|first|default:post.author.username|first }}
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold font-poppins text-slate-900 dark:text-white leading-none">
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        </h4>
+                        <span class="text-[9px] text-slate-400 font-poppins">Systems Engineer</span>
+                    </div>
+                </div>
+                <p class="text-[11px] text-slate-500 leading-relaxed font-medium">
+                    Technical author and developer at GrowthSpare IT Solutions. Deeply focused on custom Django logic databases, automated API workflows, and cloud-native solutions.
+                </p>
+            </div>
+
+            <!-- Context Related Publications -->
+            {% if related_posts %}
+                <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Related Insights</span>
+                    
+                    <div class="space-y-4">
+                        {% for rp in related_posts %}
+                            <div class="flex items-center space-x-3 group">
+                                <div class="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-900/10 dark:border-white/5">
+                                    <img src="{% if 'http' in rp.featured_image.name %}{{ rp.featured_image.name }}{% else %}{{ rp.featured_image.url }}{% endif %}" 
+                                         alt="{{ rp.title }}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
+                                </div>
+                                <div class="space-y-1 truncate">
+                                    <h4 class="text-xs font-bold text-slate-900 dark:text-white font-poppins group-hover:text-primary dark:group-hover:text-accent transition-colors truncate">
+                                        <a href="{{ rp.get_absolute_url }}">{{ rp.title }}</a>
+                                    </h4>
+                                    <span class="text-[9px] text-slate-400 block font-poppins">{{ rp.published_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

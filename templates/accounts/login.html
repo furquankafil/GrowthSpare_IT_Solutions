@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    <title>Sign In to Workspace - GrowthSpare IT Solutions</title>
+    <meta name="description" content="Access your personalized digital growth and engineering workspaces, review project milestones, or book consultations.">
+{% endblock seo %}
+
+{% block content %}
+<!-- Modern Glassmorphic Login Gateway Section -->
+<section class="min-h-screen relative flex items-center justify-center pt-28 pb-16 overflow-hidden px-4">
+    
+    <!-- Dynamic background vector glow elements matching corporate color palette -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Entry Container -->
+    <div class="relative w-full max-w-md z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 sm:p-10 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5">
+            
+            <!-- Branding Header with Official Logo -->
+            <div class="text-center mb-8">
+                <a href="{% url 'core:home' %}" class="inline-flex items-center group focus:outline-none mb-4">
+                    <!-- Loaded Official Corporate Logo directly for login page branding -->
+                    <img src="{% static 'images/logo.png' %}" 
+                         alt="GrowthSpare IT Solutions" 
+                         class="h-12 w-auto block mx-auto dark:filter dark:brightness-110">
+                </a>
+                <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins mt-2">Welcome back</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5">Enter your workspace credentials to authorize your session</p>
+            </div>
+
+            <!-- Login POST Transmission Form -->
+            <form method="POST" class="space-y-5">
+                {% csrf_token %}
+                
+                <!-- Email Parameter Input (Mapped to Django username field) -->
+                <div class="space-y-1.5">
+                    <label for="id_username" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Email Address</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" name="username" id="id_username" required placeholder="name@company.com" 
+                               class="w-full pl-11 pr-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label for="id_password" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider font-poppins">Password</label>
+                        <a href="{% url 'accounts:password_reset' %}" class="text-[11px] font-bold text-primary dark:text-accent hover:underline">Forgot password?</a>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" name="password" id="id_password" required placeholder="••••••••" 
+                               class="w-full pl-11 pr-4 py-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-900/10 dark:border-white/5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-accent font-medium">
+                    </div>
+                </div>
+
+                <!-- Submit Control -->
+                <button type="submit" 
+                        class="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                    Authorize Workspace Session
+                </button>
+            </form>
+
+            <!-- Bottom Registration Anchor -->
+            <div class="mt-8 text-center pt-6 border-t border-slate-900/10 dark:border-white/5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                <span>New to GrowthSpare?</span>
+                <a href="{% url 'accounts:register' %}" class="text-primary dark:text-accent font-bold hover:underline ml-1">Create an account</a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock content %}

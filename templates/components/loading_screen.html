@@ -1,0 +1,53 @@
+{% load static %}
+<!-- Secure, high-performance loading screen panel with Official Logo Integration -->
+<div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-50 dark:bg-darkBackground transition-all duration-700 ease-out pointer-events-none opacity-100">
+    <div class="relative flex flex-col items-center">
+        
+        <!-- Rotating modern geometric outer loading gear/ring -->
+        <div class="relative w-28 h-28 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+            <div class="absolute inset-2 rounded-full border-4 border-accent/20 border-b-accent animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+            
+            <!-- Central official brand logo element pulsing gently -->
+            <div class="absolute inset-4 flex items-center justify-center bg-white dark:bg-secondary rounded-full p-1 shadow-md">
+                <img src="{% static 'images/logo.png' %}" 
+                     alt="GrowthSpare Loading..." 
+                     class="h-8 w-auto block animate-pulse dark:filter dark:brightness-110">
+            </div>
+        </div>
+
+        <!-- Corporate Text indicators with dynamic pulse effects -->
+        <p class="mt-6 text-xs font-extrabold uppercase tracking-widest text-slate-900 dark:text-white font-poppins animate-pulse">
+            GrowthSpare
+        </p>
+        <span class="mt-1.5 text-[9px] font-bold tracking-widest text-primary dark:text-accent uppercase font-poppins block">
+            Empowering Digital Innovation
+        </span>
+
+    </div>
+</div>
+
+<script>
+    // Handles seamless page load fade out behavior in native JavaScript
+    (function() {
+        const handleLoadingScreenDismissal = () => {
+            const preloader = document.getElementById('loading-screen');
+            if (preloader) {
+                // Apply delay to guarantee rendering timeline transitions
+                setTimeout(() => {
+                    preloader.classList.add('opacity-0');
+                    // De-register interactions and remove from paint calculations after fade out completes
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 700);
+                }, 300);
+            }
+        };
+
+        if (document.readyState === 'complete') {
+            handleLoadingScreenDismissal();
+        } else {
+            window.addEventListener('load', handleLoadingScreenDismissal);
+        }
+    })();
+</script>

@@ -1,0 +1,29 @@
+<!-- ==============================================================================
+     GrowthSpare IT Solutions - Modular SEO Meta & Social Card Includes
+     Generates standardized head metadata for search engine indexing and social platforms.
+     ============================================================================== -->
+
+<!-- Core Search Engine Optimization Headers -->
+<title>{% if seo_title %}{{ seo_title }} | {{ COMPANY_NAME }}{% else %}{{ COMPANY_NAME }} - {{ TAGLINE }}{% endif %}</title>
+<meta name="description" content="{{ seo_description|default:TAGLINE }}">
+<meta name="keywords" content="{{ seo_keywords|default:'AI Automation, Web Development, Django, SaaS development, CRM Development, New Delhi' }}">
+
+{% if canonical_url %}
+    <link rel="canonical" href="{{ canonical_url }}">
+{% endif %}
+
+<!-- Open Graph Protocol Validation (Facebook, LinkedIn) -->
+<meta property="og:site_name" content="{{ COMPANY_NAME }}">
+<meta property="og:title" content="{% if seo_title %}{{ seo_title }}{% else %}{{ COMPANY_NAME }}{% endif %}">
+<meta property="og:description" content="{{ seo_description|default:TAGLINE }}">
+<meta property="og:type" content="website">
+{% if canonical_url %}
+    <meta property="og:url" content="{{ canonical_url }}">
+{% endif %}
+<meta property="og:image" content="{{ seo_image|default:'/static/images/logo.png' }}">
+
+<!-- Twitter Card Validation -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if seo_title %}{{ seo_title }}{% else %}{{ COMPANY_NAME }}{% endif %}">
+<meta name="twitter:description" content="{{ seo_description|default:TAGLINE }}">
+<meta name="twitter:image" content="{{ seo_image|default:'/static/images/logo.png' }}">
