@@ -35,15 +35,12 @@ services:
       - "8000"
 
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl -f http://127.0.0.1:8000/ping || exit 1"
-        ]
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/ping || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 40s
+
 
 
   db:
@@ -65,14 +62,12 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
-        ]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 20s
+
 
 
   redis:
@@ -86,15 +81,12 @@ services:
       - redis_data:/data
 
     healthcheck:
-      test:
-        [
-          "CMD",
-          "redis-cli",
-          "ping"
-        ]
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 10s
+
 
 
   nginx:
@@ -114,7 +106,9 @@ services:
       - media_volume:/app/mediafiles:ro
 
     depends_on:
-      - web
+      web:
+        condition: service_healthy
+
 
 
 volumes:

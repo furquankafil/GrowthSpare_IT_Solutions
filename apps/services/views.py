@@ -2,8 +2,8 @@
 Class-based views managing capability catalog indexing, dynamic category pre-fetches,
 and high-performance, SEO-optimized detailed capability page renderings.
 
-Serves all 7 active service divisions: Web Solutions, AI Automations, SaaS & CRM
-Systems, Digital Growth, SEO & Marketing, Cyber Security, and Engineering Solutions.
+Serves all 7 active service divisions: Web Solutions, AI Automation, SaaS & CRM
+Systems, Digital Marketing, SEO & Marketing, Cyber Security, and Engineering Solutions.
 """
 
 from django.shortcuts import get_object_or_404
@@ -64,7 +64,7 @@ class ServiceListView(ListView):
             context["seo_title"] = "Web, AI, SaaS, Security & Engineering Solutions"
             context["seo_description"] = (
                 "Explore our complete directory of business-first services: Web Solutions, AI "
-                "Automations, SaaS & CRM Systems, Digital Growth, SEO & Marketing, Cyber Security, "
+                "Automation, SaaS & CRM Systems, Digital Marketing, SEO & Marketing, Cyber Security, "
                 "and Engineering Solutions."
             )
 
@@ -74,10 +74,10 @@ class ServiceListView(ListView):
         # the actual Service<->ServiceCategory relationship).
         base_queryset = self.get_queryset()
         context["growth_marketing_services"] = base_queryset.filter(
-            categories__slug__in=["digital-growth", "seo-marketing"]
+            categories__slug__in=["digital-marketing", "seo-marketing"]
         ).distinct()
         context["technology_services"] = base_queryset.exclude(
-            categories__slug__in=["digital-growth", "seo-marketing"]
+            categories__slug__in=["digital-marketing", "seo-marketing"]
         ).distinct()
         return context
 

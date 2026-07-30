@@ -30,7 +30,7 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         
         # Load active business solutions, newest case studies, and editorial articles
-        context["featured_services"] = Service.objects.filter(is_active=True)[:6]
+        context["featured_services"] = Service.objects.filter(is_active=True).order_by("id")
         context["featured_projects"] = Project.objects.filter(is_featured=True)[:3]
         context["recent_blogs"] = BlogPost.objects.filter(is_published=True).order_by("-published_at")[:3]
         context["testimonials"] = Testimonial.objects.filter(is_active=True).select_related("project")[:6]

@@ -12,7 +12,7 @@ backlog = 2048
 
 # Worker Process Thread Configurations
 # Optimal worker process pool calculated via CPU core footprint formula: (2 * Cores) + 1
-workers = int(os.getenv("GUNICORN_WORKERS", multiprocessing.cpu_count() * 2 + 1))
+workers = int(os.getenv("GUNICORN_WORKERS", 4))
 worker_class = "gthread"  # Concurrent request handling via thread-isolated models
 threads = 4
 worker_connections = 1000
