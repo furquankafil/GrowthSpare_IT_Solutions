@@ -162,13 +162,12 @@ ASGI_APPLICATION = "config.asgi.application"
 # ==============================================================================
 
 import dj_database_url
+import os
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv(
-            "DATABASE_URL",
-            "postgres://growthspare_user:securepassword123@db:5432/growthspare_db"
-        )
+    "default": dj_database_url.parse(
+        os.environ["DATABASE_URL"],
+        conn_max_age=600,
     )
 }
 
