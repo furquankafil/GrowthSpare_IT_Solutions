@@ -50,6 +50,7 @@ ALLOWED_HOSTS = [
     "nginx",
     "growthspareitsolutions.com",
     "www.growthspareitsolutions.com",
+    "growthspare-it-solutions.onrender.com",
 ]
 
 
