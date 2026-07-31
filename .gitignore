@@ -160,5 +160,3 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
-# Database seed scripts containing demo credentials
-seed_database.py
