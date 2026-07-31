@@ -76,4 +76,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ping || exit 1
 
 # Launch production application container using WSGI engine binding
-CMD sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --config deployment/gunicorn/gunicorn.conf.py config.wsgi:application"
+CMD sh -c "python manage.py migrate && python manage.py collectstatic --noinput && python seed_database.py && gunicorn --config deployment/gunicorn/gunicorn.conf.py config.wsgi:application"
