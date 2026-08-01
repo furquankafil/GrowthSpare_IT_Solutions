@@ -26,6 +26,8 @@
     <!-- Google Fonts Integration (Poppins & Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://unpkg.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- FontAwesome Vector Graphics and Icons Library -->
@@ -38,7 +40,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
     <!-- Tailwind CSS Production-grade CDN Integration with Custom Project Configurations -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -59,6 +60,7 @@
             }
         }
     </script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
 
     <!-- Custom Platform CSS Stylesheets Override -->
     <style>
@@ -206,45 +208,23 @@
 
     <!-- System JS Dependencies Libraries -->
     <!-- AOS Framework JS -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
     
     <!-- GSAP Interface Core Animations Engine -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
     
     <!-- Swiper Touch Sliders Core Framework JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js" defer></script>
     
     <!-- Typed.js Core Library -->
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js" defer></script>
 
     <!-- Project JS: structural UI behaviors (back-to-top, lazy load, sticky
          header, active nav tracking) and GSAP-powered entrance/hover/counter
          animations. Theme init already handled pre-paint by theme_toggle.js
          in <head>; toggle click-handlers live in navbar.html / dashboard. -->
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/animations.js' %}"></script>
-
-    <!-- Core Visual Handlers Implementation Script -->
-    <script>
-        // Initiate standard AOS trigger timelines
-        AOS.init({
-            duration: 800,
-            once: true,
-            mirror: false,
-        });
-
-        // System messages self-dismissal pipeline implementation
-        window.addEventListener('DOMContentLoaded', () => {
-            const notifications = document.querySelectorAll('#notification-holder > div');
-            notifications.forEach(notif => {
-                setTimeout(() => {
-                    notif.style.opacity = '0';
-                    notif.style.transform = 'translateY(-20px)';
-                    setTimeout(() => notif.remove(), 500);
-                }, 6000);
-            });
-        });
-    </script>
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="{% static 'js/animations.js' %}" defer></script>
 
     {% block extra_js %}{% endblock extra_js %}
 </body>

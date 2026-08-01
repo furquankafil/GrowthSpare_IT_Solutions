@@ -9,9 +9,68 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize core structural UI elements
     initBackToTop();
     initLazyLoading();
+    initLazyIframes();
     initScrollHeader();
     initActiveNavTracker();
+    initNotificationAutoDismiss();
+    initAOS();
 });
+
+/**
+ * Initializes native lazy loading for map iframes labeled with data-src.
+ */
+function initLazyIframes() {
+    const iframes = Array.from(document.querySelectorAll('iframe[data-src]'));
+
+    if (iframes.length === 0 || !('IntersectionObserver' in window)) {
+        iframes.forEach(frame => {
+            frame.src = frame.dataset.src;
+        });
+        return;
+    }
+
+    const iframeObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target;
+                iframe.src = iframe.dataset.src;
+                observer.unobserve(iframe);
+            }
+        });
+    }, {
+        rootMargin: '200px 0px',
+        threshold: 0.1,
+    });
+
+    iframes.forEach(frame => iframeObserver.observe(frame));
+}
+
+/**
+ * Initiates AOS when the deferred AOS library is available.
+ */
+function initAOS() {
+    if (typeof AOS !== 'undefined' && AOS && typeof AOS.init === 'function') {
+        AOS.init({
+            duration: 800,
+            once: true,
+            mirror: false,
+        });
+    }
+}
+
+/**
+ * Automatically dismisses flashed messages after a short interval.
+ */
+function initNotificationAutoDismiss() {
+    const notifications = document.querySelectorAll('#notification-holder > div');
+    notifications.forEach(notif => {
+        setTimeout(() => {
+            notif.style.opacity = '0';
+            notif.style.transform = 'translateY(-20px)';
+            setTimeout(() => notif.remove(), 500);
+        }, 6000);
+    });
+}
 
 /**
  * Instantiates the performance-optimized Back to Top button.
