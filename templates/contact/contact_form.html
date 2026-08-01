@@ -125,9 +125,8 @@
 
             <!-- Embedded dynamic maps visual frame (centered on OFFICIAL_LOCATION_ADDRESS / GOOGLE_MAPS_EMBED_QUERY env vars) -->
             <div class="aspect-video w-full rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-2xl bg-slate-950">
-                <iframe id="google-map-iframe" class="w-full h-full grayscale dark:invert"
-                        src="about:blank"
-                        data-src="{{ GOOGLE_MAPS_EMBED_SRC }}"
+                <iframe class="w-full h-full grayscale dark:invert"
+                        src="{{ GOOGLE_MAPS_EMBED_SRC }}"
                         title="{{ COMPANY_NAME }} office location map"
                         allowfullscreen=""
                         loading="lazy"

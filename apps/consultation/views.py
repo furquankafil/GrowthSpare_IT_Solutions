@@ -4,12 +4,12 @@ multi-step context tracking, and immediate administrative calendar alert dispatc
 """
 
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from django_ratelimit.decorators import ratelimit
 
-from apps.core.utils import send_mail_background
 from .forms import ConsultationBookingForm
 
 
@@ -65,13 +65,17 @@ class ConsultationBookingView(FormView):
             f"Respectfully,\n"
             f"Calendar Coordinator, GrowthSpare IT Solutions"
         )
-        send_mail_background(
-            subject,
-            body,
-            "GrowthSpare IT Solutions <growthspareitsolution@gmail.com>",
-            ["growthspareitsolution@gmail.com"],
-            fail_silently=True,
-        )
+        try:
+            send_mail(
+                subject,
+                body,
+                "GrowthSpare IT Solutions <growthspareitsolution@gmail.com>",
+                ["growthspareitsolution@gmail.com"],
+                fail_silently=True,
+            )
+        except Exception:
+            # Prevents email daemon runtime errors from blocking primary database saves
+            pass
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
