@@ -37,14 +37,14 @@
                 <div class="w-28 h-28 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 p-1 bg-slate-100 dark:bg-slate-950 shadow-lg">
                     <!-- Loads your uploaded professional portrait directly on the page -->
                     <img src="{% static 'images/founder.png' %}" 
-                         alt="Mohammad Furqan Kafil" 
+                         alt="GrowthSpare IT Solutions Team" 
                          class="w-full h-full object-cover rounded-full">
                 </div>
                 <div class="text-center sm:text-left space-y-1">
                     <span class="text-[10px] font-extrabold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Founder & Chief Architect</span>
                     <h3 class="text-base sm:text-lg font-bold font-poppins text-slate-900 dark:text-white">{{ FOUNDER_NAME }}</h3>
                     <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
-                        Connect with me directly to coordinate custom enterprise system specifications, AI integrations, or software scoping.
+                        Connect with our team to discuss your project requirements, AI solutions, website development, or custom software.
                     </p>
                 </div>
             </div>
@@ -137,7 +137,7 @@
 
         <!-- Right Column: Structured Lead Ingestion Form -->
         <div class="lg:col-span-7 glassmorphism p-10 sm:p-12 rounded-3xl shadow-2xl border border-slate-900/10 dark:border-white/5">
-            <h3 class="text-xl font-bold font-poppins text-slate-900 dark:text-white mb-8 border-b border-slate-900/10 dark:border-white/5 pb-4">Send us a direct project brief</h3>
+            <h3 class="text-xl font-bold font-poppins text-slate-900 dark:text-white mb-8 border-b border-slate-900/10 dark:border-white/5 pb-4">Tell Us About Your Project</h3>
             
             <form method="POST" action="{% url 'contact:contact' %}" class="space-y-6">
                 {% csrf_token %}

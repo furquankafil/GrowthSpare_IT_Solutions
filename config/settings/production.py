@@ -29,7 +29,7 @@ def _env_list(key, default):
 # Production Core Settings
 # ==============================================================================
 
-DEBUG = True
+DEBUG = False
 
 
 SECRET_KEY = os.getenv(

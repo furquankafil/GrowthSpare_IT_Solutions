@@ -12,7 +12,7 @@ urlpatterns = [
     # Master Authentication Pathways
     path("login/", views.UserLoginView.as_view(), name="login"),
     path("logout/", views.UserLogoutView.as_view(), name="logout"),
-    path("register/", views.UserRegisterView.as_view(), name="register"),
+    #path("register/", views.UserRegisterView.as_view(), name="register"),
     
     # Extended Workspace Profile Pathways
     path("profile/", views.UserProfileView.as_view(), name="profile"),
