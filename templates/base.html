@@ -18,6 +18,21 @@
         {% render_seo_meta title=seo_title description=seo_description %}
     {% endblock seo %}
 
+
+    <!-- Google Analytics 4 (GA4) Tracking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P68BKJ57R4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag(){
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-P68BKJ57R4');
+    </script>
+
     <!-- Structured Data JSON-LD Schemas -->
     {% if schema_data %}
         {% render_json_ld schema_type|default:"Organization" schema_data %}
