@@ -52,9 +52,8 @@ class Project(models.Model):
         related_name="projects",
         help_text="Select one or more categories associated with this showcase project.",
     )
-    featured_image = models.ImageField(
-        upload_to="portfolio/featured/",
-        help_text="Primary visualization card banner.",
+    featured_image = models.URLField(
+    help_text="Primary visualization card banner URL.",
     )
     video_url = models.URLField(
         blank=True,

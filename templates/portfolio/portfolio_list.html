@@ -76,8 +76,10 @@
                         <!-- Project Image Frame with checking capabilities -->
                         <div class="relative aspect-video overflow-hidden bg-slate-900">
                             {% if project.featured_image %}
-                                <img src="{% if 'http' in project.featured_image.name %}{{ project.featured_image.name }}{% else %}{{ project.featured_image.url }}{% endif %}" 
-                                     alt="{{ project.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy">
+                            <img src="{{ project.featured_image }}" 
+                                alt="{{ project.title }}" 
+                                class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" 
+                                loading="lazy">
                             {% else %}
                                 <div class="w-full h-full bg-gradient-to-tr from-primary/20 to-accent/20 flex items-center justify-center">
                                     <i class="fas fa-image text-3xl text-slate-500"></i>
