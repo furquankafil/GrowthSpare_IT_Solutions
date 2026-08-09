@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Get a Free Website Audit - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Request a free website audit from GrowthSpare IT Solutions. Tell us about your business and current website, and our team will review it and get in touch.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

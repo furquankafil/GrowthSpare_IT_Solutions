@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Frequently Asked Questions & Support - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Find answers to common questions about our AI workflows, CRM software developments, custom Django applications, and organic SEO.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

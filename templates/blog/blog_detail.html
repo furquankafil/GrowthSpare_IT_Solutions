@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>{{ post.title }} - GrowthSpare IT Solutions Insights</title>
-    <meta name="description" content="{{ post.meta_description|default:post.title }}">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}
@@ -186,7 +186,7 @@
                             <div class="flex items-center space-x-3 group">
                                 <div class="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-900/10 dark:border-white/5">
                                     <img src="{% if 'http' in rp.featured_image.name %}{{ rp.featured_image.name }}{% else %}{{ rp.featured_image.url }}{% endif %}" 
-                                         alt="{{ rp.title }}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
+                                         alt="{{ rp.title }}" loading="lazy" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
                                 </div>
                                 <div class="space-y-1 truncate">
                                     <h4 class="text-xs font-bold text-slate-900 dark:text-white font-poppins group-hover:text-primary dark:group-hover:text-accent transition-colors truncate">

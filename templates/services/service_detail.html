@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>{{ service.title }} Services - GrowthSpare IT Solutions</title>
-    <meta name="description" content="{{ service.meta_description|default:service.overview|truncatewords:25 }}">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

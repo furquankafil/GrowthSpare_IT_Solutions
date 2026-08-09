@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Terms of Service & SLA - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Review the official Terms of Service and Service Level Agreements governing GrowthSpare IT Solutions technology deployments and platforms.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

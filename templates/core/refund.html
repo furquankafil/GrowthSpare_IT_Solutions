@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>SLA Billing & Refund Policy - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Review the billing, cancellation, milestone validation, and refund terms of service for software development and AI integration services.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

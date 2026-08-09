@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Contact Our Technical Offices - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Reach out to GrowthSpare IT Solutions. Contact our solutions desk in New Delhi, India for website development, AI automation, and custom CRM software.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Corporate Privacy Protocol - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Read the GrowthSpare IT Solutions data protection parameters, compliance protocols, and strict user security rules.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

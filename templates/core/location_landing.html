@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>{{ location.seo_title }} - GrowthSpare IT Solutions</title>
-    <meta name="description" content="{{ location.seo_description }}">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Enterprise Demo Projects & Portfolio - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Explore our complete collection of 100% responsive websites, secure CRM dashboards, AI-powered WhatsApp automations, and digital marketing portfolios.">
-    
+    {% render_seo_meta title=seo_title description=seo_description %}
+{% endblock seo %}
+
+{% block extra_head %}
     <style>
         /* Smooth, hardware-accelerated 300ms transition rules preventing layout jumps */
         .portfolio-card-transition {
@@ -13,7 +15,7 @@
             will-change: opacity, transform;
         }
     </style>
-{% endblock seo %}
+{% endblock extra_head %}
 
 {% block content %}
 <!-- ==============================================================================

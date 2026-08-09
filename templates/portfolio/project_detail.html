@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>{{ project.title }} - {% if project.is_concept_project %}Concept Project{% else %}Client Case Study{% endif %} - GrowthSpare IT Solutions</title>
-    <meta name="description" content="{{ project.meta_description|default:project.problem_statement|truncatewords:25 }}">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}
@@ -106,7 +106,7 @@
                         <div class="swiper-wrapper">
                             {% for img in project.gallery_images.all %}
                                 <div class="swiper-slide relative aspect-video flex flex-col justify-end">
-                                    <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" class="absolute inset-0 w-full h-full object-cover">
+                                    <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                                     {% if img.caption %}
                                         <div class="relative z-10 bg-slate-950/80 p-4 border-t border-white/5 backdrop-blur-md text-xs text-white font-medium font-poppins">
                                             {{ img.caption }}

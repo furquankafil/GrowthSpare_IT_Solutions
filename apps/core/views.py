@@ -418,20 +418,44 @@ class PrivacyPolicyView(TemplateView):
     """Corporate data security compliance page detailing handling under standard ISO protocols."""
     template_name = "core/privacy.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["seo_title"] = "Privacy Policy"
+        context["seo_description"] = "Read the GrowthSpare IT Solutions data protection parameters, compliance protocols, and strict user security rules."
+        return context
+
 
 class TermsView(TemplateView):
     """Legal service level agreements and structural user operation terms."""
     template_name = "core/terms.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["seo_title"] = "Terms of Service"
+        context["seo_description"] = "Review the official Terms of Service and Service Level Agreements governing GrowthSpare IT Solutions technology deployments and platforms."
+        return context
 
 
 class RefundPolicyView(TemplateView):
     """Standard SLA billing, retainer timelines, and service cancellation matrices."""
     template_name = "core/refund.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["seo_title"] = "Billing & Refund Policy"
+        context["seo_description"] = "Review the billing, cancellation, milestone validation, and refund terms of service for software development and AI integration services."
+        return context
+
 
 class CookiesPolicyView(TemplateView):
     """Detailed analytics collection, persistent cookie usage, and privacy controls."""
     template_name = "core/cookies.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["seo_title"] = "Cookie Policy"
+        context["seo_description"] = "Read the official Cookie Policy for GrowthSpare IT Solutions. Learn how we use persistent browser storage to improve site performance."
+        return context
 
 
 @method_decorator(ratelimit(key="ip", rate="5/m", method="POST", block=True), name="post")

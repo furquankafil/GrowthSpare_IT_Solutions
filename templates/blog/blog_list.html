@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Publications & Tech Insights - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Explore modern software development, AI automation, and technical marketing insights written directly by the GrowthSpare team.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}
@@ -157,7 +157,7 @@
                             <div class="flex items-center space-x-3.5 group">
                                 <div class="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-900/10 dark:border-white/5">
                                     <img src="{% if 'http' in fp.featured_image.name %}{{ fp.featured_image.name }}{% else %}{{ fp.featured_image.url }}{% endif %}" 
-                                         alt="{{ fp.title }}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
+                                         alt="{{ fp.title }}" loading="lazy" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
                                 </div>
                                 <div class="space-y-1 truncate">
                                     <h4 class="text-xs font-bold text-slate-900 dark:text-white font-poppins group-hover:text-primary dark:group-hover:text-accent transition-colors truncate">

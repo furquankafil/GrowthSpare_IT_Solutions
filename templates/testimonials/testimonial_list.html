@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Client Reviews & Testimonials - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Read client feedback for GrowthSpare IT Solutions. Genuine testimonials are added as projects are completed.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}
@@ -67,7 +67,7 @@
                     <div class="pt-6 mt-6 border-t border-slate-900/10 dark:border-white/5 flex items-center space-x-4">
                         <div class="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 p-0.5 bg-slate-100 dark:bg-slate-950 flex items-center justify-center text-primary font-bold">
                             {% if testimonial.client_avatar %}
-                                <img src="{{ testimonial.client_avatar.url }}" alt="{{ testimonial.client_name }}" class="w-full h-full object-cover rounded-full">
+                                <img src="{{ testimonial.client_avatar.url }}" alt="{{ testimonial.client_name }}" loading="lazy" class="w-full h-full object-cover rounded-full">
                             {% else %}
                                 {{ testimonial.client_name|first|upper }}
                             {% endif %}

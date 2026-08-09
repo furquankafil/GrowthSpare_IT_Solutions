@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>Services & Capabilities - GrowthSpare IT Solutions</title>
-    <meta name="description" content="GrowthSpare combines performance marketing and custom technology to help businesses grow online and run smarter — all under one roof.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}

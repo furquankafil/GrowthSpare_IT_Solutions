@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load seo_tags %}
 
 {% block seo %}
-    <title>About Our Engineering Journey - GrowthSpare IT Solutions</title>
-    <meta name="description" content="Learn more about GrowthSpare IT Solutions. We engineer custom web products, deploy automation pipelines, and scale businesses globally.">
+    {% render_seo_meta title=seo_title description=seo_description %}
 {% endblock seo %}
 
 {% block content %}
@@ -105,7 +105,7 @@
 
                 <!-- Center Brand Focal Indicator -->
                 <div class="w-32 h-32 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center z-10 shadow-2xl shadow-primary/20">
-                    <img src="{% static 'images/logo.png' %}" alt="GrowthSpare Logo" class="h-10 w-auto opacity-90 dark:brightness-110">
+                    <img src="{% static 'images/logo.png' %}" alt="GrowthSpare Logo" loading="lazy" class="h-10 w-auto opacity-90 dark:brightness-110">
                 </div>
             </div>
         </div>
@@ -125,6 +125,7 @@
                 <!-- Founder image source with placeholder fallback -->
                 <img src="{% static 'images/founder.png' %}" 
                      alt="{{ FOUNDER_NAME }}" 
+                     loading="lazy"
                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                      onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=750';">
                 
