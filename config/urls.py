@@ -9,24 +9,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponseRedirect
 
-# ADD THESE TWO IMPORTS
-from django.views.generic import RedirectView
-from django.templatetags.static import static as static_file
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 # Global exception handlers pointing to custom views inside core application
 handler404 = "apps.core.views.custom_handler_404"
 handler500 = "apps.core.views.custom_handler_500"
 
+
+def favicon_redirect(request):
+    return HttpResponseRedirect(staticfiles_storage.url("images/favicon.ico"))
+
+
 urlpatterns = [
     # Root favicon (https://growthspareitsolutions.com/favicon.ico)
-    path(
-        "favicon.ico",
-        RedirectView.as_view(
-            url=static_file("images/favicon.ico"),
-            permanent=True,
-        ),
-    ),
+    path("favicon.ico", favicon_redirect),
 
     # Enterprise Admin Command Console
     path("admin/", admin.site.urls),
