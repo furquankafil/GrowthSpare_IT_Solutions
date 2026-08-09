@@ -21,6 +21,10 @@ def company_branding(request):
         "OFFICIAL_EMAIL": "growthspareitsolution@gmail.com",
         "OFFICIAL_PHONE": "+91 9811579273",
         "OFFICIAL_WHATSAPP": "+91 9811579273",
+        # Digits-only variant for wa.me links — wa.me rejects URLs containing
+        # "+" or spaces, so this is what every wa.me href should interpolate
+        # instead of OFFICIAL_WHATSAPP directly.
+        "OFFICIAL_WHATSAPP_LINK": "919811579273",
         # Address is configurable via the OFFICIAL_LOCATION_ADDRESS env var
         # (see config/settings/base.py) instead of being hardcoded here.
         "OFFICIAL_LOCATION": settings.OFFICIAL_LOCATION_ADDRESS,

@@ -157,9 +157,12 @@ class ServiceDetailView(DetailView):
             else f"Explore our high-performance {service.title} solutions. Learn about features, benefits, processes, and tech stacks."
         )
 
-        # Build schema data structure dynamically to render in JSON-LD headers
-        context["schema_type"] = "Service"
-        context["schema_data"] = {
+        # Build schema data structure dynamically to render in JSON-LD headers.
+        # Combined as a @graph: Service schema plus FAQPage schema when this
+        # service actually has active FAQs (matches what's visibly on the page —
+        # FAQPage schema on a page without visible qualifying FAQs violates
+        # Google's structured data guidelines).
+        service_schema = {
             "name": service.title,
             "description": service.overview,
             "provider": {
@@ -173,4 +176,26 @@ class ServiceDetailView(DetailView):
                 "description": service.pricing_estimate,
             },
         }
+        service_schema["@type"] = "Service"
+
+        active_faqs = list(service.service_faqs.all())
+        if active_faqs:
+            faq_schema = {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": faq.question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": faq.answer,
+                        },
+                    }
+                    for faq in active_faqs
+                ],
+            }
+            context["schema_data"] = [service_schema, faq_schema]
+        else:
+            context["schema_type"] = "Service"
+            context["schema_data"] = {k: v for k, v in service_schema.items() if k != "@type"}
         return context

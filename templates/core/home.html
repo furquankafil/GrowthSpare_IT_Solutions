@@ -22,30 +22,26 @@
             </div>
             
             <h1 class="text-5xl sm:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-none text-slate-900 dark:text-white font-poppins">
-                Build Websites,<br>
-                Automate Business &<br>
+                Build a Better<br>
+                Digital Presence.<br>
                 <span class="bg-gradient-to-r from-primary via-accent to-success bg-clip-text text-transparent">
-                    Grow Online with Confidence
+                    Automate. Grow Faster.
                 </span>
             </h1>
 
             <!-- Subtitle with expanded size for premium readability -->
             <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                GrowthSpare IT Solutions helps startups and businesses build modern websites, improve online visibility, automate workflows with AI, and develop custom software solutions.
+                GrowthSpare IT Solutions helps businesses grow with website development, AI automation, CRM systems, SEO, digital marketing, and custom software — all under one roof.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                 <a href="{% url 'consultation:book' %}" 
                    class="w-full sm:w-auto text-center px-10 py-5 rounded-xl font-bold font-poppins text-white bg-gradient-to-r from-primary to-accent shadow-xl shadow-primary/25 hover:opacity-95 hover:scale-[1.01] transition-all">
-                    Get Free Consultation
+                    Get a Free Website Audit
                 </a>
                 <a href="{% url 'portfolio:list' %}" 
                    class="w-full sm:w-auto text-center px-10 py-5 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all">
-                    View Portfolio
-                </a>
-                <a href="{% url 'contact:contact' %}" 
-                   class="w-full sm:w-auto text-center px-10 py-5 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all">
-                    Request a Free Quote
+                    View Our Work
                 </a>
             </div>
         </div>
@@ -332,9 +328,11 @@
                                         {{ category.name }}
                                     {% endfor %}
                                 </span>
+                                {% if project.is_concept_project %}
                                 <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
-                                    Demo Project
+                                    Concept Project
                                 </span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="p-6 space-y-4">
@@ -580,14 +578,50 @@
 </section>
 
 <!-- ==============================================================================
+     8.5 PRICING SECTION (Real, DB-driven pricing — no invented figures)
+     ============================================================================== -->
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Pricing</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Simple, Transparent Packages</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Starting prices for our core services. Every project is scoped and quoted based on your exact requirements.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for service in featured_services %}
+                <div class="glassmorphism p-6 rounded-3xl border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:-translate-y-1 hover:border-primary/20 transition-all duration-300" data-aos="fade-up">
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold font-poppins text-slate-900 dark:text-white leading-snug">{{ service.title }}</h3>
+                        <p class="text-lg font-extrabold font-poppins text-primary dark:text-accent">{{ service.pricing_estimate }}</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-2">{{ service.overview }}</p>
+                    </div>
+                    <a href="{{ service.get_absolute_url }}" class="mt-6 text-xs font-bold text-primary dark:text-accent hover:underline inline-flex items-center space-x-1.5">
+                        <span>See What's Included</span> <i class="fas fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-slate-500">Pricing catalog initializing...</div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-10">
+            <a href="{% url 'consultation:book' %}" class="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold font-poppins text-sm hover:opacity-95 transition-all shadow-lg shadow-primary/20 inline-block">
+                Get a Custom Quote for Your Project
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
      9. TESTIMONIALS SLIDER SECTION (SwiperJS Implementation with Demo helper label)
      ============================================================================== -->
 <section class="py-24 border-t border-slate-900/10 dark:border-white/5 overflow-hidden relative z-10">
     <div class="max-w-[1400px] mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">What Our Clients Say</span>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Verified B2B Feedback</h2>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Read certified ratings and reviews direct from our partners and clients globally.</p>
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Client Feedback</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Sample Client Feedback</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">These are sample reviews illustrating the kind of experience we aim to deliver — genuine testimonials will replace these as projects are completed.</p>
         </div>
 
         <!-- Dynamic Swiper container layout -->
@@ -781,18 +815,18 @@
     <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
         <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight font-poppins">Ready to Grow Your Business?</h2>
         <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
-            Let's discuss your project and create a solution tailored to your goals.
+            Get a free audit of your current website, or let's discuss your project from scratch.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 font-poppins">
-                Book Free Consultation
+                Get a Free Website Audit
             </a>
             <a href="{% url 'contact:contact' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-white/10 text-white font-bold text-xs tracking-wider uppercase hover:bg-white/5 transition-all font-poppins">
                 Request Free Quote
             </a>
-            <a href="https://wa.me/{{ OFFICIAL_WHATSAPP }}?text=Hello%20GrowthSpare%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-success text-white font-bold text-xs tracking-wider uppercase hover:opacity-90 transition-all font-poppins inline-flex items-center justify-center space-x-2 shadow-lg">
+            <a href="https://wa.me/{{ OFFICIAL_WHATSAPP_LINK }}?text=Hi%20GrowthSpare%2C%20I%20would%20like%20a%20free%20website%20audit%20for%20my%20business." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-success text-white font-bold text-xs tracking-wider uppercase hover:opacity-90 transition-all font-poppins inline-flex items-center justify-center space-x-2 shadow-lg">
                 <i class="fab fa-whatsapp"></i>
-                <span>WhatsApp Us</span>
+                <span>Audit on WhatsApp</span>
             </a>
             <a href="tel:{{ OFFICIAL_PHONE }}" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-white/10 text-white font-bold text-xs tracking-wider uppercase hover:bg-white/5 transition-all font-poppins inline-flex items-center justify-center space-x-2">
                 <i class="fas fa-phone-volume"></i>

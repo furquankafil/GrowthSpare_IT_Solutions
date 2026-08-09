@@ -19,6 +19,7 @@ class ConsultationBookingForm(forms.ModelForm):
             "email",
             "phone",
             "company",
+            "website_url",
             "industry",
             "budget",
             "services_required",
@@ -29,7 +30,8 @@ class ConsultationBookingForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"placeholder": "John Doe"}),
             "email": forms.EmailInput(attrs={"placeholder": "name@company.com"}),
             "phone": forms.TextInput(attrs={"placeholder": "+91 9811653212"}),
-            "company": forms.TextInput(attrs={"placeholder": "GrowthSpare IT Solutions"}),
+            "company": forms.TextInput(attrs={"placeholder": "Your Business Name"}),
+            "website_url": forms.URLInput(attrs={"placeholder": "https://yourbusiness.com (leave blank if you don't have one yet)"}),
             "industry": forms.TextInput(attrs={"placeholder": "e.g., E-commerce, FinTech, Logistics"}),
             "project_details": forms.Textarea(
                 attrs={

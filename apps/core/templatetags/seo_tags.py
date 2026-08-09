@@ -91,16 +91,32 @@ def render_json_ld(schema_type, data):
     """
     Returns dynamically populated Schema.org JSON-LD elements wrapped
     in secure HTML scripts, establishing rich snippet capabilities.
+
+    `data` normally is a single dict for one schema block (backward
+    compatible with all existing callers). It can also be a list of dicts,
+    each already containing its own "@type" key, in which case this emits
+    a single "@graph" array so a page can carry more than one schema block
+    (e.g. a Service page needs both Service and FAQPage schema — one
+    <script> tag per page is what Google's tooling expects, not several).
     """
-    if not isinstance(data, dict):
+    if isinstance(data, list):
+        graph_items = [d for d in data if isinstance(d, dict) and d]
+        if not graph_items:
+            return ""
+        schema_payload = {
+            "@context": "https://schema.org",
+            "@graph": graph_items,
+        }
+    elif isinstance(data, dict):
+        if not data:
+            return ""
+        schema_payload = {
+            "@context": "https://schema.org",
+            "@type": schema_type,
+            **data,
+        }
+    else:
         return ""
-        
-    # Inject primary schema context constraints
-    schema_payload = {
-        "@context": "https://schema.org",
-        "@type": schema_type,
-        **data
-    }
     
     # json.dumps already produces safely-escaped string content for the
     # </script> boundary is the one risk here — guard against a payload

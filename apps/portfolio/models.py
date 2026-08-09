@@ -98,6 +98,17 @@ class Project(models.Model):
         default=False,
         help_text="Enables display in landing page showcase sections.",
     )
+    is_concept_project = models.BooleanField(
+        default=True,
+        help_text=(
+            "Marks this as a concept/demo project rather than a verified "
+            "paid client engagement. Concept projects render a clearly "
+            "labelled 'Concept Project' badge and omit unverified client/"
+            "results claims from SEO structured data. Uncheck only once "
+            "the client relationship and stated results are genuine and "
+            "verifiable."
+        ),
+    )
     
     # Custom Metadata Tags for SEO
     meta_title = models.CharField(

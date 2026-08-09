@@ -6,7 +6,7 @@ operational services, case studies, and corporate publications.
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from apps.services.models import Service
+from apps.services.models import Service, ServiceCategory
 from apps.portfolio.models import Project
 from apps.blog.models import BlogPost
 
@@ -26,6 +26,22 @@ class StaticViewSitemap(Sitemap):
             "core:cookies",
             "contact:contact",
             "consultation:book",
+            # Previously missing — these are real, valuable, crawlable index
+            # pages (not just detail pages), and were absent from the
+            # sitemap entirely.
+            "services:list",
+            "portfolio:list",
+            "blog:list",
+            "faq:list",
+            "testimonials:list",
+            "core:location-delhi",
+            "core:location-noida",
+            "core:location-gurgaon",
+            "core:industry-restaurant",
+            "core:industry-real-estate",
+            "core:industry-clinic",
+            "core:industry-education",
+            "core:industry-small-business",
         ]
 
     def location(self, item):
@@ -44,6 +60,18 @@ class ServiceSitemap(Sitemap):
     def lastmod(self, obj):
         # Fallback timestamp handling if database model track flags change
         return obj.updated_at
+
+
+class ServiceCategorySitemap(Sitemap):
+    """Maps the dedicated /services/category/<slug>/ landing pages — previously absent from the sitemap entirely."""
+    priority = 0.6
+    changefreq = "monthly"
+
+    def items(self):
+        return ServiceCategory.objects.all()
+
+    def location(self, obj):
+        return reverse("services:category", kwargs={"category_slug": obj.slug})
 
 
 class PortfolioSitemap(Sitemap):

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block seo %}
-    <title>{{ project.title }} - Client Case Study - GrowthSpare IT Solutions</title>
+    <title>{{ project.title }} - {% if project.is_concept_project %}Concept Project{% else %}Client Case Study{% endif %} - GrowthSpare IT Solutions</title>
     <meta name="description" content="{{ project.meta_description|default:project.problem_statement|truncatewords:25 }}">
 {% endblock seo %}
 
@@ -31,6 +31,12 @@
         <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest font-poppins">
             Client Profile: {{ project.client_name }} — Industry Sector: {{ project.industry }}
         </p>
+
+        {% if project.is_concept_project %}
+        <div class="inline-flex items-center space-x-2 bg-success/10 border border-success/20 px-4 py-1.5 rounded-full">
+            <span class="text-xs font-bold font-poppins uppercase tracking-wider text-success">Concept Project — illustrative example, not a verified client engagement</span>
+        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -40,7 +46,7 @@
 <section class="py-12 border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10 backdrop-blur-md">
     <div class="max-w-[1400px] mx-auto px-6 text-center">
         <div class="inline-flex flex-col items-center space-y-3">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins block">Verified Outcome Metric</span>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins block">{% if project.is_concept_project %}Illustrative Target Outcome{% else %}Verified Outcome Metric{% endif %}</span>
             <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-success font-poppins uppercase tracking-wide leading-none">
                 <i class="fas fa-chart-line mr-2"></i>{{ project.results_statement }}
             </div>
@@ -84,7 +90,7 @@
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
                 <div class="flex items-center space-x-3 text-success">
                     <div class="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center text-success"><i class="fas fa-circle-check"></i></div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">3. Commercial Growth Outcomes</h3>
+                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">3. Commercial Growth Outcomes{% if project.is_concept_project %} <span class="text-xs font-medium text-slate-400 normal-case">(illustrative target, not a measured result)</span>{% endif %}</h3>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                     {{ project.results_statement }}

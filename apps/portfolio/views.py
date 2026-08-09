@@ -39,11 +39,12 @@ class PortfolioListView(ListView):
         context["active_category"] = self.request.GET.get("category", "")
         
         # SEO attributes
-        context["seo_title"] = "Case Studies & Production-Grade Code Implementations"
+        context["seo_title"] = "Portfolio & Case Studies"
         context["seo_description"] = (
-            "Explore our verified corporate milestone case studies. Read how "
-            "GrowthSpare IT Solutions structures robust cloud databases, deploys AI "
-            "automation hooks, and implements high-performance web products."
+            "Explore our portfolio of website, CRM, AI automation, and SEO "
+            "projects. See how GrowthSpare IT Solutions structures robust cloud "
+            "databases, deploys AI automation hooks, and implements "
+            "high-performance web products."
         )
         return context
 
@@ -78,13 +79,22 @@ class ProjectDetailView(DetailView):
         context["seo_title"] = (
             project.meta_title
             if project.meta_title
-            else f"{project.title} - Client Case Study ({project.client_name})"
+            else f"{project.title} - {'Concept Project' if project.is_concept_project else 'Client Case Study'} ({project.client_name})"
         )
-        context["seo_description"] = (
-            project.meta_description
-            if project.meta_description
-            else f"Read the success story for {project.client_name}. Learn about the engineering challenges faced, our architectural actions, and the metrics achieved."
-        )
+        if project.meta_description:
+            context["seo_description"] = project.meta_description
+        elif project.is_concept_project:
+            context["seo_description"] = (
+                f"A concept project illustrating how GrowthSpare IT Solutions would "
+                f"approach a {project.industry} engagement like {project.client_name}. "
+                f"See the engineering approach and technology stack used."
+            )
+        else:
+            context["seo_description"] = (
+                f"Read the success story for {project.client_name}. Learn about the "
+                f"engineering challenges faced, our architectural actions, and the "
+                f"metrics achieved."
+            )
 
         # Dynamic Schema JSON-LD structure mapping
         # Safely extract first category name if available for JSON-LD data
@@ -93,15 +103,22 @@ class ProjectDetailView(DetailView):
         context["schema_data"] = {
             "name": project.title,
             "description": project.problem_statement[:150] + "...",
-            "client": {
-                "@type": "Organization",
-                "name": project.client_name,
-                "industry": project.industry,
-            },
             "category": first_cat.name if first_cat else "General",
             "creator": {
                 "@type": "LocalBusiness",
                 "name": "GrowthSpare IT Solutions",
             },
         }
+        # Only attribute a named client relationship in structured data for
+        # verified, non-concept engagements — attaching a fabricated
+        # Organization name to a concept project here would be a false
+        # business-relationship claim indexed directly by search engines.
+        if not project.is_concept_project:
+            context["schema_data"]["client"] = {
+                "@type": "Organization",
+                "name": project.client_name,
+                "industry": project.industry,
+            }
+        else:
+            context["schema_data"]["genre"] = "Concept Project"
         return context

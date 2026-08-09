@@ -37,6 +37,7 @@ class ConsultationBookingAdmin(admin.ModelAdmin):
                     "email",
                     "phone",
                     "company",
+                    "website_url",
                     "industry",
                 )
             },

@@ -8,7 +8,13 @@ from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 
 from . import views
-from .sitemaps import StaticViewSitemap, BlogSitemap, ServiceSitemap, PortfolioSitemap
+from .sitemaps import (
+    StaticViewSitemap,
+    BlogSitemap,
+    ServiceSitemap,
+    ServiceCategorySitemap,
+    PortfolioSitemap,
+)
 
 app_name = "core"
 
@@ -16,6 +22,7 @@ app_name = "core"
 sitemaps = {
     "static": StaticViewSitemap,
     "services": ServiceSitemap,
+    "service-categories": ServiceCategorySitemap,
     "portfolio": PortfolioSitemap,
     "blogs": BlogSitemap,
 }
@@ -27,6 +34,18 @@ urlpatterns = [
     # General Corporate Pages
     path("", views.HomeView.as_view(), name="home"),
     path("about-us/", views.AboutView.as_view(), name="about"),
+
+    # Local SEO — City Landing Pages (Delhi HQ + wider NCR)
+    path("locations/web-development-delhi/", views.LocationLandingView.as_view(), {"location_slug": "delhi"}, name="location-delhi"),
+    path("locations/web-development-noida/", views.LocationLandingView.as_view(), {"location_slug": "noida"}, name="location-noida"),
+    path("locations/web-development-gurgaon/", views.LocationLandingView.as_view(), {"location_slug": "gurgaon"}, name="location-gurgaon"),
+
+    # Industry-Specific Landing Pages
+    path("industries/restaurant-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "restaurant-website-development"}, name="industry-restaurant"),
+    path("industries/real-estate-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "real-estate-website-development"}, name="industry-real-estate"),
+    path("industries/clinic-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "clinic-website-development"}, name="industry-clinic"),
+    path("industries/education-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "education-website-development"}, name="industry-education"),
+    path("industries/small-business-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "small-business-website-development"}, name="industry-small-business"),
     
     # Legal and SLA Compliance Pages
     path("privacy-policy/", views.PrivacyPolicyView.as_view(), name="privacy"),

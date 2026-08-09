@@ -11,8 +11,10 @@ from .models import Testimonial
 
 class TestimonialListView(ListView):
     """
-    Renders the verified corporate reviews directory. Loads and displays active
+    Renders the client reviews directory. Loads and displays active
     customer endorsements alongside their respective designations and corporate contexts.
+    Note: seeded testimonials are clearly labelled "Sample Review" in the
+    template until replaced with genuine, verified client feedback.
     """
     model = Testimonial
     template_name = "testimonials/testimonial_list.html"
@@ -20,16 +22,15 @@ class TestimonialListView(ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        """Retrieves and displays verified corporate reviews safely."""
+        """Retrieves and displays active customer reviews safely."""
         return Testimonial.objects.filter(is_active=True).select_related("project")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Custom SEO attributes
-        context["seo_title"] = "Verified Corporate Testimonials & Case Study Success Reviews"
+        context["seo_title"] = "Client Reviews & Testimonials"
         context["seo_description"] = (
-            "Explore reviews and ratings from our B2B partners, company founders, "
-            "and directors globally detailing their technology optimization outcomes with "
-            "GrowthSpare IT Solutions."
+            "Read client feedback for GrowthSpare IT Solutions, covering website "
+            "development, AI automation, CRM, and SEO projects."
         )
         return context

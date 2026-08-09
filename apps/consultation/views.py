@@ -35,9 +35,9 @@ class ConsultationBookingView(FormView):
 
         messages.success(
             self.request,
-            "Your strategic scoping profile has been logged successfully! "
-            "Our corporate coordination desk will review your details and "
-            "confirm a meeting slot along with your video conference link.",
+            "Your free website audit request has been received! "
+            "Our team will review your details and get back to you shortly "
+            "with your audit findings and a suggested meeting slot.",
         )
 
         return super().form_valid(form)
@@ -58,17 +58,18 @@ class ConsultationBookingView(FormView):
     def send_scoping_notification_email(self, booking):
 
         subject = (
-            f"[Consultation Scheduled] "
+            f"[Free Website Audit Request] "
             f"{booking.name} - {booking.company or 'SME Stakeholder'}"
         )
 
 
         body = (
-            f"Admins, a new strategic consultation request has been recorded:\n\n"
+            f"Admins, a new free website audit request has been recorded:\n\n"
             f"Name: {booking.name}\n"
             f"Email: {booking.email}\n"
-            f"Phone: {booking.phone}\n"
+            f"Phone / WhatsApp: {booking.phone}\n"
             f"Company: {booking.company or 'N/A'}\n"
+            f"Website URL: {booking.website_url or 'No existing website'}\n"
             f"Industry Focus: {booking.industry or 'N/A'}\n"
             f"Selected Service Group: {booking.get_services_required_display()}\n"
             f"Stated Budget Scale: {booking.get_budget_display()}\n"
@@ -95,13 +96,13 @@ class ConsultationBookingView(FormView):
         context = super().get_context_data(**kwargs)
 
         context["seo_title"] = (
-            "Book a Free AI & Web Solutions Scoping Consultation"
+            "Get a Free Website Audit - GrowthSpare IT Solutions"
         )
 
         context["seo_description"] = (
-            "Coordinate a direct, strategic scoping meeting with our solution "
-            "architects. Define your requirements, budget configurations, "
-            "and technical timeline parameters."
+            "Request a free website audit from GrowthSpare IT Solutions. "
+            "Share your website and business details and our team will "
+            "review your online presence and get in touch."
         )
 
         return context

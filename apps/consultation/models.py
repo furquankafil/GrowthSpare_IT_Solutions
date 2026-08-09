@@ -57,6 +57,11 @@ class ConsultationBooking(models.Model):
         blank=True,
         help_text="Entity or company business name.",
     )
+    website_url = models.URLField(
+        max_length=255,
+        blank=True,
+        help_text="Existing website URL to be reviewed as part of the free audit (optional if the business has no site yet).",
+    )
     industry = models.CharField(
         max_length=100,
         blank=True,

@@ -39,10 +39,11 @@ class ProjectAdmin(admin.ModelAdmin):
         "client_name",
         "get_categories",  # Custom helper displaying mapped classifications cleanly
         "is_featured",
+        "is_concept_project",
         "project_duration",
         "created_at",
     )
-    list_filter = ("is_featured", "categories", "industry", "created_at")
+    list_filter = ("is_featured", "is_concept_project", "categories", "industry", "created_at")
     search_fields = (
         "title",
         "client_name",
@@ -64,6 +65,7 @@ class ProjectAdmin(admin.ModelAdmin):
                     "industry",
                     "categories",
                     "is_featured",
+                    "is_concept_project",
                 )
             },
         ),

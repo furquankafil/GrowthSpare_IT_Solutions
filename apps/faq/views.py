@@ -38,4 +38,23 @@ class FAQListView(ListView):
             "AI Automation, custom Django platforms, SaaS integrations, and search engine optimization "
             "delivery parameters structured by GrowthSpare IT Solutions."
         )
+
+        # FAQPage structured data — mirrors exactly what's visibly rendered
+        # on this page (active FAQ items only), across all categories.
+        active_items = FAQItem.objects.filter(is_active=True).select_related("category")
+        if active_items:
+            context["schema_type"] = "FAQPage"
+            context["schema_data"] = {
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": item.question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": item.answer,
+                        },
+                    }
+                    for item in active_items
+                ]
+            }
         return context
