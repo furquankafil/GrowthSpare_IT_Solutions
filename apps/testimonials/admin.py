@@ -18,11 +18,12 @@ class TestimonialAdmin(admin.ModelAdmin):
         "company_name",
         "designation",
         "rating",
+        "is_sample",
         "is_active",
         "order",
         "created_at",
     )
-    list_filter = ("rating", "is_active", "created_at")
+    list_filter = ("rating", "is_sample", "is_active", "created_at")
     list_editable = ("is_active", "order")
     search_fields = ("client_name", "company_name", "designation", "review")
     
@@ -52,6 +53,7 @@ class TestimonialAdmin(admin.ModelAdmin):
             "Visual Sorting Controls",
             {
                 "fields": (
+                    "is_sample",
                     "is_active",
                     "order",
                 )

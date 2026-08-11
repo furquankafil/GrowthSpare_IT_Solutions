@@ -688,14 +688,54 @@ def seed_all_data():
             "project_duration": "4 Weeks",
             "tags": "SEO, local SEO, Schema, Healthcare",
             "is_featured": True
-        }
+        },
+
+        # --- Verified Real Client Projects (is_concept_project=False + live_url) ---
+        # These are genuine client engagements. No performance metrics are claimed
+        # unless verified; results_statement describes the delivered scope only.
+        {
+            "title": "Elevate Workforce - International Recruitment & Job Board Platform",
+            "cat_obj": cat_saas,
+            "extra_cats": [cat_web],
+            "featured_image": "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80",
+            "live_url": "https://elevate-workforce-hpkt.onrender.com/",
+            "client_name": "Elevate Workforce LLC",
+            "industry": "Recruitment & HR Tech",
+            "problem_statement": "Elevate Workforce needed a central digital platform to connect overseas employers with skilled candidates, replacing fragmented manual application handling with a structured, searchable pipeline.",
+            "solution_statement": "GrowthSpare engineered a Django-based recruitment platform with employer and candidate dashboards, categorized job listings across destination countries, online applications with resume upload, interview scheduling, saved jobs, blog and gallery sections, and an AI assistant widget.",
+            "results_statement": "Delivered and deployed a production-ready international recruitment platform on Render, including applicant tracking, destination pages, and employer/candidate portals.",
+            "technology_stack": "Django 5, Python, PostgreSQL, HTML5, CSS3, JavaScript, Pillow, Gunicorn, WhiteNoise",
+            "project_duration": "Delivered",
+            "tags": "Recruitment, Job Board, Django, SaaS, HR Tech",
+            "is_featured": True,
+            "is_concept_project": False,
+        },
+        {
+            "title": "Heartland Hills Farm - Farm Land Showcase & Site Visit Landing Site",
+            "cat_obj": cat_web,
+            "featured_image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80",
+            "live_url": "https://lustrous-frangollo-5c6722.netlify.app/",
+            "client_name": "Heartland Hills Farm",
+            "industry": "Real Estate / Farm Land",
+            "problem_statement": "Heartland Hills Farm needed a credible online presence to present premium farm-land opportunities around Igatpuri and Nashik to families and investors, with a clear path to book a site visit.",
+            "solution_statement": "GrowthSpare designed and developed a modern real-estate landing website focused on presenting farm-land opportunities, including a property photo gallery, 4K video showcase, location highlights, Google Maps integration, contact/inquiry forms, and prominent 'Book Site Visit' calls-to-action.",
+            "results_statement": "Delivered a responsive, mobile-friendly marketing website for Heartland Hills Farm with lead capture via form, phone, and WhatsApp contact channels.",
+            "technology_stack": "HTML5, CSS3, Tailwind CSS, JavaScript, SwiperJS, AOS, FontAwesome",
+            "project_duration": "Delivered",
+            "tags": "Real Estate, Farm Land, Landing Page, Tailwind CSS",
+            "is_featured": True,
+            "is_concept_project": False,
+        },
     ]
 
     for p_data in portfolio_projects_data:
         cat_obj = p_data.pop("cat_obj")
+        extra_cats = p_data.pop("extra_cats", [])
         title = p_data.pop("title")
         project, _ = Project.objects.update_or_create(title=title, defaults=p_data)
         project.categories.add(cat_obj)  # Map multiple categories using Many-to-Many dynamic methods [1]
+        for extra_cat in extra_cats:
+            project.categories.add(extra_cat)
 
     print(f"-> Successfully seeded {Project.objects.count()} customized case studies.")
 
@@ -1009,10 +1049,12 @@ def seed_all_data():
             "client_name": "Mirza Khalique Beg",
             "company_name": "Elevate Workforce LLC",
             "designation": "Operations Director",
-            "review": "[Sample Review] GrowthSpare IT Solutions successfully re-engineered our SaaS deployment schemas. The team configured a highly-performant, secure database cluster that scaled past our peak concurrent user demands without any downtime.",
+            "review": "GrowthSpare IT Solutions designed and developed our international recruitment platform. The team delivered a structured job board with employer and candidate portals, application tracking, and destination pages that we operate every day.",
             "rating": 5,
+            "is_sample": False,
             "is_active": True,
-            "order": 1
+            "order": 1,
+            "project_title": "Elevate Workforce - International Recruitment & Job Board Platform"
         },
         {
             "client_name": "Aarav Sharma",
@@ -1073,6 +1115,12 @@ def seed_all_data():
     for t_data in testimonials_data:
         client_name = t_data.pop("client_name")
         company_name = t_data.pop("company_name")
+        project_title = t_data.pop("project_title", None)
+        if project_title:
+            try:
+                t_data["project"] = Project.objects.get(title=project_title)
+            except Project.DoesNotExist:
+                pass
         Testimonial.objects.update_or_create(
             client_name=client_name, company_name=company_name, defaults=t_data
         )

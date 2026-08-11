@@ -60,6 +60,11 @@ class Project(models.Model):
         null=True,
         help_text="Optional embedded link showing design or code demonstrations.",
     )
+    live_url = models.URLField(
+        blank=True,
+        null=True,
+        help_text="Optional link to the live project website (e.g., https://example.com).",
+    )
     client_name = models.CharField(
         max_length=150,
         help_text="Business or corporate name.",

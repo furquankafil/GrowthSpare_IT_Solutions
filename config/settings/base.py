@@ -382,6 +382,20 @@ DEFAULT_FROM_EMAIL = os.getenv(
 
 
 # ==============================================================================
+# Canonical Site URL (env-configurable)
+# The absolute canonical origin used for <link rel="canonical">, Open Graph
+# og:url, absolute image URLs, and JSON-LD "url" fields. Defaults to the
+# production domain so temporary deployment URLs (Render/Railway/Netlify
+# subdomains) never leak into canonical or social-crawler output.
+# ==============================================================================
+
+SITE_URL = os.getenv(
+    "SITE_URL",
+    "https://growthspareitsolutions.com",
+)
+
+
+# ==============================================================================
 # Office Location & Google Maps Embed (env-configurable)
 # Lets the corporate office address / map pin be changed per-deployment
 # (e.g. a staging environment or a future office move) purely via .env,

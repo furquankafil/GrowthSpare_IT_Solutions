@@ -39,6 +39,16 @@ class Testimonial(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         help_text="Evaluated scale ranging from 1 to 5 stars.",
     )
+
+    is_sample = models.BooleanField(
+        default=True,
+        help_text=(
+            "Marks this as a sample/demo review rather than a verified client "
+            "testimonial. Sample reviews render a clearly labelled badge and are "
+            "excluded from verified-client claims. Uncheck only once the review "
+            "is a genuine, attributable client statement."
+        ),
+    )
     
     # Decoupled string relation pointing to portfolio project model safely
     project = models.ForeignKey(

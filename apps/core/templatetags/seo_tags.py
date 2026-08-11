@@ -5,6 +5,7 @@ canonical URLs, Open Graph schemas, Twitter cards, and JSON-LD markup.
 
 import json
 from django import template
+from django.conf import settings
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -20,11 +21,12 @@ def get_canonical_url(context):
     request = context.get("request")
     if not request:
         return ""
-    # Enforces HTTPS canonical strings globally when running in production environment
-    protocol = "https" if request.is_secure() else "http"
-    host = request.get_host()
+    # Enforces the canonical origin globally when running in production environment.
+    # We use settings.SITE_URL (defaulting to the production domain) rather than the
+    # request host to prevent search engines from indexing temporary deployment URLs
+    # (like Render/Railway/Netlify subdomains).
     path = request.path
-    return f"{protocol}://{host}{path}"
+    return f"{settings.SITE_URL.rstrip('/')}{path}"
 
 
 @register.simple_tag(takes_context=True)
@@ -46,10 +48,11 @@ def render_seo_meta(context, title=None, description=None, image=None, keywords=
     final_keywords = keywords if keywords else comp_kw
     final_image = image if image else "/static/images/logo.png"
 
-    # Resolve absolute link if image path is structural rather than full resource
+    # Resolve absolute link if image path is structural rather than full resource.
+    # Built from settings.SITE_URL (not the request host) so social-crawler previews
+    # never point at a temporary deployment subdomain.
     if request and not final_image.startswith("http"):
-        protocol = "https" if request.is_secure() else "http"
-        final_image = f"{protocol}://{request.get_host()}{final_image}"
+        final_image = f"{settings.SITE_URL.rstrip('/')}{final_image}"
 
     # SECURITY: title/description/keywords/image may originate from
     # admin-editable model fields (Service.meta_title, BlogPost.meta_title,

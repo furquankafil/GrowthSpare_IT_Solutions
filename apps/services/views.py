@@ -6,6 +6,7 @@ Serves all 7 active service divisions: Web Solutions, AI Automation, SaaS & CRM
 Systems, Digital Marketing, SEO & Marketing, Cyber Security, and Engineering Solutions.
 """
 
+from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Service, ServiceCategory
@@ -168,7 +169,7 @@ class ServiceDetailView(DetailView):
             "provider": {
                 "@type": "LocalBusiness",
                 "name": "GrowthSpare IT Solutions",
-                "url": "https://growthspareitsolutions.com",
+                "url": settings.SITE_URL,
             },
             "offers": {
                 "@type": "Offer",

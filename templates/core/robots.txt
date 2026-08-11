@@ -11,4 +11,4 @@ Disallow: /accounts/password-reset/
 Disallow: /dashboard/
 
 # Dynamic absolute sitemap index map location
-Sitemap: https://growthspareitsolutions.com/sitemap.xml
+Sitemap: {{ SITE_URL }}/sitemap.xml

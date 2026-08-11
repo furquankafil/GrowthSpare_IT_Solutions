@@ -28,7 +28,7 @@ def company_branding(request):
         # Address is configurable via the OFFICIAL_LOCATION_ADDRESS env var
         # (see config/settings/base.py) instead of being hardcoded here.
         "OFFICIAL_LOCATION": settings.OFFICIAL_LOCATION_ADDRESS,
-        "SITE_URL": "https://growthspareitsolutions.com",
+        "SITE_URL": settings.SITE_URL,
         # Keyless Google Maps embed URL, built from GOOGLE_MAPS_EMBED_QUERY.
         # Uses the official /maps/embed endpoint (rather than the legacy
         # maps.google.com/maps?...&output=embed form), which is what Google

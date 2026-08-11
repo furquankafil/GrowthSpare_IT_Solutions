@@ -3,6 +3,7 @@ Core page routing views, corporate compliance pages, async newsletter subscripti
 and secure dynamic 404/500 exception handling views.
 """
 
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -47,9 +48,9 @@ class HomeView(TemplateView):
         context["schema_type"] = "LocalBusiness"
         context["schema_data"] = {
             "name": "GrowthSpare IT Solutions",
-            "url": "https://growthspareitsolutions.com",
-            "logo": "https://growthspareitsolutions.com/static/images/logo.png",
-            "image": "https://growthspareitsolutions.com/static/images/logo.png",
+            "url": settings.SITE_URL,
+            "logo": f"{settings.SITE_URL}/static/images/logo.png",
+            "image": f"{settings.SITE_URL}/static/images/logo.png",
             "description": "Empowering Businesses with AI, Software Development & Digital Innovation.",
             "email": "growthspareitsolution@gmail.com",
             "telephone": "+91 9811579273",
@@ -218,7 +219,7 @@ class LocationLandingView(TemplateView):
         local_business_schema = {
             "@type": "LocalBusiness",
             "name": "GrowthSpare IT Solutions",
-            "url": "https://growthspareitsolutions.com",
+            "url": settings.SITE_URL,
             "telephone": "+91 9811579273",
             "address": {
                 "@type": "PostalAddress",

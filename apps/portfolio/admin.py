@@ -40,6 +40,7 @@ class ProjectAdmin(admin.ModelAdmin):
         "get_categories",  # Custom helper displaying mapped classifications cleanly
         "is_featured",
         "is_concept_project",
+        "live_url",
         "project_duration",
         "created_at",
     )
@@ -74,6 +75,7 @@ class ProjectAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "featured_image",
+                    "live_url",
                     "video_url",
                 )
             },
