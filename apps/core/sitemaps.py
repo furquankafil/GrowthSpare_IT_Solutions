@@ -42,6 +42,11 @@ class StaticViewSitemap(Sitemap):
             "core:industry-clinic",
             "core:industry-education",
             "core:industry-small-business",
+            "core:industry-gym-fitness",
+            "core:industry-law-firm",
+            "core:industry-retail-ecommerce",
+            "core:industry-corporate-business",
+            "core:industry-hotels-travel",
         ]
 
     def location(self, item):

@@ -487,6 +487,145 @@ INDUSTRY_DATA = {
             ("What's the starting price for a small business website?", "Our standard business websites start at ₹4,999 — get in touch with your specific requirements for an accurate quote."),
         ],
     },
+    "gym-website-development": {
+        "name": "Gym & Fitness Website Development",
+        "seo_title": "Gym & Fitness Website Development Services",
+        "seo_description": "Websites for gyms, fitness studios, and personal trainers in Delhi NCR — class schedules, membership enquiries, and WhatsApp lead capture, built by GrowthSpare IT Solutions.",
+        "heading": "Gym & Fitness Website Development",
+        "problem": (
+            "Most gyms and fitness studios fill memberships through Instagram DMs, walk-ins, "
+            "and word of mouth — with no proper website showing class schedules, pricing, "
+            "or trainer credentials. When someone searches for a 'gym near me' in Delhi NCR, "
+            "the studios that answer their questions online are the ones that get the enquiry — "
+            "the rest quietly lose potential members they never knew existed."
+        ),
+        "solution": (
+            "We build fast, mobile-first gym websites that present class schedules, "
+            "membership options, and trainer profiles clearly, and route membership "
+            "enquiries straight to WhatsApp — so a fitness enquiry in Noida or Gurugram "
+            "isn't waiting overnight for a reply."
+        ),
+        "features": [
+            "Class schedule and timetable pages that stay easy to update",
+            "Membership enquiry form with WhatsApp confirmation",
+            "Trainer profile and facility gallery sections",
+            "Local SEO aligned with your Google Business Profile for 'gym near me' searches",
+        ],
+        "faqs": [
+            ("Can members book or pay for classes on the website?", "We can integrate a booking/enquiry flow and link to a payment gateway you already use. Fully automated membership billing with recurring payments is a larger custom build — we'll scope it separately if that's what your gym needs."),
+            ("Do you build websites for small independent trainers, not just big gyms?", "Yes — the same structure works for a personal trainer or a small studio across Delhi NCR: a clean page for services and pricing, trainer background, and a simple enquiry/WhatsApp flow. We keep the scope proportionate to the business."),
+        ],
+    },
+    "law-firm-website-development": {
+        "name": "Law Firm Website Development",
+        "seo_title": "Law Firm Website Development Services",
+        "seo_description": "Websites for law firms, advocates, and legal consultants in Delhi NCR — practice area pages, lawyer profiles, and client enquiry forms, from GrowthSpare IT Solutions.",
+        "heading": "Law Firm Website Development",
+        "problem": (
+            "Prospective clients search for a lawyer before they make contact, and they judge "
+            "credibility from the website: practice areas, experience, and how easy it is to "
+            "reach you. A dated or unstructured site quietly loses serious enquiries — "
+            "especially in a competitive legal market like Delhi and the wider NCR — to firms "
+            "that look established online."
+        ),
+        "solution": (
+            "We build professional, trustworthy law firm websites with clear practice-area "
+            "pages, lawyer and partner profiles, and a discreet client enquiry form that "
+            "routes leads straight to your team — no middlemen, no listing platforms."
+        ),
+        "features": [
+            "Practice-area service pages (corporate, family, property, criminal, and more)",
+            "Lawyer and partner profile pages",
+            "Confidential client enquiry form routed to WhatsApp or email",
+            "Clean, formal design that builds trust before the first call",
+        ],
+        "faqs": [
+            ("Can I update practice-area pages myself after launch?", "Yes — we set up a simple content structure so your team can add a practice area or update lawyer profiles without developer help, with optional training included."),
+            ("Do you build websites for solo advocates as well as firms?", "Yes — a solo advocate often needs even less: one practice-area overview, an about page, and an enquiry/contact flow. We scope the site to the practice, not the other way around."),
+        ],
+    },
+    "ecommerce-website-development": {
+        "name": "Retail & E-commerce Website Development",
+        "seo_title": "Retail & E-commerce Website Development Services",
+        "seo_description": "E-commerce websites and retail online stores with secure checkout, inventory, and payment integration, built by GrowthSpare IT Solutions for Delhi NCR sellers.",
+        "heading": "Retail & E-commerce Website Development",
+        "problem": (
+            "Retailers who sell only through marketplaces pay a commission on every order and "
+            "never own the customer relationship. Without an online store of their own, "
+            "Delhi NCR retailers can't build repeat sales, capture contact details, or control "
+            "how their brand looks to buyers who found them through a marketplace search."
+        ),
+        "solution": (
+            "We build e-commerce websites with product catalogues, secure checkout, and "
+            "payment integration — plus WhatsApp ordering for businesses that want a lighter "
+            "first step into selling online without a full checkout build."
+        ),
+        "features": [
+            "Product catalogue with categories, variants, and search",
+            "Secure checkout with payment gateway integration",
+            "Order and inventory tracking",
+            "Optional WhatsApp ordering for a simpler first launch",
+        ],
+        "faqs": [
+            ("Can you migrate an existing catalogue or store?", "Yes, we can help move a product catalogue from a marketplace listing or an existing platform into the new store, provided we have clean product data to work with."),
+            ("Which payment gateway do you support?", "We integrate with common Indian payment gateways (such as Razorpay or PhonePe) and set up whichever one you already have an account with."),
+            ("How much does an e-commerce website cost?", "E-commerce builds vary more than brochure sites because of products, payment, and shipping setup — from a simpler WhatsApp-ordering store up to a full checkout build. Share your product range and we'll quote accurately."),
+        ],
+    },
+    "corporate-website-development": {
+        "name": "Corporate Business Website Development",
+        "seo_title": "Corporate Website Development Services",
+        "seo_description": "Corporate and B2B websites for companies in Delhi NCR — professional design, clear service structure, and enquiry capture, from GrowthSpare IT Solutions.",
+        "heading": "Corporate Business Website Development",
+        "problem": (
+            "Corporate buyers and potential partners judge a company online before they ever "
+            "contact it. A corporate website that's slow, vague, or outdated undermines an "
+            "otherwise strong firm — especially in a B2B-heavy market like Gurugram and "
+            "Noida, where first impressions decide whether a sales call happens at all."
+        ),
+        "solution": (
+            "We build polished corporate websites with clear service and offering structure, "
+            "company and leadership pages, and enquiry forms designed to feed your sales "
+            "team — whether you're B2B, B2C, or investor-facing."
+        ),
+        "features": [
+            "Service and capability pages structured for B2B buyers",
+            "Company, leadership, and careers pages",
+            "Enquiry and contact flows routed to your sales team or CRM",
+            "Fast, professional design that holds up across departments",
+        ],
+        "faqs": [
+            ("Can you integrate the website with our existing CRM?", "Yes, we can route enquiry forms directly into your CRM, or into our custom CRM system if you don't already use one."),
+            ("Do you build corporate websites only, or also internal tools?", "We build the public website and also develop internal tools — CRMs, portals, and dashboards — as separate custom software projects. Both are common for our corporate clients in Delhi NCR."),
+        ],
+    },
+    "hotel-travel-website-development": {
+        "name": "Hotel & Travel Website Development",
+        "seo_title": "Hotel & Travel Website Development Services",
+        "seo_description": "Websites for hotels, resorts, and travel agencies — room showcases, booking enquiries, and itinerary pages, built by GrowthSpare IT Solutions.",
+        "heading": "Hotels & Travel Website Development",
+        "problem": (
+            "Travellers research extensively before booking, comparing rooms, photos, and "
+            "prices across sites. A hotel or travel agency that only exists on OTA listings "
+            "pays commission on every booking it gets — and misses the direct bookings "
+            "where margins are better, from Delhi NCR travellers and inbound visitors alike."
+        ),
+        "solution": (
+            "We build attractive, mobile-first hotel and travel websites that showcase rooms, "
+            "packages, and itineraries clearly, with a booking enquiry flow that drives direct "
+            "reservations and WhatsApp enquiries instead of paid commissions."
+        ),
+        "features": [
+            "Room, suite, and property showcase pages with photo galleries",
+            "Booking enquiry form with WhatsApp confirmation",
+            "Tour package and itinerary listing pages for travel agencies",
+            "Local SEO for 'hotel near me' and destination searches",
+        ],
+        "faqs": [
+            ("Can you connect a live booking engine?", "We can integrate an enquiry-based booking flow and link to an existing reservation system or channel manager you already use. A fully automated live-pricing booking engine is a larger custom build — we'll scope it separately."),
+            ("Do you build for both hotels and travel agencies?", "Yes — hotels and resorts need room showcases and booking flows, while travel agencies need package and itinerary pages with enquiry capture. We tailor the structure to whichever business you run."),
+        ],
+    },
 }
 
 
@@ -500,16 +639,50 @@ class IndustryLandingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        industry = INDUSTRY_DATA.get(kwargs["industry_slug"])
+        industry_slug = kwargs["industry_slug"]
+        industry = INDUSTRY_DATA.get(industry_slug)
         if industry is None:
             raise Http404("Unknown industry.")
         context["industry"] = industry
         context["seo_title"] = industry["seo_title"]
         context["seo_description"] = industry["seo_description"]
 
+        # Build schema data to render as JSON-LD. Mirrors the Service detail
+        # page architecture (apps/services/views.py): a single @graph made up
+        # of a Service block describing this industry-specific website
+        # development service plus the provider context, a BreadcrumbList, and
+        # the FAQPage block matching the FAQ section visibly on the page. Only
+        # factual on-page/site content is used — no invented reviews, ratings,
+        # prices, awards, or claims.
+        base_url = settings.SITE_URL.rstrip("/")
+        industry_url = f"{base_url}/industries/{industry_slug}/"
+        service_schema = {
+            "@type": "Service",
+            "name": industry["name"],
+            "serviceType": industry["name"],
+            "description": industry["solution"],
+            "url": industry_url,
+            "provider": {
+                "@type": "LocalBusiness",
+                "name": "GrowthSpare IT Solutions",
+                "url": settings.SITE_URL,
+            },
+            # Matches the wider NCR serving area already stated on the
+            # homepage and service pages.
+            "areaServed": ["New Delhi", "Noida", "Gurugram"],
+        }
+        breadcrumb_schema = {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                {"@type": "ListItem", "position": 2, "name": industry["name"], "item": industry_url},
+            ],
+        }
+        schema_blocks = [service_schema, breadcrumb_schema]
+
         if industry.get("faqs"):
-            context["schema_type"] = "FAQPage"
-            context["schema_data"] = {
+            faq_schema = {
+                "@type": "FAQPage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -517,8 +690,11 @@ class IndustryLandingView(TemplateView):
                         "acceptedAnswer": {"@type": "Answer", "text": answer},
                     }
                     for question, answer in industry["faqs"]
-                ]
+                ],
             }
+            schema_blocks.append(faq_schema)
+
+        context["schema_data"] = schema_blocks
         return context
 
 

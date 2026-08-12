@@ -46,7 +46,12 @@ urlpatterns = [
     path("industries/clinic-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "clinic-website-development"}, name="industry-clinic"),
     path("industries/education-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "education-website-development"}, name="industry-education"),
     path("industries/small-business-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "small-business-website-development"}, name="industry-small-business"),
-    
+    path("industries/gym-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "gym-website-development"}, name="industry-gym-fitness"),
+    path("industries/law-firm-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "law-firm-website-development"}, name="industry-law-firm"),
+    path("industries/ecommerce-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "ecommerce-website-development"}, name="industry-retail-ecommerce"),
+    path("industries/corporate-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "corporate-website-development"}, name="industry-corporate-business"),
+    path("industries/hotel-travel-website-development/", views.IndustryLandingView.as_view(), {"industry_slug": "hotel-travel-website-development"}, name="industry-hotels-travel"),
+
     # Legal and SLA Compliance Pages
     path("privacy-policy/", views.PrivacyPolicyView.as_view(), name="privacy"),
     path("terms-and-conditions/", views.TermsView.as_view(), name="terms"),
