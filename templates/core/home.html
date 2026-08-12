@@ -727,83 +727,19 @@
         </div>
 
         <div class="space-y-4">
-            <!-- FAQ 1 -->
+            {% for question, answer in homepage_faqs %}
             <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
                 <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
-                    <span>How long does it take to build a website?</span>
+                    <span>{{ question }}</span>
                     <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
                 </button>
                 <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
                     <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        A standard, responsive brochure website can launch within 3 to 4 weeks. Highly specialized web applications and SaaS development milestones average between 2 to 3 months depending on complexity.
+                        {{ answer }}
                     </p>
                 </div>
             </div>
-
-            <!-- FAQ 2 -->
-            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
-                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
-                    <span>Do you redesign existing websites?</span>
-                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
-                </button>
-                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
-                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        Yes, we re-engineer legacy websites, migrating old codebases to modern Django and Tailwind setups while preserving active search rankings and improving Core Web Vitals.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
-                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
-                    <span>Can you improve my Google ranking?</span>
-                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
-                </button>
-                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
-                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        Yes. By executing semantic SEO setups, auditing and improving site speed, optimizing schemas, and structuring content, we help grow organic search visibility.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 4 -->
-            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
-                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
-                    <span>Do you develop CRM software?</span>
-                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
-                </button>
-                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
-                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        Yes. We build custom, secure, private CRM software designed around your specific team permissions, lead stages, invoicing cycles, and communication rules.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 5 -->
-            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
-                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
-                    <span>Do you provide maintenance?</span>
-                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
-                </button>
-                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
-                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        Yes, we provide SLA-backed support contracts that include automated database backups, security patch updates, server monitoring, and emergency support.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 6 -->
-            <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
-                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
-                    <span>Can you automate my business using AI?</span>
-                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
-                </button>
-                <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
-                    <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        Yes, we integrate OpenAI model pipelines, construct custom Retrieval-Augmented Generation (RAG) indices, and configure automated WhatsApp Cloud API lead capture receivers.
-                    </p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
