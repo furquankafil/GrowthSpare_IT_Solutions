@@ -43,7 +43,14 @@ def render_seo_meta(context, title=None, description=None, image=None, keywords=
     comp_desc = "Empowering Businesses with AI, Software Development & Digital Innovation."
     comp_kw = "AI Automation, Web Development, Django, SaaS development, CRM Development, New Delhi"
     
-    final_title = f"{title} | {comp_title}" if title else f"{comp_title} - {comp_desc}"
+    # Avoid a doubled brand suffix: admin-editable meta titles (e.g.
+    # Service.meta_title, Portfolio meta_title) already end with
+    # "GrowthSpare IT Solutions", while dynamic view titles don't. Only
+    # append the brand when the title doesn't already carry it.
+    if title:
+        final_title = title if comp_title.lower() in title.lower() else f"{title} | {comp_title}"
+    else:
+        final_title = f"{comp_title} - {comp_desc}"
     final_desc = description if description else comp_desc
     final_keywords = keywords if keywords else comp_kw
     final_image = image if image else "/static/images/logo.png"

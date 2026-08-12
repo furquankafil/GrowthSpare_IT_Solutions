@@ -19,6 +19,18 @@
 
     <!-- Increased max-width to 1400px -->
     <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Services</a>
+            {% if breadcrumb_category %}
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <a href="{% url 'services:category' category_slug=breadcrumb_category.slug %}" class="hover:text-primary dark:hover:text-accent transition-colors">{{ breadcrumb_category.name }}</a>
+            {% endif %}
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">{{ service.title }}</span>
+        </nav>
+
         <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
             <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
             <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">
@@ -48,18 +60,22 @@
         <!-- Left Pane: Technical copy, process steps, tools, FAQs -->
         <div class="lg:col-span-8 space-y-12" data-aos="fade-right">
             
-            <!-- Description narrative -->
+            <!-- AEO quick answer: question-led and grounded entirely in the
+                 service's own stored content (overview + detailed description +
+                 features). No invented capabilities — it mirrors the visible page. -->
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
-                <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Overview & Capabilities</h3>
+                <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">What does GrowthSpare IT Solutions provide for {{ service.title }}?</h2>
                 <div class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-medium space-y-4">
+                    <p>{{ service.overview }}</p>
                     {{ service.detailed_description|safe }}
+                    <p>Commonly included: {{ service.get_features_list|join:", " }}.</p>
                 </div>
             </div>
 
             <!-- Workflow / Process Steps timeline -->
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-8">
                 <div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Our Project Workflow</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Our Project Workflow</h2>
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Our step-by-step engineering and integration methodology</p>
                 </div>
                 
@@ -81,7 +97,7 @@
 
             <!-- Technology Stack Pills -->
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
-                <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Technologies Deployed</h3>
+                <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Technologies Deployed</h2>
                 <div class="flex flex-wrap gap-2.5">
                     {% for tech in service.get_tech_list %}
                         <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold tracking-wide uppercase bg-slate-900/10 dark:bg-black/20 text-slate-600 dark:text-slate-300">
@@ -95,7 +111,7 @@
             {% if service.get_use_cases_list %}
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
                 <div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Where This Service Fits</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Where This Service Fits</h2>
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Real-world use cases we regularly deliver on</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -113,7 +129,7 @@
             {% if service.get_why_choose_list %}
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
                 <div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Why Choose GrowthSpare for This</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Why Choose GrowthSpare for This</h2>
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">What sets our delivery apart on this specific service</p>
                 </div>
                 <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300 font-medium">
@@ -130,7 +146,7 @@
             <!-- Dynamic Service-level FAQs accordions -->
             {% if service.service_faqs.all %}
                 <div class="space-y-6">
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Service Specific FAQs</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Service Specific FAQs</h2>
                     
                     <div class="space-y-4">
                         {% for faq in service.service_faqs.all %}
@@ -210,6 +226,28 @@
 </section>
 
 <!-- ==============================================================================
+     2B. CONTEXTUAL RELATED PAGES (internal linking to real location, industry
+         and portfolio pages — mirrors SERVICE_CONTEXTUAL_LINKS in the view)
+     ============================================================================== -->
+{% if service_links %}
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6 space-y-10">
+        <div class="text-center space-y-3">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Related Pages</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Explore Related Services &amp; Projects</h2>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+            {% for link in service_links %}
+            <a href="{{ link.url }}" class="px-5 py-2.5 rounded-xl bg-white dark:bg-white/[0.03] border border-slate-900/10 dark:border-white/10 text-sm font-bold text-slate-700 dark:text-slate-300 hover:border-primary/40 dark:hover:border-accent/40 hover:text-primary dark:hover:text-accent hover:-translate-y-0.5 transition-all">
+                {{ link.label }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==============================================================================
      3. SERVICE-SPECIFIC CALL-TO-ACTION BANNER
      ============================================================================== -->
 <section class="py-24 bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8">
@@ -238,7 +276,7 @@
 <section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
     <!-- Increased container max-width to 1400px -->
     <div class="max-w-[1400px] mx-auto px-6 space-y-12">
-        <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4 text-center">Related Services</h3>
+        <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4 text-center">Related Services</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {% for related in related_services %}

@@ -8,8 +8,54 @@ Systems, Digital Marketing, SEO & Marketing, Cyber Security, and Engineering Sol
 
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from .models import Service, ServiceCategory
+
+
+# Services whose delivery genuinely targets the Delhi NCR market. Only these
+# carry an `areaServed` in their Service schema — the rest are delivered
+# remotely nationwide and don't over-claim a location.
+LOCAL_SERVICE_SLUGS = {
+    "website-development",
+    "digital-marketing",
+    "seo-optimization",
+}
+
+# Per-service contextual internal links to pages that already exist on the
+# site (location, industry, and portfolio URLs). Natural, varied anchor text —
+# nothing invented, nothing pointing at a non-existent URL.
+SERVICE_CONTEXTUAL_LINKS = {
+    "website-development": [
+        {"label": "web development services in Delhi", "url_name": "core:location-delhi"},
+        {"label": "web development in Noida", "url_name": "core:location-noida"},
+        {"label": "web development in Gurugram", "url_name": "core:location-gurgaon"},
+        {"label": "restaurant website development", "url_name": "core:industry-restaurant"},
+        {"label": "clinic website development", "url_name": "core:industry-clinic"},
+        {"label": "small business website development", "url_name": "core:industry-small-business"},
+        {"label": "real estate website development", "url_name": "core:industry-real-estate"},
+        {"label": "education website development", "url_name": "core:industry-education"},
+        {"label": "restaurant website project for Spice Garden", "url_name": "portfolio:detail", "kwargs": {"slug": "bitecraft-restaurant-website-for-spice-garden"}},
+    ],
+    "digital-marketing": [
+        {"label": "social media growth campaign for a local café", "url_name": "portfolio:detail", "kwargs": {"slug": "social-media-growth-campaign-for-local-cafe"}},
+    ],
+    "seo-optimization": [
+        {"label": "local SEO optimization for a dental clinic", "url_name": "portfolio:detail", "kwargs": {"slug": "local-seo-optimization-for-dental-clinic"}},
+    ],
+    "ai-whatsapp-automation": [
+        {"label": "AI customer support chatbot for e-commerce", "url_name": "portfolio:detail", "kwargs": {"slug": "ai-customer-support-chatbot-for-e-commerce"}},
+        {"label": "WhatsApp lead collection bot for a local retailer", "url_name": "portfolio:detail", "kwargs": {"slug": "whatsapp-lead-collection-bot-for-local-retailer"}},
+    ],
+    "crm-software-development": [
+        {"label": "SalesFlow B2B lead management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "salesflow-b2b-lead-management-crm"}},
+        {"label": "BrightAcademy school management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "brightacademy-school-management-crm"}},
+    ],
+    "custom-software-engineering": [
+        {"label": "ScholarGrid academic LMS platform", "url_name": "portfolio:detail", "kwargs": {"slug": "scholargrid-symmetric-academic-lms-platform"}},
+        {"label": "TechVibe subscription content publisher", "url_name": "portfolio:detail", "kwargs": {"slug": "techvibe-subscription-content-media-publisher"}},
+    ],
+}
 
 
 class ServiceListView(ListView):
@@ -142,9 +188,11 @@ class ServiceDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         service = self.object
 
+        categories = list(service.categories.all())
+
         # Retrieve up to 3 similar services sharing any of this service's categories
         context["related_services"] = (
-            Service.objects.filter(categories__in=service.categories.all(), is_active=True)
+            Service.objects.filter(categories__in=categories, is_active=True)
             .exclude(id=service.id)
             .prefetch_related("categories")
             .distinct()[:3]
@@ -158,14 +206,30 @@ class ServiceDetailView(DetailView):
             else f"Explore our high-performance {service.title} solutions. Learn about features, benefits, processes, and tech stacks."
         )
 
+        # Contextual internal links to real location/industry/portfolio pages
+        # (see SERVICE_CONTEXTUAL_LINKS). Resolved here so the template never
+        # has to reason about url_name/kwargs.
+        context["service_links"] = []
+        for link in SERVICE_CONTEXTUAL_LINKS.get(service.slug, []):
+            context["service_links"].append(
+                {
+                    "label": link["label"],
+                    "url": reverse(link["url_name"], kwargs=link.get("kwargs") or {}),
+                }
+            )
+
+        # Visible breadcrumb trail: Home > Services > Category > Service
+        context["breadcrumb_category"] = categories[0] if categories else None
+
         # Build schema data structure dynamically to render in JSON-LD headers.
-        # Combined as a @graph: Service schema plus FAQPage schema when this
-        # service actually has active FAQs (matches what's visibly on the page —
-        # FAQPage schema on a page without visible qualifying FAQs violates
-        # Google's structured data guidelines).
+        # Combined as a single @graph: Service schema plus BreadcrumbList, plus
+        # FAQPage schema when this service actually has active FAQs (matches
+        # what's visibly on the page — FAQPage schema on a page without visible
+        # qualifying FAQs violates Google's structured data guidelines).
         service_schema = {
             "name": service.title,
             "description": service.overview,
+            "url": f"{settings.SITE_URL}{service.get_absolute_url()}",
             "provider": {
                 "@type": "LocalBusiness",
                 "name": "GrowthSpare IT Solutions",
@@ -177,7 +241,37 @@ class ServiceDetailView(DetailView):
                 "description": service.pricing_estimate,
             },
         }
+        if service.slug in LOCAL_SERVICE_SLUGS:
+            service_schema["areaServed"] = ["New Delhi", "Noida", "Gurugram"]
         service_schema["@type"] = "Service"
+
+        base_url = settings.SITE_URL.rstrip("/")
+        breadcrumb_items = [
+            {"name": "Home", "url": f"{base_url}/"},
+            {"name": "Services", "url": f"{base_url}{reverse('services:list')}"},
+        ]
+        if categories:
+            breadcrumb_items.append(
+                {
+                    "name": categories[0].name,
+                    "url": f"{base_url}{reverse('services:category', kwargs={'category_slug': categories[0].slug})}",
+                }
+            )
+        breadcrumb_items.append({"name": service.title, "url": f"{base_url}{service.get_absolute_url()}"})
+        breadcrumb_schema = {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": position,
+                    "name": item["name"],
+                    "item": item["url"],
+                }
+                for position, item in enumerate(breadcrumb_items, start=1)
+            ],
+        }
+
+        schema_blocks = [service_schema, breadcrumb_schema]
 
         active_faqs = list(service.service_faqs.all())
         if active_faqs:
@@ -195,8 +289,7 @@ class ServiceDetailView(DetailView):
                     for faq in active_faqs
                 ],
             }
-            context["schema_data"] = [service_schema, faq_schema]
-        else:
-            context["schema_type"] = "Service"
-            context["schema_data"] = {k: v for k, v in service_schema.items() if k != "@type"}
+            schema_blocks.append(faq_schema)
+
+        context["schema_data"] = schema_blocks
         return context
