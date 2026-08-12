@@ -20,6 +20,112 @@ from apps.blog.models import BlogPost
 from apps.testimonials.models import Testimonial
 
 
+# ==============================================================================
+# Homepage FAQ (AEO) — single source of truth.
+# These are the exact, visible Q&A pairs rendered in the homepage accordion and
+# mirrored 1:1 into FAQPage structured data. Answers are concise and factual,
+# based only on documented service capabilities / existing site content.
+# ==============================================================================
+HOMEPAGE_FAQS = [
+    (
+        "What services does GrowthSpare IT Solutions provide?",
+        "We provide website development, AI & WhatsApp automation, custom CRM "
+        "software, SaaS and custom software engineering, SEO & digital marketing, "
+        "and cyber security services for startups, small businesses, and growing companies.",
+    ),
+    (
+        "How much does a business website cost?",
+        "Our standard business websites start at ₹4,999. Final pricing depends on "
+        "the number of pages, features, and content readiness. Share your "
+        "requirements and we'll quote accurately.",
+    ),
+    (
+        "How long does website development take?",
+        "Most standard business websites are delivered in 2-4 weeks, depending on "
+        "the number of pages and how quickly content is provided. Larger web "
+        "applications and SaaS builds take longer and are scoped individually.",
+    ),
+    (
+        "Do you provide website development in Delhi?",
+        "Yes. We are based in Okhla, New Delhi, and build websites for businesses "
+        "across Delhi — with in-person meetings available when a project needs them.",
+    ),
+    (
+        "Do you serve businesses in Noida and Gurugram?",
+        "Yes. We work with businesses in Noida and Gurugram as well as Delhi, "
+        "covering the wider NCR region. Projects can be delivered fully remotely "
+        "or with in-person meetings.",
+    ),
+    (
+        "Can you build custom CRM software?",
+        "Yes. We build custom CRM systems tailored to your sales process — leads, "
+        "customers, invoicing, and team permissions — which you own outright, "
+        "with no per-seat subscription fees.",
+    ),
+    (
+        "Can you automate business processes using AI?",
+        "Yes. We build AI and WhatsApp automations for lead collection, appointment "
+        "booking, and customer support, built on the official WhatsApp Cloud API "
+        "and OpenAI models, with human handoff built in.",
+    ),
+    (
+        "Do you provide SEO services?",
+        "Yes. We provide technical, on-page, and local SEO services to help your "
+        "business rank higher on Google and grow organic traffic sustainably.",
+    ),
+    (
+        "How long does SEO take?",
+        "SEO is a compounding channel. Most businesses start seeing meaningful "
+        "movement in 3-6 months, with continued growth after that. We focus on "
+        "sustainable white-hat practices and don't guarantee specific rankings.",
+    ),
+    (
+        "Do you provide website maintenance?",
+        "Yes. We offer maintenance and support plans that keep your website "
+        "updated, secure, and running smoothly — including backups, security "
+        "patches, and monitoring.",
+    ),
+]
+
+
+# sameAs entries are ONLY the profiles already linked in the public footer
+# (LinkedIn company page, Instagram, Facebook). Nothing invented.
+COMPANY_SAME_AS = [
+    "https://www.linkedin.com/company/growthspareitsolution/",
+    "https://www.instagram.com/growthspareitsolution/",
+    "https://www.facebook.com/profile.php?id=61592462990102",
+]
+
+
+def _company_local_business_schema():
+    """Shared NAP + hours entity block reused by LocalBusiness schemas."""
+    return {
+        "@type": "LocalBusiness",
+        "name": "GrowthSpare IT Solutions",
+        "url": settings.SITE_URL,
+        "logo": f"{settings.SITE_URL}/static/images/logo.png",
+        "image": f"{settings.SITE_URL}/static/images/logo.png",
+        "description": "Website development, AI automation, CRM software, SEO & digital marketing for startups and SMEs in Delhi NCR.",
+        "email": "growthspareitsolution@gmail.com",
+        "telephone": "+91 9811579273",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "D-50, Shaheen Bagh, Okhla",
+            "addressLocality": "New Delhi",
+            "postalCode": "110025",
+            "addressCountry": "IN",
+        },
+        # Business hours already stated on the public contact page.
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00",
+        },
+        "sameAs": COMPANY_SAME_AS,
+    }
+
+
 class HomeView(TemplateView):
     """
     Renders the premium corporate landing engine. Passes dynamic structural parameters
@@ -41,32 +147,33 @@ class HomeView(TemplateView):
         # template when no logo file has been uploaded for that client.
         context["client_logos"] = ClientLogo.objects.filter(is_active=True)
 
-        # LocalBusiness structured data. Previously typed as generic
-        # "Organization" — with full NAP (name/address/phone) already
-        # available, "LocalBusiness" is the correct schema.org type here
-        # and is what Google's local-pack / local-SEO features key off.
-        context["schema_type"] = "LocalBusiness"
-        context["schema_data"] = {
-            "name": "GrowthSpare IT Solutions",
-            "url": settings.SITE_URL,
-            "logo": f"{settings.SITE_URL}/static/images/logo.png",
-            "image": f"{settings.SITE_URL}/static/images/logo.png",
-            "description": "Empowering Businesses with AI, Software Development & Digital Innovation.",
-            "email": "growthspareitsolution@gmail.com",
-            "telephone": "+91 9811579273",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "D-50, Shaheen Bagh, Okhla",
-                "addressLocality": "New Delhi",
-                "postalCode": "110025",
-                "addressCountry": "IN",
-            },
-            "areaServed": ["New Delhi", "Noida", "Gurugram"],
+        # Homepage FAQ (AEO): visible accordion content + matching FAQPage schema.
+        context["homepage_faqs"] = HOMEPAGE_FAQS
+
+        # Structured data: LocalBusiness entity + FAQPage, emitted as one @graph
+        # (a single script tag per page, which is what Google's tooling expects).
+        local_business_schema = _company_local_business_schema()
+        local_business_schema["@id"] = f"{settings.SITE_URL}/#organization"
+        local_business_schema["areaServed"] = ["New Delhi", "Noida", "Gurugram"]
+        faq_schema = {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": question,
+                    "acceptedAnswer": {"@type": "Answer", "text": answer},
+                }
+                for question, answer in HOMEPAGE_FAQS
+            ],
         }
-        
+        context["schema_data"] = [local_business_schema, faq_schema]
+
         # SEO parameters
-        context["seo_title"] = "Grow Smarter. Scale Faster."
-        context["seo_description"] = "Empowering Businesses with AI, Software Development & Digital Innovation."
+        context["seo_title"] = "Web Development, AI & CRM in Delhi NCR"
+        context["seo_description"] = (
+            "Website development, AI automation, CRM software, SEO & digital "
+            "marketing for startups & SMEs in Delhi, Noida & Gurugram. Based in New Delhi."
+        )
         return context
 
 
