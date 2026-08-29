@@ -21,7 +21,7 @@ import os
 import django
 
 # Initialize the Django Environment
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
 django.setup()
 
 from django.conf import settings  # noqa: E402  (must follow django.setup())
