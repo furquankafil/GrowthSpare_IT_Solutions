@@ -455,7 +455,9 @@ def seed_all_data():
             "technology_stack": "HTML5, CSS3, Tailwind CSS, JavaScript, Django, PostgreSQL",
             "project_duration": "3 Weeks",
             "tags": "Restaurant, Booking, Menu, Django",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "BiteCraft - Restaurant Website for Spice Garden",
+            "meta_description": "for Hospitality & Food Service for Spice Garden",
         },
         {
             "title": "SmileCare - Professional Dental Clinic Website",
@@ -469,7 +471,9 @@ def seed_all_data():
             "technology_stack": "HTML5, CSS3, Bootstrap 5, Django, SQLite, Twilio",
             "project_duration": "3 Weeks",
             "tags": "Healthcare, Appointment, SMS, Bootstrap",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "SmileCare - Professional Dental Clinic Website",
+            "meta_description": "for Healthcare & Dentistry for SmileCare Dental",
         },
         {
             "title": "IronPulse - Modern Gym & Fitness Website",
@@ -483,7 +487,9 @@ def seed_all_data():
             "technology_stack": "HTML5, CSS3, Tailwind CSS, JS, Gsap, AOS, Django",
             "project_duration": "3 Weeks",
             "tags": "Fitness, Landing Page, Animations, Tailwind",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "IronPulse - Modern Gym & Fitness Website",
+            "meta_description": "for Fitness & Health for IronPulse Fitness",
         },
         {
             "title": "UrbanNest - Real Estate Agency Website",
@@ -497,7 +503,9 @@ def seed_all_data():
             "technology_stack": "HTML5, CSS3, Tailwind CSS, Mapbox API, Django, PostgreSQL",
             "project_duration": "4 Weeks",
             "tags": "Real Estate, Mapbox, Directory, Django",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "UrbanNest - Real Estate Agency Website",
+            "meta_description": "for Real Estate / Brokerage for UrbanNest Realty",
         },
         {
             "title": "VibeEvents - Ticket Booking & Event Platform",
@@ -511,7 +519,9 @@ def seed_all_data():
             "technology_stack": "HTML5, Tailwind CSS, Django, Stripe, Weasyprint",
             "project_duration": "8 Weeks",
             "tags": "Ticketing, Stripe, Web App, Django",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "VibeEvents - Ticket Booking & Event Platform",
+            "meta_description": "for Entertainment & Events for VibeEvents Group",
         },
         {
             "title": "ScholarGrid - Symmetric Academic LMS Platform",
@@ -525,7 +535,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, PostgreSQL, Celery, Gunicorn, Redis",
             "project_duration": "12 Weeks",
             "tags": "LMS, EdTech, PostgreSQL, Django",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "ScholarGrid - Symmetric Academic LMS Platform",
+            "meta_description": "for EdTech / Education for ScholarGrid Academics",
         },
         {
             "title": "GrandVista - Hotel Reservation PMS Platform",
@@ -539,7 +551,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, PostgreSQL, Bootstrap 5, Gunicorn",
             "project_duration": "10 Weeks",
             "tags": "Hotel Booking, Hospitality, PostgreSQL, Django",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "GrandVista - Hotel Reservation PMS Platform",
+            "meta_description": "for Hospitality & Tourism for GrandVista Resorts",
         },
         {
             "title": "SwiftDrop - Logistics Tracking Mobile App Backend",
@@ -553,7 +567,9 @@ def seed_all_data():
             "technology_stack": "Flutter, Dart, Django REST Framework, SimpleJWT, Redis",
             "project_duration": "12 Weeks",
             "tags": "Mobile App, Flutter, API, Logistics",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "SwiftDrop - Logistics Tracking Mobile App Backend",
+            "meta_description": "for Logistics & Delivery for SwiftDrop Logistics",
         },
         {
             "title": "SafeInspected - Property Inspection Mobile Compliance",
@@ -567,7 +583,9 @@ def seed_all_data():
             "technology_stack": "Flutter, Dart, Django REST Framework, SQLite, PostgreSQL",
             "project_duration": "8 Weeks",
             "tags": "Offline Sync, Flutter, Mobile App, API",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "SafeInspected - Property Inspection Mobile Compliance",
+            "meta_description": "for Real Estate / Compliance for SafeInspected Corp",
         },
         {
             "title": "IndoBulk - Wholesale Procurement Portal System",
@@ -581,7 +599,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, PostgreSQL, Alpine.js, Weasyprint",
             "project_duration": "12 Weeks",
             "tags": "B2B Portal, Procurement, Weasyprint, Django",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "IndoBulk - Wholesale Procurement Portal System",
+            "meta_description": "for Manufacturing / Logistics for IndoBulk Traders",
         },
         {
             "title": "TechVibe - Subscription Content Media Publisher",
@@ -595,7 +615,9 @@ def seed_all_data():
             "technology_stack": "HTML5, Tailwind CSS, Django, Stripe, PostgreSQL, Redis",
             "project_duration": "8 Weeks",
             "tags": "Paywall, Subscriptions, Stripe, Django",
-            "is_featured": False
+            "is_featured": False,
+            "meta_title": "TechVibe - Subscription Content Media Publisher",
+            "meta_description": "for Media & Publishing for TechVibe Media",
         },
 
         # --- AI Automation (2 projects) ---
@@ -611,7 +633,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, Meta API, Redis, Celery, PostgreSQL",
             "project_duration": "3 Weeks",
             "tags": "WhatsApp, Webhooks, Automation, Python",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "WhatsApp Lead Collection Bot for Local Retailer",
+            "meta_description": "for Retail / Wholesale for Vanguard Supplies",
         },
         {
             "title": "AI Customer Support Chatbot for E-Commerce",
@@ -625,7 +649,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, OpenAI API, LangChain, Redis, Celery",
             "project_duration": "4 Weeks",
             "tags": "AI Chatbot, LangChain, Support, Python",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "AI Customer Support Chatbot for E-Commerce",
+            "meta_description": "for E-Commerce for ShopHub Retail",
         },
 
         # --- CRM & SaaS Solutions (2 projects) ---
@@ -641,7 +667,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, PostgreSQL, Bootstrap 5, Chart.js",
             "project_duration": "8 Weeks",
             "tags": "CRM, School, Dashboard, Django",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "BrightAcademy - School Management CRM",
+            "meta_description": "for Education / EdTech for BrightAcademy Schools",
         },
         {
             "title": "SalesFlow - B2B Lead Management CRM",
@@ -655,7 +683,9 @@ def seed_all_data():
             "technology_stack": "Python, Django, PostgreSQL, Chart.js, HTML5, Tailwind CSS",
             "project_duration": "6 Weeks",
             "tags": "SaaS, CRM, Sales, Lead Tracking",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "SalesFlow - B2B Lead Management CRM",
+            "meta_description": "for B2B Sales for SalesFlow Solutions",
         },
 
         # --- Digital Marketing (1 project) ---
@@ -671,7 +701,9 @@ def seed_all_data():
             "technology_stack": "Meta Ads Manager, GTM, GA4, Adobe Illustrator, Canva",
             "project_duration": "4 Weeks",
             "tags": "SMM, Local Ads, Graphic Design, Marketing",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "Social Media Growth Campaign for Local Cafe",
+            "meta_description": "for Hospitality & PR for MochaVibe Cafe",
         },
 
         # --- SEO Optimization (1 project) ---
@@ -687,7 +719,9 @@ def seed_all_data():
             "technology_stack": "Google Search Console, GA4, Schema.org, Ahrefs, HTML5",
             "project_duration": "4 Weeks",
             "tags": "SEO, local SEO, Schema, Healthcare",
-            "is_featured": True
+            "is_featured": True,
+            "meta_title": "Local SEO Optimization for Dental Clinic",
+            "meta_description": "for Healthcare & Dentistry for SmileDent Clinic",
         },
 
         # --- Verified Real Client Projects (is_concept_project=False + live_url) ---
@@ -765,6 +799,8 @@ def seed_all_data():
             "content": "<p>When building enterprise web applications, inefficient database query execution is often the root cause of high latency. Learn how to optimize Django ORM lookups by enforcing indexes and leveraging select_related.</p>",
             "tags": "Django, Database, Performance",
             "is_published": True,
+            "meta_title": "Optimizing Database Performance in Django 6.0 Applications",
+            "meta_description": "When building enterprise web applications, inefficient database query execution is often the root cause of high latency. Learn how to opt... in Website Devel...",
             "is_featured": True
         },
         {
@@ -774,6 +810,8 @@ def seed_all_data():
             "content": "<p>Organic search optimization relies heavily on raw page performance. Learn how to compress static resources using Brotli, optimize CSS layouts, and structure schemas to score 100 on Lighthouse audits.</p>",
             "tags": "SEO, Django, Performance",
             "is_published": True,
+            "meta_title": "Technical SEO Checklist for Sub-300ms Django Page Speeds",
+            "meta_description": "Organic search optimization relies heavily on raw page performance. Learn how to compress static resources using Brotli, optimize CSS lay... in Website Devel...",
             "is_featured": False
         },
         {
@@ -783,6 +821,8 @@ def seed_all_data():
             "content": "<p>Secure your stateless API endpoints. Learn how JSON Web Tokens work, configure expiration limits, and handle token rotation safely to protect user authorization data.</p>",
             "tags": "Security, JWT, REST API",
             "is_published": True,
+            "meta_title": "A Guide to Secure JWT Token Authentication in REST APIs",
+            "meta_description": "Secure your stateless API endpoints. Learn how JSON Web Tokens work, configure expiration limits, and handle token rotation safely to pro... in Website Devel...",
             "is_featured": False
         },
         {
@@ -792,6 +832,8 @@ def seed_all_data():
             "content": "<p>Choosing the right mobile stack is crucial for long-term scalability. We compare Dart-based Flutter compilations with React Native's bridge framework for enterprise mobile applications.</p>",
             "tags": "Mobile, Flutter, React Native",
             "is_published": True,
+            "meta_title": "Flutter vs React Native: Choosing the Right Mobile Stack ...",
+            "meta_description": "Choosing the right mobile stack is crucial for long-term scalability. We compare Dart-based Flutter compilations with React Native's brid... in Website Devel...",
             "is_featured": False
         },
 
@@ -803,6 +845,8 @@ def seed_all_data():
             "content": "<p>Integrating the WhatsApp Cloud API with Django requires robust webhook processing. We discuss verifying request signatures, validating payloads, and handling asynchronous execution with Celery.</p>",
             "tags": "WhatsApp, Webhooks, Celery",
             "is_published": True,
+            "meta_title": "How to Securely Connect WhatsApp Cloud API with Django We...",
+            "meta_description": "Integrating the WhatsApp Cloud API with Django requires robust webhook processing. We discuss verifying request signatures, validating pa... in AI Automation...",
             "is_featured": True
         },
         {
@@ -812,6 +856,8 @@ def seed_all_data():
             "content": "<p>Explore how conversational AI chatbots process user intent to qualify and route leads. By connecting chat streams directly with your database, you can dramatically scale sales funnels.</p>",
             "tags": "AI, Chatbots, LeadGen",
             "is_published": True,
+            "meta_title": "Unlocking B2B Conversions: The Power of Conversational AI...",
+            "meta_description": "Explore how conversational AI chatbots process user intent to qualify and route leads. By connecting chat streams directly with your data... in AI Automation...",
             "is_featured": False
         },
         {
@@ -821,6 +867,8 @@ def seed_all_data():
             "content": "<p>Enterprise AI integration requires strict privacy compliance. Learn how to securely pass raw workflow structures into OpenAI endpoints without exposing sensitive company data.</p>",
             "tags": "AI, OpenAI, ERP, Automation",
             "is_published": True,
+            "meta_title": "How to Securely Integrate OpenAI GPT-4o into Your ERP Wor...",
+            "meta_description": "Enterprise AI integration requires strict privacy compliance. Learn how to securely pass raw workflow structures into OpenAI endpoints wi... in AI Automation...",
             "is_featured": False
         },
         {
@@ -830,6 +878,8 @@ def seed_all_data():
             "content": "<p>Retrieval-Augmented Generation lets your AI query custom knowledge bases. We guide you through chunking documents, creating vector embeddings, and indexing them using PGVector in PostgreSQL.</p>",
             "tags": "RAG, PGVector, LLM, Python",
             "is_published": True,
+            "meta_title": "Implementing Retrieval-Augmented Generation (RAG) with PG...",
+            "meta_description": "Retrieval-Augmented Generation lets your AI query custom knowledge bases. We guide you through chunking documents, creating vector embedd... in AI Automation...",
             "is_featured": False
         },
 
@@ -841,6 +891,8 @@ def seed_all_data():
             "content": "<p>Multi-tenancy requires strict isolation boundaries. We evaluate shared database/isolated schema models and compare PostgreSQL's performance metrics for heavy SaaS usage.</p>",
             "tags": "SaaS, PostgreSQL, Database",
             "is_published": True,
+            "meta_title": "Architecting Multi-Tenant SaaS Databases in PostgreSQL",
+            "meta_description": "Multi-tenancy requires strict isolation boundaries. We evaluate shared database/isolated schema models and compare PostgreSQL's performan... in CRM & SaaS So...",
             "is_featured": False
         },
         {
@@ -850,6 +902,8 @@ def seed_all_data():
             "content": "<p>Off-the-shelf software is rarely optimized for your unique sales workflow. Learn how custom, private CRM platforms eliminate seat licensing costs and keep you in control of your data.</p>",
             "tags": "CRM, Custom Software, SaaS",
             "is_published": True,
+            "meta_title": "Why Proprietary CRMs Outperform Off-The-Shelf SaaS Platforms",
+            "meta_description": "Off-the-shelf software is rarely optimized for your unique sales workflow. Learn how custom, private CRM platforms eliminate seat licensi... in CRM & SaaS So...",
             "is_featured": False
         },
         {
@@ -859,6 +913,8 @@ def seed_all_data():
             "content": "<p>Complex dashboard layouts require intuitive UX research. Learn how to wireframe smooth user journeys, plan clean grid structures, and ensure high developer-handoff accuracy in Figma.</p>",
             "tags": "UI UX, Figma, Product Design",
             "is_published": True,
+            "meta_title": "Designing Clean Figma User Journeys for Complex SaaS Dash...",
+            "meta_description": "Complex dashboard layouts require intuitive UX research. Learn how to wireframe smooth user journeys, plan clean grid structures, and ens... in CRM & SaaS So...",
             "is_featured": False
         },
         {
@@ -868,6 +924,8 @@ def seed_all_data():
             "content": "<p>Stripe webhooks are essential for automated subscription management. Learn how to process billing notifications, handle renewals, and manage multi-tenant access tiers safely.</p>",
             "tags": "Stripe, Webhooks, SaaS, Invoicing",
             "is_published": True,
+            "meta_title": "Deploying Multi-Tenant Invoicing Engines with Stripe Webh...",
+            "meta_description": "Stripe webhooks are essential for automated subscription management. Learn how to process billing notifications, handle renewals, and man... in CRM & SaaS So...",
             "is_featured": False
         },
 
@@ -879,6 +937,8 @@ def seed_all_data():
             "content": "<p>A brand kit is a promise of quality. GrowthSpare builds high-fidelity vector guidelines, establishing responsive typography hierarchies and semantic color palettes.</p>",
             "tags": "Brand Guide, Design Tokens, Vector, Figma",
             "is_published": True,
+            "meta_title": "Creating Unified Brand Identity Kits and Guidelines",
+            "meta_description": "A brand kit is a promise of quality. GrowthSpare builds high-fidelity vector guidelines, establishing responsive typography hierarchies a... in Digital Marke...",
             "is_featured": False
         },
         {
@@ -888,6 +948,8 @@ def seed_all_data():
             "content": "<p>Our graphic designers compile professional assets. We create high-resolution vectors, ad creative pools, and responsive assets designed to drive CTR in pay-per-click campaigns.</p>",
             "tags": "Graphic, Ad Creative, Banner, Design",
             "is_published": True,
+            "meta_title": "High-Conversion Programmatic Graphic Layout Designs",
+            "meta_description": "Our graphic designers compile professional assets. We create high-resolution vectors, ad creative pools, and responsive assets designed t... in Digital Marke...",
             "is_featured": False
         },
         {
@@ -897,6 +959,8 @@ def seed_all_data():
             "content": "<p>Stop burning budget on standard, non-converting social ads. Learn how highly targeted ad groups, negative keywords, and precise conversion pixels secure high-value sales.</p>",
             "tags": "PPC, Google Ads, Ad Spend, CRO",
             "is_published": True,
+            "meta_title": "Why Professional Graphic Asset Sets Maximize Social Ads CTR",
+            "meta_description": "Stop burning budget on standard, non-converting social ads. Learn how highly targeted ad groups, negative keywords, and precise conversio... in Digital Marke...",
             "is_featured": False
         },
         {
@@ -906,6 +970,8 @@ def seed_all_data():
             "content": "<p>Attracting traffic is only half the battle. Discover how to execute detailed A/B tests, restructure forms, and optimize micro-copy to maximize lead ingestion rates.</p>",
             "tags": "Marketing, CRO, Conversion, B2B",
             "is_published": True,
+            "meta_title": "Conversion Rate Optimization (CRO) Best Practices for B2B...",
+            "meta_description": "Attracting traffic is only half the battle. Discover how to execute detailed A/B tests, restructure forms, and optimize micro-copy to max... in Digital Marke...",
             "is_featured": False
         },
 
@@ -917,6 +983,8 @@ def seed_all_data():
             "content": "<p>Stop wasting ad spend. Learn how to configure Google Tag Manager and exact conversion tracking pixels to accurately measure high-intent search ad ROI.</p>",
             "tags": "PPC, Google Ads, GA4",
             "is_published": True,
+            "meta_title": "Maximize Google Ads ROI: B2B Conversion Tracking Best Pra...",
+            "meta_description": "Stop wasting ad spend. Learn how to configure Google Tag Manager and exact conversion tracking pixels to accurately measure high-intent s... in SEO Optimizat...",
             "is_featured": False
         },
         {
@@ -926,6 +994,8 @@ def seed_all_data():
             "content": "<p>Ad-blockers and browser updates block client-side tracking pixels. Learn how to integrate Meta's server-side Conversions API (CAPI) to record accurate attribution metrics.</p>",
             "tags": "Meta Ads, Conversion API, Marketing",
             "is_published": True,
+            "meta_title": "Meta Conversions API (CAPI) Integration Guide for High-RO...",
+            "meta_description": "Ad-blockers and browser updates block client-side tracking pixels. Learn how to integrate Meta's server-side Conversions API (CAPI) to re... in SEO Optimizat...",
             "is_featured": False
         },
         {
@@ -935,6 +1005,8 @@ def seed_all_data():
             "content": "<p>Conversion psychology is key to landing page success. Learn how to structure visual flows, implement async forms, and design clear CTAs using Tailwind CSS for high conversion rates.</p>",
             "tags": "Tailwind CSS, Landing Page, CRO",
             "is_published": True,
+            "meta_title": "The Anatomy of a High-Converting B2B Landing Page in Tail...",
+            "meta_description": "Conversion psychology is key to landing page success. Learn how to structure visual flows, implement async forms, and design clear CTAs u... in SEO Optimizat...",
             "is_featured": False
         },
         {
@@ -944,6 +1016,8 @@ def seed_all_data():
             "content": "<p>Targeting traffic is easy, but targeting conversion is hard. Learn how to audit user search intent, separate informational queries from transactional keywords, and structure high-converting content.</p>",
             "tags": "SEO, Keywords, CRO, Google",
             "is_published": True,
+            "meta_title": "Keyword Intent Mapping: The Secret to High-Conversion SEO...",
+            "meta_description": "Targeting traffic is easy, but targeting conversion is hard. Learn how to audit user search intent, separate informational queries from t... in SEO Optimizat...",
             "is_featured": False
         }
     ]

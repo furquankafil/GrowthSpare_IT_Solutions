@@ -118,6 +118,11 @@ class BlogPostDetailView(DetailView):
             },
             "datePublished": post.published_at.isoformat() if post.published_at else "",
             "dateModified": post.updated_at.isoformat(),
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": f"{settings.SITE_URL}{post.get_absolute_url()}",
+            },
+            "keywords": post.tags,
         }
         return context
 

@@ -291,5 +291,17 @@ class ServiceDetailView(DetailView):
             }
             schema_blocks.append(faq_schema)
 
+        website_schema = {
+            "@type": "WebSite",
+            "name": "GrowthSpare IT Solutions",
+            "url": settings.SITE_URL,
+            "description": "Website development, AI automation, CRM software, SEO & digital marketing for startups and SMEs in Delhi NCR.",
+            "publisher": {
+                "@type": "Organization",
+                "name": "GrowthSpare IT Solutions",
+            },
+        }
+        schema_blocks.append(website_schema)
+
         context["schema_data"] = schema_blocks
         return context
