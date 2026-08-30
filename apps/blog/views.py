@@ -3,6 +3,7 @@ Class-based views managing editorial publications feed directories, search and c
 filtering indexes, transactional comment moderations, and optimized content increments.
 """
 
+from django.conf import settings
 from django.db.models import Q, F
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
@@ -105,9 +106,8 @@ class BlogPostDetailView(DetailView):
 
         # Article dynamic metadata structured block mapping
         context["schema_type"] = "Article"
-        context["schema_data"] = {
+        schema_data = {
             "headline": post.title,
-            "image": post.featured_image.url if post.featured_image else "",
             "author": {
                 "@type": "Person",
                 "name": f"{post.author.first_name} {post.author.last_name}".strip() or post.author.username,
@@ -115,15 +115,24 @@ class BlogPostDetailView(DetailView):
             "publisher": {
                 "@type": "Organization",
                 "name": "GrowthSpare IT Solutions",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": f"{settings.SITE_URL}/static/images/logo.png",
+                },
             },
-            "datePublished": post.published_at.isoformat() if post.published_at else "",
-            "dateModified": post.updated_at.isoformat(),
             "mainEntityOfPage": {
                 "@type": "WebPage",
                 "@id": f"{settings.SITE_URL}{post.get_absolute_url()}",
             },
             "keywords": post.tags,
         }
+        if post.featured_image:
+            schema_data["image"] = post.featured_image.url
+        if post.published_at:
+            schema_data["datePublished"] = post.published_at.isoformat()
+        if post.updated_at:
+            schema_data["dateModified"] = post.updated_at.isoformat()
+        context["schema_data"] = schema_data
         return context
 
 

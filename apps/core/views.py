@@ -138,7 +138,7 @@ class HomeView(TemplateView):
         
         # Load active business solutions, newest case studies, and editorial articles
         context["featured_services"] = Service.objects.filter(is_active=True).order_by("id")
-        context["featured_projects"] = Project.objects.filter(is_featured=True)[:3]
+        context["featured_projects"] = Project.objects.filter(is_featured=True).prefetch_related("categories")[:3]
         context["recent_blogs"] = BlogPost.objects.filter(is_published=True).order_by("-published_at")[:3]
         context["testimonials"] = Testimonial.objects.filter(is_active=True).select_related("project")[:6]
 
@@ -322,21 +322,10 @@ class LocationLandingView(TemplateView):
         context["seo_description"] = location["seo_description"]
 
         # LocalBusiness (scoped to this city) + FAQPage schema, combined —
-        # matches the pattern used on service detail pages.
-        local_business_schema = {
-            "@type": "LocalBusiness",
-            "name": "GrowthSpare IT Solutions",
-            "url": settings.SITE_URL,
-            "telephone": "+91 9811579273",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "D-50, Shaheen Bagh, Okhla",
-                "addressLocality": "New Delhi",
-                "postalCode": "110025",
-                "addressCountry": "IN",
-            },
-            "areaServed": location["city"],
-        }
+        # matches the pattern used on service detail pages. Uses the shared
+        # NAP helper to keep schema consistent with the homepage.
+        local_business_schema = _company_local_business_schema()
+        local_business_schema["areaServed"] = [location["city"]]
         faq_schema = {
             "@type": "FAQPage",
             "mainEntity": [

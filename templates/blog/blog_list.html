@@ -156,8 +156,10 @@
                         {% for fp in featured_posts %}
                             <div class="flex items-center space-x-3.5 group">
                                 <div class="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-900/10 dark:border-white/5">
-                                    <img src="{% if 'http' in fp.featured_image.name %}{{ fp.featured_image.name }}{% else %}{{ fp.featured_image.url }}{% endif %}" 
-                                         alt="{{ fp.title }}" loading="lazy" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
+                                    {% if fp.featured_image %}
+                                        <img src="{% if 'http' in fp.featured_image.name %}{{ fp.featured_image.name }}{% else %}{{ fp.featured_image.url }}{% endif %}" 
+                                             alt="{{ fp.title }}" loading="lazy" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform">
+                                    {% endif %}
                                 </div>
                                 <div class="space-y-1 truncate">
                                     <h4 class="text-xs font-bold text-slate-900 dark:text-white font-poppins group-hover:text-primary dark:group-hover:text-accent transition-colors truncate">

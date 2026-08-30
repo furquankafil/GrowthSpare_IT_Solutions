@@ -160,3 +160,22 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+# Ad-hoc developer/seed manipulation scripts (not part of the application)
+add_seed_meta.py
+apply_seed_meta.py
+examine_blog_seed.py
+examine_blog_seed2.py
+examine_seed.py
+examine_seed_735.py
+find_seed_patterns.py
+fix_is_featured.py
+gen_meta.py
+get_db_meta.py
+modify_seed.py
+modify_seed_meta.py
+try_seed_mods.py
+update_seed.py
+verify_meta.py
+verify_meta_persists.py
+process_official_logo.py

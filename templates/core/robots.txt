@@ -9,7 +9,7 @@ Disallow: /accounts/login/
 Disallow: /accounts/register/
 Disallow: /accounts/password-reset/
 Disallow: /dashboard/
-Disallow: /consultation/book?
+Disallow: /consultation/book/
 
 # Dynamic absolute sitemap index map location
 Sitemap: {{ SITE_URL }}/sitemap.xml

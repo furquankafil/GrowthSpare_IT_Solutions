@@ -417,6 +417,9 @@ GOOGLE_MAPS_EMBED_QUERY = os.getenv(
     "D-50, Shaheen Bagh, Okhla, New Delhi 110025",
 )
 
+# B2B API integration key for dashboard settings page
+B2B_API_KEY = os.getenv("B2B_API_KEY", "")
+
 
 # ==============================================================================
 # Content Security Policy (django-csp 4.x)

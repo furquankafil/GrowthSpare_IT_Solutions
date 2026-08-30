@@ -1,3 +1,4 @@
+{% load static %}
 <!-- ==============================================================================
      GrowthSpare IT Solutions - Modular SEO Meta & Social Card Includes
      Generates standardized head metadata for search engine indexing and social platforms.
@@ -7,6 +8,7 @@
 <title>{% if seo_title %}{{ seo_title }} | {{ COMPANY_NAME }}{% else %}{{ COMPANY_NAME }} - {{ TAGLINE }}{% endif %}</title>
 <meta name="description" content="{{ seo_description|default:TAGLINE }}">
 <meta name="keywords" content="{{ seo_keywords|default:'AI Automation, Web Development, Django, SaaS development, CRM Development, New Delhi' }}">
+<meta name="robots" content="index, follow">
 
 {% if canonical_url %}
     <link rel="canonical" href="{{ canonical_url }}">
@@ -20,10 +22,10 @@
 {% if canonical_url %}
     <meta property="og:url" content="{{ canonical_url }}">
 {% endif %}
-<meta property="og:image" content="{{ seo_image|default:'/static/images/logo.png' }}">
+<meta property="og:image" content="{{ seo_image|default:request.build_absolute_uri|default:'https://growthspareitsolutions.com/static/images/logo.png' }}">
 
 <!-- Twitter Card Validation -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{% if seo_title %}{{ seo_title }}{% else %}{{ COMPANY_NAME }}{% endif %}">
 <meta name="twitter:description" content="{{ seo_description|default:TAGLINE }}">
-<meta name="twitter:image" content="{{ seo_image|default:'/static/images/logo.png' }}">
+<meta name="twitter:image" content="{{ seo_image|default:request.build_absolute_uri|default:'https://growthspareitsolutions.com/static/images/logo.png' }}">

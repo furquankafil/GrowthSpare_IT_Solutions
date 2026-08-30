@@ -3,6 +3,7 @@ Class-based views managing operations and client dashboard interfaces, aggregate
 role-based access validations, and active bulletin allocations.
 """
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import get_user_model
@@ -31,6 +32,12 @@ class DashboardSettingsView(LoginRequiredMixin, TemplateView):
     reads from request.user directly.
     """
     template_name = "dashboard/settings.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Pass API key from settings to avoid hardcoding in templates
+        context["b2b_api_key"] = getattr(settings, "B2B_API_KEY", "")
+        return context
 
 
 class DashboardUsersView(LoginRequiredMixin, TemplateView):
