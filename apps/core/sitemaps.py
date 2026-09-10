@@ -34,6 +34,8 @@ class StaticViewSitemap(Sitemap):
             "blog:list",
             "faq:list",
             "testimonials:list",
+            "core:locations-index",
+            "core:industries-index",
             "core:location-delhi",
             "core:location-noida",
             "core:location-gurgaon",

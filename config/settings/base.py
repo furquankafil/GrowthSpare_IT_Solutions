@@ -98,6 +98,9 @@ INSTALLED_APPS = (
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
 
+    # SEO: www -> apex 301 (only acts on www.growthspareitsolutions.com)
+    "apps.core.middleware.WwwToApexRedirectMiddleware",
+
     # Disabled manifest compression issue
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
@@ -424,7 +427,8 @@ B2B_API_KEY = os.getenv("B2B_API_KEY", "")
 # ==============================================================================
 # Content Security Policy (django-csp 4.x)
 # Allows exactly the external hosts referenced in templates/base.html —
-# Tailwind Play CDN, Google Fonts, FontAwesome, AOS, Swiper, GSAP, Typed.js.
+# Tailwind Play CDN, Google Fonts, FontAwesome, AOS, Swiper, GSAP, Typed.js,
+# plus Google Analytics 4 (googletagmanager + google-analytics).
 # ==============================================================================
 
 CONTENT_SECURITY_POLICY = {
@@ -437,6 +441,8 @@ CONTENT_SECURITY_POLICY = {
             "https://unpkg.com",
             "https://cdnjs.cloudflare.com",
             "https://cdn.jsdelivr.net",
+            "https://www.googletagmanager.com",
+            "https://www.google-analytics.com",
         ],
         "style-src": [
             "'self'",
@@ -452,7 +458,7 @@ CONTENT_SECURITY_POLICY = {
             "https://cdnjs.cloudflare.com",
         ],
         "img-src": ["'self'", "data:", "https:"],
-        "connect-src": ["'self'"],
+        "connect-src": ["'self'", "https://www.google-analytics.com", "https://region1.google-analytics.com"],
         # Without an explicit frame-src, browsers fall back to default-src
         # ('self'), which silently blocks the Google Maps <iframe> embed on
         # the contact page — this is why the map was not loading in

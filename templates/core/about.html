@@ -105,7 +105,10 @@
 
                 <!-- Center Brand Focal Indicator -->
                 <div class="w-32 h-32 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center z-10 shadow-2xl shadow-primary/20">
-                    <img src="{% static 'images/logo.png' %}" alt="GrowthSpare Logo" loading="lazy" class="h-10 w-auto opacity-90 dark:brightness-110">
+                    <picture>
+                        <source srcset="{% static 'images/logo.webp' %}" type="image/webp">
+                        <img src="{% static 'images/logo.png' %}" alt="GrowthSpare IT Solutions logo" loading="lazy" decoding="async" width="768" height="512" class="h-10 w-auto opacity-90 dark:brightness-110">
+                    </picture>
                 </div>
             </div>
         </div>
@@ -123,11 +126,15 @@
         <div class="lg:col-span-5 relative" data-aos="fade-right">
             <div class="relative w-full max-w-[400px] mx-auto aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-800/50 group">
                 <!-- Founder image source with placeholder fallback -->
-                <img src="{% static 'images/founder.png' %}" 
-                     alt="{{ FOUNDER_NAME }}" 
-                     loading="lazy"
-                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                     onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=750';">
+                <picture class="w-full h-full block">
+                    <source srcset="{% static 'images/founder.webp' %}" type="image/webp">
+                    <img src="{% static 'images/founder.png' %}"
+                         alt="Mohammad Furqan Kafil, Founder and Lead Engineer at GrowthSpare IT Solutions"
+                         loading="lazy" decoding="async"
+                         width="640" height="829"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=750';">
+                </picture>
                 
                 <!-- Ambient Inner Glow/Gradients -->
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>

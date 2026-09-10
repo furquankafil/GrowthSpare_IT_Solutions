@@ -6,9 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#2563EB">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
     <link rel="apple-touch-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
     <!-- Theme Synchronization Engine: runs before anything renders so the
          correct Light/Dark class is applied pre-paint (no flash). Site
@@ -169,6 +174,27 @@
             color: #ffffff !important;
             border-color: transparent !important;
         }
+
+        /* Accessibility: visible keyboard focus without altering brand design */
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 2px solid #06B6D4;
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 100;
+            padding: 0.75rem 1.25rem;
+            background: #2563EB;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 0 0 12px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+        }
     </style>
 
     <!-- Project theme tokens (glassmorphism variables, neon glow, base font mapping) -->
@@ -182,6 +208,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-darkBackground dark:text-slate-100 transition-colors duration-300 font-sans flex flex-col min-h-screen">
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Pre-loader dynamic state visualization segment -->
     {% include 'components/loading_screen.html' %}
 
@@ -212,7 +239,7 @@
     {% endif %}
 
     <!-- Master Dynamic Content Block placeholder -->
-    <main class="flex-grow">
+    <main id="main-content" class="flex-grow">
         {% block content %}{% endblock content %}
     </main>
 
@@ -239,8 +266,9 @@
          header, active nav tracking) and GSAP-powered entrance/hover/counter
          animations. Theme init already handled pre-paint by theme_toggle.js
          in <head>; toggle click-handlers live in navbar.html / dashboard. -->
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/animations.js' %}"></script>
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="{% static 'js/animations.js' %}" defer></script>
+    <script src="{% static 'js/conversion_tracking.js' %}" defer></script>
 
     <!-- Core Visual Handlers Implementation Script -->
     <script>

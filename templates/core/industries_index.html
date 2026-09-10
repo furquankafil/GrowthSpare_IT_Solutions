@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load seo_tags %}
+
+{% block seo %}
+    {% render_seo_meta title=seo_title description=seo_description %}
+{% endblock seo %}
+
+{% block content %}
+<section class="relative pt-40 pb-20 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-8" data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">Industries</span>
+        </nav>
+        <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Industries We Serve</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none text-slate-900 dark:text-white font-poppins">
+            Websites That Solve Real Industry Problems
+        </h1>
+        <p class="text-base sm:text-xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto font-medium leading-relaxed">
+            From restaurants to clinics to real estate — see how a focused, fast website with WhatsApp lead capture helps each kind of business get more enquiries.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-white bg-gradient-to-r from-primary to-accent shadow-xl shadow-primary/25 hover:opacity-95 transition-all">
+                Get a Free Website Audit
+            </a>
+            <a href="{% url 'services:list' %}" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all">
+                Explore Services
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-20">
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-3">
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Restaurants &amp; Cafés</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Menus, reservations and WhatsApp ordering without marketplace commissions.</p>
+            <a href="{% url 'core:industry-restaurant' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Restaurant websites →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-3">
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Real Estate</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Listing sites and project microsites that turn browsing into enquiries.</p>
+            <a href="{% url 'core:industry-real-estate' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Real estate websites →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-3">
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Clinics &amp; Healthcare</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Appointment flows and local SEO for “near me” patient searches.</p>
+            <a href="{% url 'core:industry-clinic' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Clinic websites →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-3">
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Coaching &amp; Education</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Course pages, admission enquiries and optional LMS integration.</p>
+            <a href="{% url 'core:industry-education' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Education websites →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-3">
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Small &amp; Local Businesses</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Affordable, professional sites for shops, salons and services — starting at ₹4,999.</p>
+            <a href="{% url 'core:industry-small-business' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Small business websites →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-3">
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Gyms, Legal, Retail, Corporate &amp; Travel</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Focused builds for fitness, law firms, e-commerce, B2B and hotels.</p>
+            <div class="flex flex-wrap gap-3 text-sm font-bold text-primary dark:text-accent">
+                <a href="{% url 'core:industry-gym-fitness' %}" class="hover:underline">Gyms</a>
+                <a href="{% url 'core:industry-law-firm' %}" class="hover:underline">Law Firms</a>
+                <a href="{% url 'core:industry-retail-ecommerce' %}" class="hover:underline">Retail</a>
+                <a href="{% url 'core:industry-corporate-business' %}" class="hover:underline">Corporate</a>
+                <a href="{% url 'core:industry-hotels-travel' %}" class="hover:underline">Hotels</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

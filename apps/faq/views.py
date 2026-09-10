@@ -32,11 +32,10 @@ class FAQListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Custom SEO attributes
-        context["seo_title"] = "Dynamic FAQs & Knowledge Base Directory"
+        context["seo_title"] = "FAQs: Websites, AI, CRM, SEO & Pricing"
         context["seo_description"] = (
-            "Explore answers to frequently asked technical and process questions regarding "
-            "AI Automation, custom Django platforms, SaaS integrations, and search engine optimization "
-            "delivery parameters structured by GrowthSpare IT Solutions."
+            "Answers on website cost and timelines, AI automation, CRM, SEO and "
+            "working with GrowthSpare IT Solutions in Delhi NCR."
         )
 
         # FAQPage structured data — mirrors exactly what's visibly rendered

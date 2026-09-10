@@ -88,13 +88,47 @@ class ContactView(FormView):
         context = super().get_context_data(**kwargs)
 
         context["seo_title"] = (
-            "Contact our Engineering Architects & Project Offices"
+            "Contact GrowthSpare IT Solutions in Delhi | Free Website Audit"
         )
 
         context["seo_description"] = (
-            "Initiate a design brief with GrowthSpare IT Solutions. "
-            "Contact our offices in New Delhi, India for custom Django, "
-            "AI automation, or CRM engineering services."
+            "Contact GrowthSpare IT Solutions in Okhla, New Delhi — call, WhatsApp or send "
+            "your project brief for websites, AI automation, CRM and SEO. Mon–Sat, 9am–7pm IST."
         )
+
+        from django.conf import settings
+
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "LocalBusiness",
+                "name": "GrowthSpare IT Solutions",
+                "url": settings.SITE_URL,
+                "image": f"{settings.SITE_URL}/static/images/logo.png",
+                "telephone": "+91 9811579273",
+                "email": "growthspareitsolution@gmail.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "D-50, Shaheen Bagh, Okhla",
+                    "addressLocality": "New Delhi",
+                    "postalCode": "110025",
+                    "addressCountry": "IN",
+                },
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    "opens": "09:00",
+                    "closes": "19:00",
+                },
+                "areaServed": ["New Delhi", "Noida", "Gurugram"],
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Contact", "item": f"{base_url}/contact/"},
+                ],
+            },
+        ]
 
         return context

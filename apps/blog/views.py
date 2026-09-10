@@ -50,12 +50,18 @@ class BlogListView(ListView):
         context["active_category"] = self.request.GET.get("category", "")
         context["search_query"] = self.request.GET.get("q", "")
 
-        # SEO configurations
-        context["seo_title"] = "Corporate Publications, tech Insights & AI Tutorials"
+        # SEO configurations — intent-led, human-readable
+        context["seo_title"] = "Website, SEO & AI Insights for Growing Businesses"
         context["seo_description"] = (
-            "Explore structural growth guides, Python and Django software development tutorials, "
-            "automation strategies, and corporate technology insights written by the GrowthSpare team."
+            "Practical guides on website development costs, hiring a web developer, "
+            "local SEO, WhatsApp lead generation and AI automation — by GrowthSpare IT Solutions."
         )
+        # Internal search and filtered category pages must not be indexed as
+        # separate pages (thin duplicates of the main blog index).
+        if context["search_query"] or context["active_category"] or self.request.GET.get("page"):
+            # Only search/filter combos are noindex; plain pagination page 1 stays indexable
+            if context["search_query"] or context["active_category"]:
+                context["seo_robots"] = "noindex, follow"
         return context
 
 

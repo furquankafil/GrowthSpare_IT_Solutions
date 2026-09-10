@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load seo_tags %}
+
+{% block seo %}
+    {% render_seo_meta title=seo_title description=seo_description %}
+{% endblock seo %}
+
+{% block content %}
+<section class="relative pt-40 pb-20 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-8" data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">Locations</span>
+        </nav>
+        <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Service Areas</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none text-slate-900 dark:text-white font-poppins">
+            Website Development in Delhi NCR
+        </h1>
+        <p class="text-base sm:text-xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto font-medium leading-relaxed">
+            GrowthSpare IT Solutions is based in Okhla, New Delhi and serves growing businesses across Delhi, Noida and Gurugram with modern websites, AI automation, CRM and SEO.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-white bg-gradient-to-r from-primary to-accent shadow-xl shadow-primary/25 hover:opacity-95 transition-all">
+                Get a Free Website Audit
+            </a>
+            <a href="{% url 'portfolio:list' %}" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all">
+                View Our Work
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-20">
+    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+            <h2 class="text-xl font-bold font-poppins text-slate-900 dark:text-white">Delhi</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{ locations.0.intro|truncatewords:30 }}</p>
+            <a href="{% url 'core:location-delhi' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Web Development in Delhi →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+            <h2 class="text-xl font-bold font-poppins text-slate-900 dark:text-white">Noida</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{ locations.1.intro|truncatewords:30 }}</p>
+            <a href="{% url 'core:location-noida' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Web Development in Noida →</a>
+        </div>
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+            <h2 class="text-xl font-bold font-poppins text-slate-900 dark:text-white">Gurugram</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{ locations.2.intro|truncatewords:30 }}</p>
+            <a href="{% url 'core:location-gurgaon' %}" class="text-sm font-bold text-primary dark:text-accent hover:underline">Web Development in Gurugram →</a>
+        </div>
+    </div>
+    <div class="max-w-[900px] mx-auto px-6 mt-12 text-center space-y-4">
+        <p class="text-sm text-slate-600 dark:text-slate-300">Prefer to talk first? <a href="{% url 'contact:contact' %}" class="font-bold text-primary dark:text-accent hover:underline">Contact our Delhi office</a> or <a href="{% url 'services:list' %}" class="font-bold text-primary dark:text-accent hover:underline">explore all services</a>.</p>
+    </div>
+</section>
+{% endblock content %}

@@ -11,10 +11,15 @@
               - Height set to custom h-[74px] (mobile) and sm:h-[92px] (desktop) for maximum readability.
               - Maintains ideal aspect ratio, remains beautifully centered and professionally proportioned.
             -->
-            <img src="{% static 'images/logo.png' %}" 
-                 id="navbar-logo"
-                 alt="GrowthSpare IT Solutions" 
-                 class="h-[74px] sm:h-[92px] w-auto block transition-all duration-300 group-hover:scale-[1.01] dark:filter dark:brightness-110">
+            <picture>
+                <source srcset="{% static 'images/logo.webp' %}" type="image/webp">
+                <img src="{% static 'images/logo.png' %}"
+                     id="navbar-logo"
+                     alt="GrowthSpare IT Solutions"
+                     width="768" height="512"
+                     fetchpriority="high" decoding="async"
+                     class="h-[74px] sm:h-[92px] w-auto block transition-all duration-300 group-hover:scale-[1.01] dark:filter dark:brightness-110">
+            </picture>
         </a>
 
         <!-- Desktop Core Navigation Links (Larger font and expanded spacing) -->

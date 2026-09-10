@@ -5,11 +5,11 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /accounts/login/
-Disallow: /accounts/register/
-Disallow: /accounts/password-reset/
+Disallow: /accounts/
 Disallow: /dashboard/
-Disallow: /consultation/book/
+Disallow: /*?q=
+Disallow: /*?category=
+Disallow: /*?page=
 
 # Dynamic absolute sitemap index map location
 Sitemap: {{ SITE_URL }}/sitemap.xml

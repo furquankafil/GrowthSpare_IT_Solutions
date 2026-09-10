@@ -17,6 +17,13 @@
     </div>
 
     <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-8" data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <a href="{% url 'core:industries-index' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Industries</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">{{ industry.name }}</span>
+        </nav>
         <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Industry Focus</span>
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-slate-900 dark:text-white font-poppins">
             {{ industry.heading }}

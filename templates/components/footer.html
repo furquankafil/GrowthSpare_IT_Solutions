@@ -12,10 +12,14 @@
                   - Height scaled to h-[56px] (mobile) and md:h-[66px] (tablet/desktop)
                   - Proportions and baseline layouts completely matched
                 -->
-                <img src="{% static 'images/logo.png' %}" 
-                     alt="GrowthSpare IT Solutions" 
-                     loading="lazy"
-                     class="h-[56px] md:h-[66px] w-auto block transition-all duration-300 group-hover:scale-[1.01] dark:filter dark:brightness-110">
+                <picture>
+                    <source srcset="{% static 'images/logo.webp' %}" type="image/webp">
+                    <img src="{% static 'images/logo.png' %}"
+                         alt="GrowthSpare IT Solutions"
+                         loading="lazy" decoding="async"
+                         width="768" height="512"
+                         class="h-[56px] md:h-[66px] w-auto block transition-all duration-300 group-hover:scale-[1.01] dark:filter dark:brightness-110">
+                </picture>
             </a>
             <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400 font-medium pt-1">
                 {{ TAGLINE }} Our engineering teams deploy stable, production-grade cloud databases, dynamic automation engines, and secure web products globally.
@@ -54,11 +58,12 @@
         <div>
             <span class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-300 font-poppins">Engineering Directory</span>
             <ul class="mt-4 space-y-2.5 text-xs font-medium">
-                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">SaaS & CRM Engineering</a></li>
-                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">AI & WhatsApp Automation</a></li>
-                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Python & Django Development</a></li>
-                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Digital SEO & Google Ads Campaigns</a></li>
-                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Cybersecurity Assessment</a></li>
+                <li><a href="/services/website-development/" class="hover:text-primary dark:hover:text-accent transition-colors">Website Development</a></li>
+                <li><a href="/services/ai-whatsapp-automation/" class="hover:text-primary dark:hover:text-accent transition-colors">AI &amp; WhatsApp Automation</a></li>
+                <li><a href="/services/crm-software-development/" class="hover:text-primary dark:hover:text-accent transition-colors">CRM Software Development</a></li>
+                <li><a href="/services/seo-optimization/" class="hover:text-primary dark:hover:text-accent transition-colors">SEO Services</a></li>
+                <li><a href="/services/digital-marketing/" class="hover:text-primary dark:hover:text-accent transition-colors">Digital Marketing &amp; Growth</a></li>
+                <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">All Services</a></li>
             </ul>
         </div>
 
@@ -91,6 +96,16 @@
                     <a href="{% url 'core:location-gurgaon' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Gurugram</a>
                 </div>
             </div>
+            <div class="mt-4 pt-4 border-t border-white/5">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Industries</span>
+                <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
+                    <a href="{% url 'core:industry-restaurant' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Restaurants</a>
+                    <a href="{% url 'core:industry-real-estate' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Real Estate</a>
+                    <a href="{% url 'core:industry-clinic' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Clinics</a>
+                    <a href="{% url 'core:industry-education' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Coaching</a>
+                    <a href="{% url 'core:industry-small-business' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Small Business</a>
+                </div>
+            </div>
         </div>
 
         <!-- Bulletin Ingestion (Newsletter Form with AJAX) -->
@@ -116,6 +131,9 @@
     <div class="max-w-[1400px] mx-auto px-6 mt-16 pt-8 border-t border-slate-900/10 dark:border-white/5 flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-500 font-medium">
         <span>&copy; <span id="current-year">2026</span> {{ COMPANY_NAME }}. All corporate and system rights reserved.</span>
         <div class="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 justify-center">
+            <a href="{% url 'portfolio:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Portfolio</a>
+            <a href="{% url 'blog:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Insights</a>
+            <a href="{% url 'testimonials:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Client Reviews</a>
             <a href="{% url 'core:privacy' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Privacy Protocol</a>
             <a href="{% url 'core:terms' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Terms of Operations</a>
             <a href="{% url 'core:refund' %}" class="hover:text-primary dark:hover:text-accent transition-colors">SLA Refund Matrix</a>

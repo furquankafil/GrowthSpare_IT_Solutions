@@ -150,10 +150,33 @@ class HomeView(TemplateView):
         # Homepage FAQ (AEO): visible accordion content + matching FAQPage schema.
         context["homepage_faqs"] = HOMEPAGE_FAQS
 
-        # Structured data: LocalBusiness entity + FAQPage, emitted as one @graph
-        # (a single script tag per page, which is what Google's tooling expects).
+        # Structured data: Organization + WebSite (+SearchAction) + LocalBusiness + FAQPage,
+        # emitted as one @graph (a single script tag per page, which is what
+        # Google's tooling expects).
+        organization_schema = {
+            "@type": "Organization",
+            "@id": f"{settings.SITE_URL}/#organization",
+            "name": "GrowthSpare IT Solutions",
+            "url": settings.SITE_URL,
+            "logo": f"{settings.SITE_URL}/static/images/logo.png",
+            "description": "Modern websites & digital solutions for growing businesses — website development, AI automation, CRM software, SEO & digital marketing in Delhi NCR.",
+            "email": "growthspareitsolution@gmail.com",
+            "telephone": "+91 9811579273",
+            "sameAs": COMPANY_SAME_AS,
+        }
+        website_schema = {
+            "@type": "WebSite",
+            "url": settings.SITE_URL,
+            "name": "GrowthSpare IT Solutions",
+            "publisher": {"@id": f"{settings.SITE_URL}/#organization"},
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": f"{settings.SITE_URL}/blog/?q={{search_term_string}}",
+                "query-input": "required name=search_term_string",
+            },
+        }
         local_business_schema = _company_local_business_schema()
-        local_business_schema["@id"] = f"{settings.SITE_URL}/#organization"
+        local_business_schema["@id"] = f"{settings.SITE_URL}/#localbusiness"
         local_business_schema["areaServed"] = ["New Delhi", "Noida", "Gurugram"]
         faq_schema = {
             "@type": "FAQPage",
@@ -166,13 +189,13 @@ class HomeView(TemplateView):
                 for question, answer in HOMEPAGE_FAQS
             ],
         }
-        context["schema_data"] = [local_business_schema, faq_schema]
+        context["schema_data"] = [organization_schema, website_schema, local_business_schema, faq_schema]
 
-        # SEO parameters
-        context["seo_title"] = "Web Development, AI & CRM in Delhi NCR"
+        # SEO parameters — primary business intent, human-readable, no stuffing
+        context["seo_title"] = "Website Development Company in Delhi NCR"
         context["seo_description"] = (
-            "Website development, AI automation, CRM software, SEO & digital "
-            "marketing for startups & SMEs in Delhi, Noida & Gurugram. Based in New Delhi."
+            "GrowthSpare IT Solutions builds modern, mobile-first websites, AI & WhatsApp "
+            "automation, CRM software and SEO for growing businesses in Delhi, Noida & Gurugram."
         )
         return context
 
@@ -183,8 +206,29 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["seo_title"] = "Our Vision & Enterprise Engineering Leadership"
-        context["seo_description"] = "Learn how GrowthSpare IT Solutions helps businesses scale globally using advanced technology."
+        context["seo_title"] = "About GrowthSpare IT Solutions | Website & AI Experts in Delhi"
+        context["seo_description"] = (
+            "Meet GrowthSpare IT Solutions — Delhi-based team building modern websites, AI automation, "
+            "CRM software and SEO for startups and growing businesses across Delhi NCR."
+        )
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "Organization",
+                "@id": f"{settings.SITE_URL}/#organization",
+                "name": "GrowthSpare IT Solutions",
+                "url": settings.SITE_URL,
+                "logo": f"{settings.SITE_URL}/static/images/logo.png",
+                "sameAs": COMPANY_SAME_AS,
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "About Us", "item": f"{base_url}/about-us/"},
+                ],
+            },
+        ]
         return context
 
 
@@ -684,6 +728,65 @@ class IndustryLandingView(TemplateView):
             schema_blocks.append(faq_schema)
 
         context["schema_data"] = schema_blocks
+        return context
+
+
+class LocationsIndexView(TemplateView):
+    """Hub page listing Delhi/Noida/Gurugram service areas — prevents orphan location pages."""
+
+    template_name = "core/locations_index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["seo_title"] = "Website Development in Delhi, Noida & Gurugram"
+        context["seo_description"] = (
+            "GrowthSpare IT Solutions serves businesses across Delhi NCR — Delhi (Okhla HQ), "
+            "Noida and Gurugram — with websites, AI automation, CRM and SEO."
+        )
+        context["locations"] = [
+            {"key": key, "city": LOCATION_DATA[key]["city"], "heading": LOCATION_DATA[key]["heading"],
+             "intro": LOCATION_DATA[key]["intro"]}
+            for key in ("delhi", "noida", "gurgaon")
+        ]
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Locations", "item": f"{base_url}/locations/"},
+                ],
+            }
+        ]
+        return context
+
+
+class IndustriesIndexView(TemplateView):
+    """Hub page listing all industry specialisations — prevents orphan industry pages."""
+
+    template_name = "core/industries_index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["seo_title"] = "Websites for Restaurants, Clinics, Real Estate & More"
+        context["seo_description"] = (
+            "Websites for restaurants, clinics, real estate, coaching, gyms, law firms "
+            "and local businesses — by GrowthSpare IT Solutions, Delhi NCR."
+        )
+        context["industries"] = [
+            {"slug": slug, "name": data["name"], "heading": data["heading"], "solution": data["solution"]}
+            for slug, data in INDUSTRY_DATA.items()
+        ]
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Industries", "item": f"{base_url}/industries/"},
+                ],
+            }
+        ]
         return context
 
 

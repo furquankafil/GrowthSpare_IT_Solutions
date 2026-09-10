@@ -75,6 +75,24 @@ class ServiceListView(ListView):
     template_name = "services/service_list.html"
     context_object_name = "services"
 
+    def get(self, request, *args, **kwargs):
+        # 301 legacy ?category= URLs to the canonical category landing page.
+        # Prevents duplicate-content indexing (same list under two URLs).
+        category_slug = request.GET.get("category")
+        if category_slug:
+            try:
+                from django.shortcuts import redirect as dj_redirect
+
+                category = ServiceCategory.objects.filter(slug=category_slug).first()
+                if category:
+                    return dj_redirect(
+                        reverse("services:category", kwargs={"category_slug": category.slug}),
+                        permanent=True,
+                    )
+            except Exception:
+                pass
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
         """
         Filter capabilities to active service provisions and prefetch categories.
@@ -108,11 +126,10 @@ class ServiceListView(ListView):
                 f"modern businesses automate workflows and scale faster."
             )
         else:
-            context["seo_title"] = "Web, AI, SaaS, Security & Engineering Solutions"
+            context["seo_title"] = "Web, AI, CRM, SEO & Marketing Services"
             context["seo_description"] = (
-                "Explore our complete directory of business-first services: Web Solutions, AI "
-                "Automation, SaaS & CRM Systems, Digital Marketing, SEO & Marketing, Cyber Security, "
-                "and Engineering Solutions."
+                "Websites, AI automation, CRM systems, SEO and digital marketing "
+                "for growing businesses — explore all GrowthSpare services."
             )
 
         # Real category-based groupings for the two "Division" sections on the
@@ -126,6 +143,16 @@ class ServiceListView(ListView):
         context["technology_services"] = base_queryset.exclude(
             categories__slug__in=["digital-marketing", "seo-marketing"]
         ).distinct()
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Services", "item": f"{base_url}/services/"},
+                ],
+            }
+        ]
         return context
 
 

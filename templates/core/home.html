@@ -717,6 +717,30 @@
 </section>
 
 <!-- ==============================================================================
+     10B. WHAT GROWTHSPARE DOES — SEO + INTERNAL LINKING HUB (design-matched)
+     ============================================================================== -->
+<section class="py-20 border-t border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
+    <div class="max-w-4xl mx-auto px-6 text-center space-y-6" data-aos="fade-up">
+        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">What GrowthSpare Does</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Modern Websites &amp; Digital Solutions for Growing Businesses</h2>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            GrowthSpare IT Solutions is a Delhi-based team helping startups and small businesses get more enquiries from Google and WhatsApp.
+            We build <a href="/services/website-development/" class="font-bold text-primary dark:text-accent hover:underline">mobile-first business websites</a>,
+            <a href="/services/ai-whatsapp-automation/" class="font-bold text-primary dark:text-accent hover:underline">AI &amp; WhatsApp automation</a>,
+            <a href="/services/crm-software-development/" class="font-bold text-primary dark:text-accent hover:underline">custom CRM systems</a> and
+            <a href="/services/seo-optimization/" class="font-bold text-primary dark:text-accent hover:underline">practical SEO</a> —
+            serving <a href="{% url 'core:location-delhi' %}" class="font-bold text-primary dark:text-accent hover:underline">Delhi</a>,
+            <a href="{% url 'core:location-noida' %}" class="font-bold text-primary dark:text-accent hover:underline">Noida</a> and
+            <a href="{% url 'core:location-gurgaon' %}" class="font-bold text-primary dark:text-accent hover:underline">Gurugram</a>,
+            including <a href="{% url 'core:industry-restaurant' %}" class="font-bold text-primary dark:text-accent hover:underline">restaurants</a>,
+            <a href="{% url 'core:industry-clinic' %}" class="font-bold text-primary dark:text-accent hover:underline">clinics</a> and
+            <a href="{% url 'core:industry-small-business' %}" class="font-bold text-primary dark:text-accent hover:underline">local businesses</a>.
+            Start with a <a href="{% url 'consultation:book' %}" class="font-bold text-primary dark:text-accent hover:underline">free website audit</a> or <a href="{% url 'portfolio:list' %}" class="font-bold text-primary dark:text-accent hover:underline">see our work</a>.
+        </p>
+    </div>
+</section>
+
+<!-- ==============================================================================
      11. FAQ ACCORDION SECTION (Attractive, Animated accordion)
      ============================================================================== -->
 <section id="faq" class="py-24 relative overflow-hidden bg-slate-100/50 dark:bg-slate-950/40 border-t border-slate-900/10 dark:border-white/5 relative z-10">
@@ -729,9 +753,9 @@
         <div class="space-y-4">
             {% for question, answer in homepage_faqs %}
             <div class="glassmorphism rounded-2xl border border-slate-900/10 dark:border-white/5 overflow-hidden transition-all duration-300" data-aos="fade-up">
-                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)">
+                <button class="w-full p-6 text-left flex items-center justify-between text-slate-900 dark:text-white font-bold font-poppins text-xs sm:text-sm focus:outline-none" onclick="toggleLocalFaq(this)" aria-expanded="false">
                     <span>{{ question }}</span>
-                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300"></i>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400 transform transition-transform duration-300" aria-hidden="true"></i>
                 </button>
                 <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-500/5">
                     <p class="p-6 pt-0 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
@@ -809,9 +833,11 @@
         if (content.style.maxHeight && content.style.maxHeight !== '0px') {
             content.style.maxHeight = '0px';
             icon.style.transform = 'rotate(0deg)';
+            button.setAttribute('aria-expanded', 'false');
         } else {
             content.style.maxHeight = content.scrollHeight + 'px';
             icon.style.transform = 'rotate(180deg)';
+            button.setAttribute('aria-expanded', 'true');
         }
     }
 </script>

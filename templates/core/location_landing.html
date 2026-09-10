@@ -17,6 +17,13 @@
     </div>
 
     <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-8" data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <a href="{% url 'core:locations-index' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Locations</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">{{ location.city }}</span>
+        </nav>
         <div class="inline-flex items-center space-x-2.5 bg-primary/10 border border-primary/20 px-5 py-2 rounded-full">
             <span class="w-2.5 h-2.5 rounded-full bg-accent animate-ping"></span>
             <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Serving {{ location.city }}</span>

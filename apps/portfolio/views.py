@@ -37,14 +37,16 @@ class PortfolioListView(ListView):
         # Load all classification parameters to power category selectors on front-end
         context["categories"] = ProjectCategory.objects.all()
         context["active_category"] = self.request.GET.get("category", "")
+        # Filtered category views are useful for users but should not be indexed
+        # as separate pages (duplicate of the unfiltered portfolio index).
+        if self.request.GET.get("category"):
+            context["seo_robots"] = "noindex, follow"
         
         # SEO attributes
         context["seo_title"] = "Portfolio & Case Studies"
         context["seo_description"] = (
-            "Explore our portfolio of website, CRM, AI automation, and SEO "
-            "projects. See how GrowthSpare IT Solutions structures robust cloud "
-            "databases, deploys AI automation hooks, and implements "
-            "high-performance web products."
+            "Website, CRM, AI automation and SEO projects by GrowthSpare IT Solutions "
+            "for restaurants, clinics, real estate and local businesses."
         )
         return context
 
@@ -81,8 +83,15 @@ class ProjectDetailView(DetailView):
             if project.meta_title
             else f"{project.title} - {'Concept Project' if project.is_concept_project else 'Client Case Study'} ({project.client_name})"
         )
-        if project.meta_description:
-            context["seo_description"] = project.meta_description
+        # Seed data shipped placeholder meta_descriptions like "for X for Y"
+        # (see seed_database.py). Treat those (and any <70-char stub) as missing
+        # so searchers see a real summary instead of a broken fragment.
+        _meta = (project.meta_description or "").strip()
+        _is_placeholder = (
+            not _meta or len(_meta) < 70 or _meta.lower().startswith("for ")
+        )
+        if not _is_placeholder:
+            context["seo_description"] = _meta
         elif project.is_concept_project:
             context["seo_description"] = (
                 f"A concept project illustrating how GrowthSpare IT Solutions would "
