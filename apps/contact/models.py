@@ -12,10 +12,12 @@ class ContactMessage(models.Model):
     providing CRM-ready records of target budgets and service selections.
     """
     BUDGET_CHOICES = (
-        ("under_1l", "Less than ₹1,00,000"),
-        ("1l_3l", "₹1,00,000 - ₹3,00,000"),
-        ("3l_5l", "₹3,00,000 - ₹5,00,000"),
-        ("over_5l", "₹5,00,000+"),
+        ("30k_50k", "₹30,000 – ₹50,000"),
+        ("50k_75k", "₹50,000 – ₹75,000"),
+        ("75k_1l", "₹75,000 – ₹1,00,000"),
+        ("1l_1_5l", "₹1,00,000 – ₹1,50,000"),
+        ("1_5l_2l", "₹1,50,000 – ₹2,00,000"),
+        ("2l_plus", "₹2,00,000+"),
     )
     
     SERVICE_CHOICES = (

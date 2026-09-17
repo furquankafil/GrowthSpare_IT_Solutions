@@ -4,6 +4,7 @@ SLA messages feedback, and asynchronous administrative alert dispatches.
 """
 
 from django.contrib import messages
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import FormView
@@ -12,6 +13,7 @@ from django_ratelimit.decorators import ratelimit
 from apps.core.utils import send_mail_background
 
 from .forms import ContactForm
+from .throttling import check_submission_allowed
 
 
 @method_decorator(
@@ -29,6 +31,17 @@ class ContactView(FormView):
     success_url = reverse_lazy("contact:contact")
 
     def form_valid(self, form):
+
+        # Server-side anti-spam gate: duplicate or over-limit submissions are
+        # rejected with an inline form error and NO database record is created.
+        allowed, _reason = check_submission_allowed(
+            self.request,
+            email=form.cleaned_data.get("email", ""),
+            phone=form.cleaned_data.get("phone", ""),
+        )
+        if not allowed:
+            form.add_error(None, settings.CONTACT_RATE_LIMIT_MESSAGE)
+            return self.form_invalid(form)
 
         # Save model data to database
         contact_message = form.save()

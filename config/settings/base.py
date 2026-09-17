@@ -425,6 +425,31 @@ B2B_API_KEY = os.getenv("B2B_API_KEY", "")
 
 
 # ==============================================================================
+# Contact Form Anti-Spam Throttling (server-side, env-configurable)
+# Limits repeated submissions per contact identity (email/phone) plus a
+# best-effort per-IP counter via Django's cache. Duplicate detection
+# (same email + phone within CONTACT_DUPLICATE_WINDOW_SECONDS) rejects
+# repeated identical requests without creating extra records.
+# ==============================================================================
+
+CONTACT_RATE_LIMIT_COUNT = int(os.getenv("CONTACT_RATE_LIMIT_COUNT", "3"))
+
+CONTACT_RATE_LIMIT_WINDOW_SECONDS = int(
+    os.getenv("CONTACT_RATE_LIMIT_WINDOW_SECONDS", "3600")
+)
+
+CONTACT_DUPLICATE_WINDOW_SECONDS = int(
+    os.getenv("CONTACT_DUPLICATE_WINDOW_SECONDS", "86400")
+)
+
+CONTACT_RATE_LIMIT_MESSAGE = os.getenv(
+    "CONTACT_RATE_LIMIT_MESSAGE",
+    "Too many submissions from this contact information. "
+    "Please wait before submitting again.",
+)
+
+
+# ==============================================================================
 # Content Security Policy (django-csp 4.x)
 # Allows exactly the external hosts referenced in templates/base.html —
 # Tailwind Play CDN, Google Fonts, FontAwesome, AOS, Swiper, GSAP, Typed.js,

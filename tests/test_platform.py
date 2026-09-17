@@ -3,9 +3,11 @@ Consolidated corporate validation regression testing suites, verifying custom ro
 identity profiles, dynamic services catalogs, inquiry capture logs, and consultation booking funnels.
 """
 
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
+from django.conf import settings
 
 import json
 import re
@@ -80,6 +82,10 @@ class ServicesTestCase(TestCase):
 class ContactTestCase(TestCase):
     """Verifies client inquiry forms pipeline integration and database tracking."""
 
+    def setUp(self):
+        # Start with empty throttle/ratelimit counters (shared test-client IP).
+        cache.clear()
+
     def test_contact_message_submission(self):
         """Validates POST requests safely log leads inside the database."""
         client = Client()
@@ -90,7 +96,7 @@ class ContactTestCase(TestCase):
             "email": "furqan@clientcompany.com",
             "phone": "+91 9811579273",
             "company": "Enterprise Partner",
-            "budget": "1l_3l",
+            "budget": "75k_1l",
             "service": "ai_automation",
             "message": "We need custom WhatsApp lead routing scripts written in Python."
         }
@@ -101,7 +107,7 @@ class ContactTestCase(TestCase):
         
         message = ContactMessage.objects.first()
         self.assertEqual(message.name, "Mohammad Furqan")
-        self.assertEqual(message.get_budget_display(), "₹1,00,000 - ₹3,00,000")
+        self.assertEqual(message.get_budget_display(), "₹75,000 – ₹1,00,000")
         self.assertFalse(message.is_processed)
 
 
@@ -173,3 +179,116 @@ class LocalServicePagesTestCase(TestCase):
         robots = client.get("/robots.txt").content.decode()
         self.assertIn("Sitemap:", robots)
         self.assertIn("Disallow: /admin/", robots)
+
+
+class ContactAntiSpamTestCase(TestCase):
+    """Verifies contact-form rate limiting, duplicate protection, and budget options."""
+
+    BLOCKED_MESSAGE = "Too many submissions from this contact information."
+
+    def setUp(self):
+        # Isolate per-test counters (test client shares IP; locmem cache otherwise
+        # carries django-ratelimit + throttle counters across tests).
+        cache.clear()
+        self.client = Client()
+        self.url = reverse("contact:contact")
+
+    def _post_lead(self, name="Test User", email="user@example.com",
+                   phone="+91 9811000001", budget="75k_1l",
+                   service="web_dev", message="Need a business website."):
+        return self.client.post(self.url, {
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "company": "Test Co",
+            "budget": budget,
+            "service": service,
+            "message": message,
+        })
+
+    def test_normal_submission_succeeds(self):
+        response = self._post_lead()
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(ContactMessage.objects.count(), 1)
+
+    def test_rate_limit_blocks_fourth_submission_same_email(self):
+        # Same email, distinct phones (avoids the duplicate rule) — the first
+        # three are legitimate, the fourth trips the 3/hour identity limit.
+        for i in range(3):
+            response = self._post_lead(phone=f"+91 981100000{i}")
+            self.assertEqual(response.status_code, 302)
+        response = self._post_lead(phone="+91 9811000009")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.BLOCKED_MESSAGE)
+        self.assertEqual(ContactMessage.objects.count(), 3)
+
+    def test_blocked_submissions_create_no_record(self):
+        for i in range(3):
+            self.assertEqual(
+                self._post_lead(email="repeat@example.com",
+                                phone=f"+91 981100001{i}").status_code, 302
+            )
+        before = ContactMessage.objects.count()
+        self.assertEqual(before, 3)
+        response = self._post_lead(email="repeat@example.com",
+                                   phone="+91 9811000099")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.BLOCKED_MESSAGE)
+        self.assertEqual(ContactMessage.objects.count(), before)
+
+    def test_duplicate_submission_rejected(self):
+        self.assertEqual(self._post_lead().status_code, 302)
+        # Same email + phone with a different message is still a duplicate.
+        response = self._post_lead(message="Same person writing again.")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.BLOCKED_MESSAGE)
+        self.assertEqual(ContactMessage.objects.count(), 1)
+
+    def test_duplicate_matches_phone_format_variants(self):
+        self.assertEqual(self._post_lead(phone="+91 9811000001").status_code, 302)
+        response = self._post_lead(phone="9811000001")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.BLOCKED_MESSAGE)
+        self.assertEqual(ContactMessage.objects.count(), 1)
+
+    def test_different_users_not_blocked(self):
+        for i in range(3):
+            response = self._post_lead(
+                name=f"Person {i}",
+                email=f"person{i}@example.com",
+                phone=f"+91 981200000{i}",
+            )
+            self.assertEqual(response.status_code, 302)
+        self.assertEqual(ContactMessage.objects.count(), 3)
+
+    @override_settings(CONTACT_RATE_LIMIT_COUNT=100)
+    def test_all_new_budget_options_accepted(self):
+        for i, key in enumerate(
+            ["30k_50k", "50k_75k", "75k_1l", "1l_1_5l", "1_5l_2l", "2l_plus"]
+        ):
+            # Reset per-test counters (outer 5/min IP ratelimit + throttle
+            # state) so each iteration purely validates budget acceptance.
+            cache.clear()
+            response = self._post_lead(
+                email=f"budget{i}@example.com",
+                phone=f"+91 981300000{i}",
+                budget=key,
+            )
+            self.assertEqual(response.status_code, 302, f"budget {key} rejected")
+        self.assertEqual(ContactMessage.objects.count(), 6)
+
+    def test_old_database_records_remain_readable(self):
+        # Legacy budget keys predate the new choices; rows must stay readable.
+        legacy = ContactMessage.objects.create(
+            name="Legacy Lead",
+            email="legacy@example.com",
+            phone="+91 9814000000",
+            company="Old Co",
+            budget="1l_3l",
+            service="web_dev",
+            message="Old record.",
+        )
+        fetched = ContactMessage.objects.get(pk=legacy.pk)
+        self.assertEqual(fetched.name, "Legacy Lead")
+        # get_budget_display must not raise for values outside current choices.
+        self.assertTrue(str(fetched.get_budget_display()))
