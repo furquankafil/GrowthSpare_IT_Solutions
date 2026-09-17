@@ -807,7 +807,7 @@ def seed_all_data():
             "title": "Technical SEO Checklist for Sub-300ms Django Page Speeds",
             "category": bc_web,
             "featured_image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> fast Django pages come from four layers in order: quick server response (queries, caching), small compressed assets, non-blocking JavaScript and fonts, and right-sized images. Measure with PageSpeed Insights and Search Console's Core Web Vitals report first — optimising without measuring means tuning the wrong layer. Most business sites we see lose their speed budget to unoptimized images and render-blocking scripts, not to Django itself.</p>
+            "content": """<p><strong>Quick answer:</strong> fast Django pages come from four layers in order: quick server response (queries, caching), small compressed assets, non-blocking JavaScript and fonts, and right-sized images. Measure with PageSpeed Insights and Search Console's Core Web Vitals report first — optimising without measuring means tuning the wrong layer. Most business sites we see lose their speed budget to unoptimized images and render-blocking scripts, not to Django itself.</p>
 <h2>Step 0: measure the right thing</h2>
 <p>Run the URL through PageSpeed Insights (mobile first) and note LCP, INP, and CLS separately — each has different fixes. Check Search Console's Core Web Vitals for the site-wide pattern: one slow template (often the homepage or a listing page) usually drags the whole average. Record the numbers before changing anything; otherwise you cannot tell which fix worked.</p>
 <h2>Layer 1: server response (TTFB)</h2>
@@ -822,7 +822,7 @@ def seed_all_data():
 <p>If the stack is a page-builder with 40 plugins or a theme loading five sliders, tuning buys 20% and a focused rebuild buys 70%. Signs you need the rebuild: template count in triple digits, no one knows what half the plugins do, or mobile PageSpeed stuck red after the checklist above. A clean <a href=\"/services/website-development/\">hand-built business site</a> starts fast instead of being optimised back to fast.</p>
 <h2>FAQs</h2>
 <p><strong>Does speed directly affect Google rankings?</strong><br>Page experience signals (including Core Web Vitals) are ranking inputs, but the bigger effect is conversion: slow pages lose visitors before rankings even matter. Fix speed for revenue first, rankings second.</p>
-<p><strong>What should I ask a developer about speed?</strong><br>Ask for before/after PageSpeed numbers on mobile, what they changed per layer above, and how they prevent regression (budgets, image rules). If the answer is \"we installed a caching plugin,\" keep interviewing. Or skip the quiz — <a href=\"/consultation/book/\">our free audit</a> includes a speed and <a href=\"/services/seo-optimization/\">technical SEO</a> pass over your current site.</p>",
+<p><strong>What should I ask a developer about speed?</strong><br>Ask for before/after PageSpeed numbers on mobile, what they changed per layer above, and how they prevent regression (budgets, image rules). If the answer is \"we installed a caching plugin,\" keep interviewing. Or skip the quiz — <a href=\"/consultation/book/\">our free audit</a> includes a speed and <a href=\"/services/seo-optimization/\">technical SEO</a> pass over your current site.</p>""",
             "tags": "Django, Page Speed, Core Web Vitals, Technical SEO",
             "is_published": True,
             "meta_title": "Django Speed Checklist: Lower TTFB, LCP & CLS",
@@ -857,7 +857,7 @@ def seed_all_data():
             "title": "How to Securely Connect WhatsApp Cloud API with Django Webhooks",
             "category": bc_ai,
             "featured_image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> connecting the WhatsApp Cloud API to Django means exposing a webhook endpoint that Meta calls for incoming messages and delivery statuses. The work that matters is not the endpoint itself but doing it securely: verifying the webhook, validating every request signature, replying inside WhatsApp's 24-hour customer-service window, and processing messages in a background queue so the webhook never blocks. Get those four right and you have a reliable automation foundation; skip them and you get silent message loss.</p>
+            "content": """<p><strong>Quick answer:</strong> connecting the WhatsApp Cloud API to Django means exposing a webhook endpoint that Meta calls for incoming messages and delivery statuses. The work that matters is not the endpoint itself but doing it securely: verifying the webhook, validating every request signature, replying inside WhatsApp's 24-hour customer-service window, and processing messages in a background queue so the webhook never blocks. Get those four right and you have a reliable automation foundation; skip them and you get silent message loss.</p>
 <h2>Prerequisites before writing code</h2>
 <p>You need a Meta developer app with the WhatsApp product added, a phone number (use Meta's free test number while developing), a permanent access token stored as an environment variable — never in source code — and the phone number ID, which is different from the displayed phone number. On the Django side you need an HTTPS public URL; Meta will not call webhooks over plain HTTP, so develop with a tunnel and deploy behind TLS.</p>
 <h2>Step 1: the verification handshake</h2>
@@ -876,7 +876,7 @@ def seed_all_data():
 <p><strong>Is the WhatsApp Cloud API free?</strong><br>Meta provides free access tiers and conversation-based pricing that changes by market and category; check current Meta pricing for India before budgeting. Our <a href=\"/services/ai-whatsapp-automation/\">AI and WhatsApp automation service</a> starts at &#8377;7,999 for the build itself.</p>
 <p><strong>Can I use my existing business number?</strong><br>Yes, you can migrate a number to the Cloud API, but migration disables the WhatsApp Business app on that number — plan the cutover so you never miss customer messages mid-move.</p>
 <h2>Want this built instead of DIY?</h2>
-<p>If webhooks, queues, and template approvals sound like weeks you don't have, <a href=\"/consultation/book/\">get a free website audit</a> and mention WhatsApp automation — we scope appointment booking, lead qualification, and support bots for businesses like <a href=\"/industries/clinic-website-development/\">clinics</a>, including the human handoff, from &#8377;7,999.</p>",
+<p>If webhooks, queues, and template approvals sound like weeks you don't have, <a href=\"/consultation/book/\">get a free website audit</a> and mention WhatsApp automation — we scope appointment booking, lead qualification, and support bots for businesses like <a href=\"/industries/clinic-website-development/\">clinics</a>, including the human handoff, from &#8377;7,999.</p>""",
             "tags": "WhatsApp Cloud API, Django, Webhooks, Automation",
             "is_published": True,
             "meta_title": "WhatsApp Cloud API + Django: Secure Webhook Guide",
@@ -887,7 +887,7 @@ def seed_all_data():
             "title": "Unlocking B2B Conversions: The Power of Conversational AI Chatbots",
             "category": bc_ai,
             "featured_image": "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> conversational AI chatbots lift B2B conversions in exactly three places: instant answers to repeat questions, after-hours lead capture, and structured qualification before a human calls. They fail at complex negotiation, upset customers, and anything requiring judgment. A chatbot that does the first three and hands off the rest will outperform a contact form; a chatbot positioned as a replacement for your sales team will disappoint.</p>
+            "content": """<p><strong>Quick answer:</strong> conversational AI chatbots lift B2B conversions in exactly three places: instant answers to repeat questions, after-hours lead capture, and structured qualification before a human calls. They fail at complex negotiation, upset customers, and anything requiring judgment. A chatbot that does the first three and hands off the rest will outperform a contact form; a chatbot positioned as a replacement for your sales team will disappoint.</p>
 <h2>Where chatbots actually earn their keep</h2>
 <p>Most B2B enquiries arrive with the same five questions — pricing ballpark, timelines, scope fit, location coverage, next step. Answering those in 30 seconds instead of next business day wins deals, especially for Indian buyers who message late evening. The chatbot's job is to compress that first response from hours to seconds and to collect the three facts a salesperson needs: what they want, their budget band, and how to reach them.</p>
 <h2>Anatomy of a bot that converts</h2>
@@ -900,7 +900,7 @@ def seed_all_data():
 <p>Lead rate (conversations that yield contact details), handoff rate (share needing a human — 20–40% is healthy, not failure), and first-response time (seconds, always). Containment rate alone is a vanity metric: a bot that \"contains\" 95% by stonewalling visitors is destroying enquiries.</p>
 <h2>FAQs</h2>
 <p><strong>Will a chatbot annoy my serious buyers?</strong><br>Only if it blocks the human path. Keep a visible \"talk to a person\" option and a phone number alongside the bot, and serious buyers treat it as a fast lane, not a wall.</p>
-<p><strong>How much does a business chatbot cost?</strong><br>It depends on integrations (booking, CRM, payments add scope). Our WhatsApp automation builds start at &#8377;7,999 — <a href=\"/consultation/book/\">ask for a free audit</a> describing the one workflow costing you the most manual hours, and we'll scope exactly that.</p>",
+<p><strong>How much does a business chatbot cost?</strong><br>It depends on integrations (booking, CRM, payments add scope). Our WhatsApp automation builds start at &#8377;7,999 — <a href=\"/consultation/book/\">ask for a free audit</a> describing the one workflow costing you the most manual hours, and we'll scope exactly that.</p>""",
             "tags": "AI Chatbot, B2B, Lead Generation, WhatsApp",
             "is_published": True,
             "meta_title": "AI Chatbots for B2B: Where They Convert (and Don't)",
@@ -911,7 +911,7 @@ def seed_all_data():
             "title": "How to Securely Integrate OpenAI GPT-4o into Your ERP Workflows",
             "category": bc_ai,
             "featured_image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> the safe way to put GPT-4o inside ERP workflows is through a server-side proxy that holds the API key, strips or redacts sensitive fields before prompting, and keeps a human in the loop on anything consequential. Start with one low-risk workflow (drafting, summarising, classifying), measure it against a small test set, then expand. Most failed AI pilots fail on data handling and evaluation — not on model quality.</p>
+            "content": """<p><strong>Quick answer:</strong> the safe way to put GPT-4o inside ERP workflows is through a server-side proxy that holds the API key, strips or redacts sensitive fields before prompting, and keeps a human in the loop on anything consequential. Start with one low-risk workflow (drafting, summarising, classifying), measure it against a small test set, then expand. Most failed AI pilots fail on data handling and evaluation — not on model quality.</p>
 <h2>Start with workflows where mistakes are cheap</h2>
 <p>Good first candidates: drafting customer replies for human approval, summarising long order/support threads, classifying tickets or leads into categories, extracting structured fields (dates, amounts, names) from documents. Bad first candidates: unsupervised credit decisions, auto-sending messages to customers, anything touching payroll or compliance filings. The rule: AI proposes, humans dispose — until a workflow has months of measured accuracy behind it.</p>
 <h2>The architecture that keeps you safe</h2>
@@ -926,7 +926,7 @@ def seed_all_data():
 <p>One pilot workflow with a named owner → 4 weeks measured → expand to adjacent workflows → only then consider customer-facing automation. Teams that follow this order get compounding wins; teams that connect five workflows in week one get five unmeasured risks.</p>
 <h2>FAQs</h2>
 <p><strong>Will AI replace our ERP?</strong><br>No — it makes the ERP you have more valuable by removing drafting, triage, and summarisation labour around it. Replacement projects fail far more often than augmentation ones.</p>
-<p><strong>What does a pilot cost?</strong><br>A single scoped pilot (one workflow, proxy, evaluation set) is a small custom build. <a href=\"/consultation/book/\">Book a scoping session</a> describing the workflow eating your team's hours — our <a href=\"/services/custom-software-engineering/\">engineering team</a> will tell you honestly whether AI fits it or whether plain automation is cheaper.</p>",
+<p><strong>What does a pilot cost?</strong><br>A single scoped pilot (one workflow, proxy, evaluation set) is a small custom build. <a href=\"/consultation/book/\">Book a scoping session</a> describing the workflow eating your team's hours — our <a href=\"/services/custom-software-engineering/\">engineering team</a> will tell you honestly whether AI fits it or whether plain automation is cheaper.</p>""",
             "tags": "OpenAI, GPT-4o, ERP, AI Automation",
             "is_published": True,
             "meta_title": "Using GPT-4o in ERP Workflows, Securely",
@@ -950,7 +950,7 @@ def seed_all_data():
             "title": "Architecting Multi-Tenant SaaS Databases in PostgreSQL",
             "category": bc_crm,
             "featured_image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> most B2B SaaS products should start with shared tables plus a <code>tenant_id</code> column guarded by tests and (ideally) PostgreSQL Row-Level Security, move to schema-per-tenant when compliance or per-tenant operations demand it, and reserve database-per-tenant for enterprise isolation contracts. The wrong choice early is survivable; the wrong choice after 200 tenants is a migration project. Decide on isolation needs, not fashion.</p>
+            "content": """<p><strong>Quick answer:</strong> most B2B SaaS products should start with shared tables plus a <code>tenant_id</code> column guarded by tests and (ideally) PostgreSQL Row-Level Security, move to schema-per-tenant when compliance or per-tenant operations demand it, and reserve database-per-tenant for enterprise isolation contracts. The wrong choice early is survivable; the wrong choice after 200 tenants is a migration project. Decide on isolation needs, not fashion.</p>
 <h2>Model 1: shared database, shared schema (tenant_id)</h2>
 <p>Every row carries its tenant; every query filters by it. Cheapest to build, operate, and back up; onboarding a tenant is one INSERT. The risk is cross-tenant leakage from a single missed filter — mitigate with a mandatory tenant scope in the ORM layer, RLS policies as a second lock, and tests that specifically attempt cross-tenant reads. Right for: most startups, internal tools, CRMs, school/clinic systems.</p>
 <h2>Model 2: shared database, schema per tenant</h2>
@@ -962,7 +962,7 @@ def seed_all_data():
 <h2>The mistakes that hurt later</h2>
 <ul><li><strong>Unscoped queries in background tasks</strong> (Celery has no request — pass tenant explicitly).</li><li><strong>Noisy neighbours:</strong> one tenant's report query starving others — statement timeouts and read replicas.</li><li><strong>Analytics afterthought:</strong> cross-tenant reporting on schema-per-tenant requires ETL you didn't budget.</li><li><strong>Restore granularity:</strong> \"restore tenant X to Tuesday\" is trivial per-schema/DB and painful in shared-schema without point-in-time tooling.</li></ul>
 <h2>Questions to ask any vendor</h2>
-<p>Which model and why for our tenant count? Show me the tenant-isolation tests. How do you restore one tenant? How do migrations run across tenants, and how long do they take at 10× our size? Vague answers here predict outages later. If you're scoping a product now, our <a href=\"/services/custom-software-engineering/\">engineering team</a> answers these in writing before we build — <a href=\"/consultation/book/\">start with a scoping session</a>, especially for CRM-style products like our <a href=\"/services/crm-software-development/\">custom CRM builds</a>.</p>",
+<p>Which model and why for our tenant count? Show me the tenant-isolation tests. How do you restore one tenant? How do migrations run across tenants, and how long do they take at 10× our size? Vague answers here predict outages later. If you're scoping a product now, our <a href=\"/services/custom-software-engineering/\">engineering team</a> answers these in writing before we build — <a href=\"/consultation/book/\">start with a scoping session</a>, especially for CRM-style products like our <a href=\"/services/crm-software-development/\">custom CRM builds</a>.</p>""",
             "tags": "SaaS, PostgreSQL, Django, Architecture",
             "is_published": True,
             "meta_title": "Multi-Tenant SaaS on PostgreSQL: 3 Models",
@@ -973,7 +973,7 @@ def seed_all_data():
             "title": "Why Proprietary CRMs Outperform Off-The-Shelf SaaS Platforms",
             "category": bc_crm,
             "featured_image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> proprietary CRMs beat off-the-shelf SaaS on total cost over a multi-year horizon and on fit to unusual workflows — you pay once for software shaped around your pipeline instead of forever per seat for software your team bends around. SaaS still wins for small teams with standard pipelines who need to start this week. The right choice depends on team size, process uniqueness, and how long you'll use it.</p>
+            "content": """<p><strong>Quick answer:</strong> proprietary CRMs beat off-the-shelf SaaS on total cost over a multi-year horizon and on fit to unusual workflows — you pay once for software shaped around your pipeline instead of forever per seat for software your team bends around. SaaS still wins for small teams with standard pipelines who need to start this week. The right choice depends on team size, process uniqueness, and how long you'll use it.</p>
 <h2>The real math: compounding seats vs one build</h2>
 <p>Take an illustrative example (your numbers will differ): 15 salespeople on a mid-tier SaaS plan at roughly &#8377;2,000/user/month costs &#8377;3.6 lakh a year — every year, rising with headcount and plan tiers. A custom CRM at our starting range of &#8377;24,999 for focused builds (larger pipelines scoped individually) plus modest hosting and maintenance crosses below the SaaS line surprisingly fast, and the gap compounds: year three of SaaS is another &#8377;3.6+ lakh, while year three of owned software is maintenance only. Run this arithmetic with your actual seat count before deciding — most teams never do.</p>
 <h2>Fit: software bent around you, not you around it</h2>
@@ -985,7 +985,7 @@ def seed_all_data():
 <h2>Decision table</h2>
 <ul><li><strong>Team &lt;5, standard sales, short horizon:</strong> SaaS.</li><li><strong>Team 5–15, some custom stages, 2+ year horizon:</strong> evaluate both; custom often wins on cost alone.</li><li><strong>Team 15+, unique workflow, regulated/valuable data:</strong> custom, usually decisively.</li><li><strong>Weird operations (distribution, multi-branch admissions, property pipelines):</strong> custom — SaaS workarounds will cost more than the build.</li></ul>
 <h2>Migration path that avoids regret</h2>
-<p>Spreadsheet → SaaS trial (learn what you actually need) → custom build informed by real usage. Teams that skip the middle step often over-specify; teams that stay in spreadsheets too long drown. If spreadsheets are already breaking, <a href=\"/consultation/book/\">book a scoping call</a> — we'll map your pipeline into a <a href=\"/services/crm-software-development/\">CRM you own</a>, a pattern we also use for <a href=\"/industries/real-estate-website-development/\">real-estate listing pipelines</a>.</p>",
+<p>Spreadsheet → SaaS trial (learn what you actually need) → custom build informed by real usage. Teams that skip the middle step often over-specify; teams that stay in spreadsheets too long drown. If spreadsheets are already breaking, <a href=\"/consultation/book/\">book a scoping call</a> — we'll map your pipeline into a <a href=\"/services/crm-software-development/\">CRM you own</a>, a pattern we also use for <a href=\"/industries/real-estate-website-development/\">real-estate listing pipelines</a>.</p>""",
             "tags": "CRM, Custom Software, SaaS",
             "is_published": True,
             "meta_title": "Custom CRM vs SaaS: Total Cost & Fit Compared",
@@ -1053,7 +1053,7 @@ def seed_all_data():
             "title": "Conversion Rate Optimization (CRO) Best Practices for B2B Funnels",
             "category": bc_growth,
             "featured_image": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> B2B conversion optimisation beats buying more traffic because leads = traffic &times; conversion rate, and most funnels leak at fixable points: unclear offer, competing calls to action, long forms, missing proof, slow pages. Fix those in order before running a single A/B test — testing a confusing page just measures confusion precisely.</p>
+            "content": """<p><strong>Quick answer:</strong> B2B conversion optimisation beats buying more traffic because leads = traffic &times; conversion rate, and most funnels leak at fixable points: unclear offer, competing calls to action, long forms, missing proof, slow pages. Fix those in order before running a single A/B test — testing a confusing page just measures confusion precisely.</p>
 <h2>Fix 1: say what happens next</h2>
 <p>Most B2B pages describe the company, not the transaction. Above the fold, state the offer and the next step in one line each: \"We build booking websites for clinics starting at &#8377;4,999 — get a free audit of your current site.\" If a visitor can't answer \"what do I get and what do I click\" in five seconds, nothing below the fold matters.</p>
 <h2>Fix 2: one page, one primary CTA</h2>
@@ -1068,7 +1068,7 @@ def seed_all_data():
 <p>Button colours, headline synonyms, and hero image swaps while the offer is unclear. Test big levers first (offer, CTA count, form length, proof placement), one change at a time, for at least two business cycles or a few hundred visitors — whichever is longer. Low-traffic B2B sites should test sequentially with before/after windows, not pretend to run statistically pure splits on 40 visitors a week.</p>
 <h2>FAQs</h2>
 <p><strong>What is a good B2B conversion rate?</strong><br>It varies wildly by traffic source and offer (2–5% of targeted visitors enquiring is a healthy band for service businesses, not a promise). Benchmark against your own past months, not internet averages.</p>
-<p><strong>Should I add a chatbot or shorten the form first?</strong><br>Shorten the form — it helps 100% of visitors. Add the bot second for after-hours capture. If you'd like both diagnosed on your pages, our <a href=\"/services/digital-marketing/\">digital marketing team</a> folds CRO into the <a href=\"/consultation/book/\">free website audit</a>.</p>",
+<p><strong>Should I add a chatbot or shorten the form first?</strong><br>Shorten the form — it helps 100% of visitors. Add the bot second for after-hours capture. If you'd like both diagnosed on your pages, our <a href=\"/services/digital-marketing/\">digital marketing team</a> folds CRO into the <a href=\"/consultation/book/\">free website audit</a>.</p>""",
             "tags": "CRO, B2B Marketing, Lead Generation",
             "is_published": True,
             "meta_title": "B2B CRO: Fix the Funnel Before Buying Traffic",
@@ -1092,7 +1092,7 @@ def seed_all_data():
             "title": "Meta Conversions API (CAPI) Integration Guide for High-ROI Ad Spend",
             "category": bc_seo,
             "featured_image": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> the Meta Conversions API (CAPI) sends conversion events from your server instead of (or alongside) the browser pixel, recovering signal lost to ad-blockers, Safari ITP, and iOS opt-outs. Implement it with shared <code>event_id</code>s so Meta deduplicates server + browser events, prioritise event quality (value, currency, hashed user data), and validate in Test Events before judging results. Expect better attribution — not magically cheaper leads.</p>
+            "content": """<p><strong>Quick answer:</strong> the Meta Conversions API (CAPI) sends conversion events from your server instead of (or alongside) the browser pixel, recovering signal lost to ad-blockers, Safari ITP, and iOS opt-outs. Implement it with shared <code>event_id</code>s so Meta deduplicates server + browser events, prioritise event quality (value, currency, hashed user data), and validate in Test Events before judging results. Expect better attribution — not magically cheaper leads.</p>
 <h2>Why the pixel alone under-reports now</h2>
 <p>Three forces erode browser tracking: content blockers that never load the pixel, Safari/Firefox caps on cookie lifetimes, and iOS prompts where most users decline tracking. The symptom is familiar — \"Meta shows 10 leads, our CRM shows 25\" — and the business damage is misattributed: winning audiences get killed because their conversions were invisible. Server events bypass the browser entirely, restoring the missing rows.</p>
 <h2>How CAPI + Pixel work together</h2>
@@ -1105,7 +1105,7 @@ def seed_all_data():
 <p>Validate with Test Events (send, watch it arrive with parameters), then compare Ads Manager vs CRM counts over two full weeks — attribution windows lag. And be clear-eyed: CAPI fixes measurement, not fundamentals. If the offer is weak or the landing page leaks (see our <a href=\"/blog/conversion-rate-optimization-cro-best-practices-for-b2b-funnels/\">CRO guide</a>), perfect tracking just measures the leak accurately. Fix the funnel first, then the signal.</p>
 <h2>FAQs</h2>
 <p><strong>Does CAPI replace the Pixel?</strong><br>No — run both with deduplication. Pixel contributes browser context; CAPI contributes completeness (ad-blocked users, iOS opt-outs, offline/WhatsApp closes).</p>
-<p><strong>Is server-side tracking privacy-compliant?</strong><br>It must follow the same consent rules as any tracking: disclose it in your <a href=\"/privacy-policy/\">privacy policy</a>, honour opt-outs, hash personal data, and check current Meta + Indian regulatory guidance with your counsel. If tracking setup feels fragile, our <a href=\"/services/digital-marketing/\">marketing team</a> reviews it inside the <a href=\"/consultation/book/\">free audit</a>.</p>",
+<p><strong>Is server-side tracking privacy-compliant?</strong><br>It must follow the same consent rules as any tracking: disclose it in your <a href=\"/privacy-policy/\">privacy policy</a>, honour opt-outs, hash personal data, and check current Meta + Indian regulatory guidance with your counsel. If tracking setup feels fragile, our <a href=\"/services/digital-marketing/\">marketing team</a> reviews it inside the <a href=\"/consultation/book/\">free audit</a>.</p>""",
             "tags": "Meta Ads, CAPI, Conversion Tracking",
             "is_published": True,
             "meta_title": "Meta CAPI Guide: Fix Ad Tracking in 2026",
@@ -1116,7 +1116,7 @@ def seed_all_data():
             "title": "The Anatomy of a High-Converting B2B Landing Page in Tailwind CSS",
             "category": bc_seo,
             "featured_image": "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> a high-converting B2B landing page follows a fixed anatomy: navigation with CTA, hero stating one promise, trust strip, problem agitation, how-it-works, offer with proof, objection-handling FAQ, and a final CTA repeating the hero action. Miss any section and a slice of visitors leaves unconverted; reorder them and the argument stops flowing. The framework below works whether you build in Tailwind, plain CSS, or any stack.</p>
+            "content": """<p><strong>Quick answer:</strong> a high-converting B2B landing page follows a fixed anatomy: navigation with CTA, hero stating one promise, trust strip, problem agitation, how-it-works, offer with proof, objection-handling FAQ, and a final CTA repeating the hero action. Miss any section and a slice of visitors leaves unconverted; reorder them and the argument stops flowing. The framework below works whether you build in Tailwind, plain CSS, or any stack.</p>
 <h2>Section 1: navigation with one job</h2>
 <p>Logo left, phone/WhatsApp visible, one CTA button right — no mega-menu. Landing traffic is rented attention; every nav link that isn't the conversion action is an exit door. Keep footers minimal on landing variants.</p>
 <h2>Section 2: hero — one promise, one action</h2>
@@ -1131,7 +1131,7 @@ def seed_all_data():
 <ul><li><strong>One reader, one action:</strong> write to a single persona (\"clinic owners in Delhi\") and a single next step.</li><li><strong>Concrete over clever:</strong> \"sites starting at &#8377;4,999, delivered in 2–4 weeks\" beats \"digital excellence unleashed.\"</li><li><strong>Mobile-first:</strong> thumb-reach CTA, tap-to-call/WhatsApp, forms with large inputs, no hover-dependent content — most Indian B2B research happens on phones.</li><li><strong>Tailwind notes:</strong> utility classes speed up responsive iteration (mobile: classes first, then sm:/lg: overrides); keep the class soup manageable with components for repeated cards and CTAs.</li></ul>
 <h2>FAQs</h2>
 <p><strong>How long should a B2B landing page be?</strong><br>As long as the argument needs — usually 6–9 sections. Short pages convert warm traffic; cold traffic needs the full proof chain. Match length to awareness, not fashion.</p>
-<p><strong>Can I see this structure applied?</strong><br>Browse our <a href=\"/portfolio/\">portfolio</a> and our <a href=\"/services/website-development/\">website development service</a> — or send us your current page for a <a href=\"/consultation/book/\">free audit</a> and we'll mark exactly which sections are missing.</p>",
+<p><strong>Can I see this structure applied?</strong><br>Browse our <a href=\"/portfolio/\">portfolio</a> and our <a href=\"/services/website-development/\">website development service</a> — or send us your current page for a <a href=\"/consultation/book/\">free audit</a> and we'll mark exactly which sections are missing.</p>""",
             "tags": "Landing Page, B2B, Web Design, Tailwind CSS",
             "is_published": True,
             "meta_title": "B2B Landing Page Blueprint That Converts",
@@ -1142,7 +1142,7 @@ def seed_all_data():
             "title": "Keyword Intent Mapping: The Secret to High-Conversion SEO Campaigns",
             "category": bc_seo,
             "featured_image": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
-            "content": "<p><strong>Quick answer:</strong> keyword intent mapping means sorting every keyword you target into what the searcher actually wants — to learn, to compare, or to buy — and giving each intent its own page with a matching call to action. Most traffic-that-doesn't-convert problems are intent mismatches: a buyer landing on a learner's guide with no way to enquire, or a learner hit with pricing before they understand the service.</p>
+            "content": """<p><strong>Quick answer:</strong> keyword intent mapping means sorting every keyword you target into what the searcher actually wants — to learn, to compare, or to buy — and giving each intent its own page with a matching call to action. Most traffic-that-doesn't-convert problems are intent mismatches: a buyer landing on a learner's guide with no way to enquire, or a learner hit with pricing before they understand the service.</p>
 <h2>The four intents, with business examples</h2>
 <ul><li><strong>Informational</strong> (\"how much does a website cost in Delhi\") — wants an answer. Serve a thorough guide; CTA is a soft next step (related guide, free audit).</li><li><strong>Commercial investigation</strong> (\"best website developer for restaurants\") — comparing options. Serve comparisons, process, portfolio proof; CTA is a consultation.</li><li><strong>Transactional</strong> (\"hire website developer Delhi\", \"book appointment\") — ready to act. Serve a focused service/location page with the enquiry mechanism front and centre.</li><li><strong>Navigational</strong> (\"GrowthSpare contact\") — wants a specific page. Just make it findable; don't overthink it.</li></ul>
 <h2>The mapping table to build</h2>
@@ -1153,7 +1153,7 @@ def seed_all_data():
 <p>Track queries (are commercial pages earning commercial queries?), click-through by intent (transactional titles should promise the action), and assisted conversions — an informational guide that feeds audit requests is converting even without a sale. Rankings without the right intent behind them are decoration.</p>
 <h2>FAQs</h2>
 <p><strong>How many keywords per page?</strong><br>One primary intent-cluster (a handful of close variants), not a count. Ten variants of \"website developer Delhi\" belong together; \"website cost\" belongs on its own guide.</p>
-<p><strong>Can one page serve two intents?</strong><br>Sometimes — a location page can inform and convert — but designate a primary and design the CTA for it. If both intents are strong, two pages beat one compromised page. Our <a href=\"/services/seo-optimization/\">SEO service</a> starts with exactly this mapping; <a href=\"/consultation/book/\">ask for a free audit</a> and we'll show where your current pages mismatch.</p>",
+<p><strong>Can one page serve two intents?</strong><br>Sometimes — a location page can inform and convert — but designate a primary and design the CTA for it. If both intents are strong, two pages beat one compromised page. Our <a href=\"/services/seo-optimization/\">SEO service</a> starts with exactly this mapping; <a href=\"/consultation/book/\">ask for a free audit</a> and we'll show where your current pages mismatch.</p>""",
             "tags": "SEO, Keyword Research, Search Intent",
             "is_published": True,
             "meta_title": "Search Intent Mapping for SEO That Converts",
