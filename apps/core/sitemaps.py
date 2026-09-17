@@ -49,6 +49,11 @@ class StaticViewSitemap(Sitemap):
             "core:industry-retail-ecommerce",
             "core:industry-corporate-business",
             "core:industry-hotels-travel",
+            # Hyper-local commercial service pages (root-level landing pages).
+            "core:local-website-okhla",
+            "core:local-crm-delhi-ncr",
+            "core:local-seo-shaheen",
+            "core:local-digital-south-delhi",
         ]
 
     def location(self, item):

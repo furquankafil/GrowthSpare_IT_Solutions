@@ -30,10 +30,12 @@ def get_canonical_url(context):
 
 
 @register.simple_tag(takes_context=True)
-def render_seo_meta(context, title=None, description=None, image=None, keywords=None):
+def render_seo_meta(context, title=None, description=None, image=None, keywords=None, robots=None):
     """
     Renders standardized, high-performance SEO headers, canonical references,
     Open Graph tags, and Twitter Cards for social platforms.
+    `robots` optionally overrides the default "index, follow" (e.g. "noindex, follow"
+    for internal search/filter pages to prevent thin-duplicate indexing).
     """
     request = context.get("request")
     canonical_url = get_canonical_url(context)
@@ -46,9 +48,15 @@ def render_seo_meta(context, title=None, description=None, image=None, keywords=
     # Avoid a doubled brand suffix: admin-editable meta titles (e.g.
     # Service.meta_title, Portfolio meta_title) already end with
     # "GrowthSpare IT Solutions", while dynamic view titles don't. Only
-    # append the brand when the title doesn't already carry it.
+    # append the brand when the title doesn't already carry it. A trailing
+    # "| GrowthSpare" short-brand suffix (used by hyper-local landing pages)
+    # also counts as already branded.
     if title:
-        final_title = title if comp_title.lower() in title.lower() else f"{title} | {comp_title}"
+        title_l = title.lower().rstrip()
+        already_branded = (
+            comp_title.lower() in title_l or title_l.endswith("| growthspare")
+        )
+        final_title = title if already_branded else f"{title} | {comp_title}"
     else:
         final_title = f"{comp_title} - {comp_desc}"
     final_desc = description if description else comp_desc
@@ -71,12 +79,14 @@ def render_seo_meta(context, title=None, description=None, image=None, keywords=
     final_keywords = escape(final_keywords)
     final_image = escape(final_image)
     canonical_url = escape(canonical_url)
+    final_robots = escape(robots) if robots else "index, follow"
 
     meta_html = f"""
     <!-- Enforce Core Search Metadata -->
     <title>{final_title}</title>
     <meta name="description" content="{final_desc}">
     <meta name="keywords" content="{final_keywords}">
+    <meta name="robots" content="{final_robots}">
     <link rel="canonical" href="{canonical_url}">
 
     <!-- Open Graph Protocol Validation (Facebook, LinkedIn) -->

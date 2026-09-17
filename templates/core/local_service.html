@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load seo_tags %}
+
+{% block seo %}
+    {% render_seo_meta title=seo_title description=seo_description %}
+{% endblock seo %}
+
+{% block content %}
+<!-- ==============================================================================
+     1. HERO SEGMENT (breadcrumb matches BreadcrumbList schema 1:1)
+     ============================================================================== -->
+<section class="relative pt-40 pb-20 overflow-hidden grid-bg border-b border-slate-900/10 dark:border-white/5">
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/10 w-[450px] h-[450px] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/10 right-1/10 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-8" data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <a href="{% url breadcrumb_parent.url_name %}" class="hover:text-primary dark:hover:text-accent transition-colors">{{ breadcrumb_parent.name }}</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">{{ page.kicker }}</span>
+        </nav>
+        <div class="inline-flex items-center space-x-2.5 bg-primary/10 border border-primary/20 px-5 py-2 rounded-full">
+            <span class="w-2.5 h-2.5 rounded-full bg-accent animate-ping"></span>
+            <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">{{ page.kicker }}</span>
+        </div>
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-slate-900 dark:text-white font-poppins">
+            {{ page.h1 }}
+        </h1>
+        <p class="text-base sm:text-xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto font-medium leading-relaxed">
+            {{ page.intro }}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-white bg-gradient-to-r from-primary to-accent shadow-xl shadow-primary/25 hover:opacity-95 transition-all">
+                Get Consultation
+            </a>
+            <a href="https://wa.me/{{ OFFICIAL_WHATSAPP_LINK }}?text=Hi%20GrowthSpare%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-white bg-success shadow-xl hover:opacity-95 transition-all inline-flex items-center justify-center space-x-2">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            <a href="tel:+919811579273" class="w-full sm:w-auto text-center px-8 py-4 rounded-xl font-bold font-poppins text-slate-700 dark:text-white border border-slate-900/10 dark:border-white/10 hover:bg-slate-500/5 transition-all inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-phone text-xs"></i>
+                <span>Call {{ OFFICIAL_PHONE }}</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     2. LONG-FORM BODY (per-page partial: distinct H2/H3 content per intent)
+     ============================================================================== -->
+{% include page.body_template %}
+
+<!-- ==============================================================================
+     3. SUPPORTING ARTICLES (topical cluster: commercial page <-> guides)
+     ============================================================================== -->
+{% if supporting_articles %}
+<section class="py-20 border-t border-slate-900/10 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 relative z-10">
+    <div class="max-w-[1100px] mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Helpful Guides</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Further Reading</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {% for article in supporting_articles %}
+                <a href="{{ article.url }}" class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5 hover:border-primary/30 transition-all group">
+                    <i class="fas fa-newspaper text-primary dark:text-accent mb-3"></i>
+                    <span class="text-sm font-bold text-slate-900 dark:text-white font-poppins leading-snug block group-hover:text-primary dark:group-hover:text-accent transition-colors">{{ article.title }}</span>
+                    <span class="text-xs font-bold text-primary dark:text-accent mt-3 inline-block">Read Guide →</span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==============================================================================
+     4. RELATED COMMERCIAL PAGES (deliberate internal-link network)
+     ============================================================================== -->
+{% if related_links %}
+<section class="py-20 border-t border-slate-900/10 dark:border-white/5 relative z-10">
+    <div class="max-w-[1100px] mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Related Services</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Explore Related Services</h2>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+            {% for link in related_links %}
+                <a href="{{ link.url }}" class="px-5 py-3 rounded-xl text-xs font-bold font-poppins border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent hover:border-primary/40 transition-all">{{ link.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==============================================================================
+     5. FAQ (visible content mirrors FAQPage schema exactly)
+     ============================================================================== -->
+<section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 relative z-10">
+    <div class="max-w-[900px] mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Common Questions</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-poppins">Frequently Asked Questions</h2>
+        </div>
+        <div class="space-y-4">
+            {% for question, answer in page.faqs %}
+                <div class="glassmorphism p-6 rounded-2xl border border-slate-900/10 dark:border-white/5">
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white font-poppins mb-2">{{ question }}</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{{ answer }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ==============================================================================
+     6. FINAL CTA (phone + WhatsApp + consultation + contact, consistent NAP)
+     ============================================================================== -->
+<section class="py-20 border-t border-slate-900/10 dark:border-white/5 bg-slate-950 relative z-10">
+    <div class="max-w-[1000px] mx-auto px-6 text-center space-y-6">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight font-poppins">{{ page.cta_heading }}</h2>
+        <p class="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">{{ page.cta_text }}</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="{% url 'consultation:book' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 font-poppins">
+                Get Consultation
+            </a>
+            <a href="https://wa.me/{{ OFFICIAL_WHATSAPP_LINK }}?text=Hi%20GrowthSpare%2C%20I%20would%20like%20a%20consultation." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-success text-white font-bold text-xs tracking-wider uppercase hover:opacity-90 transition-all font-poppins inline-flex items-center justify-center space-x-2 shadow-lg">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp Us</span>
+            </a>
+            <a href="tel:+919811579273" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-white/20 text-white font-bold text-xs tracking-wider uppercase hover:bg-white/5 transition-all font-poppins inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-phone"></i>
+                <span>Call {{ OFFICIAL_PHONE }}</span>
+            </a>
+        </div>
+        <p class="text-xs text-slate-500 font-medium">
+            {{ COMPANY_NAME }} · {{ OFFICIAL_LOCATION }} · <a href="{% url 'contact:contact' %}" class="underline hover:text-slate-300">Contact page</a>
+        </p>
+    </div>
+</section>
+{% endblock content %}

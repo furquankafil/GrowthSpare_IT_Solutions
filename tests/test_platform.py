@@ -7,6 +7,9 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
+import json
+import re
+
 from apps.accounts.models import UserProfile
 from apps.services.models import Service, ServiceFAQ
 from apps.portfolio.models import Project, ProjectCategory
@@ -100,3 +103,73 @@ class ContactTestCase(TestCase):
         self.assertEqual(message.name, "Mohammad Furqan")
         self.assertEqual(message.get_budget_display(), "₹1,00,000 - ₹3,00,000")
         self.assertFalse(message.is_processed)
+
+
+class LocalServicePagesTestCase(TestCase):
+    """Verifies the four hyper-local commercial landing pages: status, unique
+    metadata, canonicals, single H1, JSON-LD graph, NAP/CTAs, and sitemap."""
+
+    PAGES = [
+        ("core:local-website-okhla", "Website Development Company in Okhla Delhi | GrowthSpare"),
+        ("core:local-crm-delhi-ncr", "CRM Software Development Company in Delhi NCR | GrowthSpare"),
+        ("core:local-seo-shaheen", "SEO Company in Shaheen Bagh Okhla | GrowthSpare"),
+        ("core:local-digital-south-delhi", "Digital Marketing Agency in South Delhi | GrowthSpare"),
+    ]
+
+    def _json_ld_graphs(self, html):
+        scripts = re.findall(
+            r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
+        )
+        graphs = []
+        for script in scripts:
+            data = json.loads(script.replace("&quot;", '"'))
+            if isinstance(data, dict) and "@graph" in data:
+                graphs.extend(data["@graph"])
+            elif isinstance(data, dict):
+                graphs.append(data)
+        return graphs
+
+    def test_pages_return_200_with_unique_metadata(self):
+        client = Client()
+        seen_titles, seen_descriptions = set(), set()
+        for url_name, expected_title in self.PAGES:
+            with self.subTest(page=url_name):
+                response = client.get(reverse(url_name))
+                self.assertEqual(response.status_code, 200)
+                html = response.content.decode()
+                self.assertIn(f"<title>{expected_title}</title>", html)
+                self.assertEqual(html.lower().count("<h1"), 1)
+                self.assertIn('rel="canonical"', html)
+                self.assertIn("https://growthspareitsolutions.com", html)
+                m = re.search(r'<meta name="description" content="([^"]+)"', html)
+                self.assertIsNotNone(m)
+                seen_titles.add(expected_title)
+                seen_descriptions.add(m.group(1))
+        self.assertEqual(len(seen_titles), 4)
+        self.assertEqual(len(seen_descriptions), 4)
+
+    def test_pages_emit_valid_schema_graph(self):
+        client = Client()
+        for url_name, _ in self.PAGES:
+            with self.subTest(page=url_name):
+                html = client.get(reverse(url_name)).content.decode()
+                types = [g.get("@type") for g in self._json_ld_graphs(html)]
+                for required in ("ProfessionalService", "Service", "BreadcrumbList", "FAQPage"):
+                    self.assertIn(required, types)
+                self.assertIn("+91 9811579273", html)
+                self.assertIn("D-50, Shaheen Bagh, Okhla", html)
+                self.assertIn("tel:+919811579273", html)
+
+    def test_pages_listed_in_sitemap_and_robots_allows(self):
+        client = Client()
+        sitemap = client.get("/sitemap.xml").content.decode()
+        for slug in (
+            "website-development-company-okhla-delhi",
+            "crm-software-development-company-delhi-ncr",
+            "seo-company-shaheen-bagh-okhla",
+            "digital-marketing-agency-south-delhi",
+        ):
+            self.assertIn(slug, sitemap)
+        robots = client.get("/robots.txt").content.decode()
+        self.assertIn("Sitemap:", robots)
+        self.assertIn("Disallow: /admin/", robots)

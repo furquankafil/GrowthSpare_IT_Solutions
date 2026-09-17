@@ -19,6 +19,10 @@ from .models import Service, ServiceCategory
 LOCAL_SERVICE_SLUGS = {
     "website-development",
     "digital-marketing",
+    # Production database carries this service under its full seeded title
+    # slug while some environments carry the shorter legacy slug — both get
+    # areaServed so schema output never depends on which seed created the row.
+    "digital-marketing-growth",
     "seo-optimization",
 }
 
@@ -36,12 +40,21 @@ SERVICE_CONTEXTUAL_LINKS = {
         {"label": "real estate website development", "url_name": "core:industry-real-estate"},
         {"label": "education website development", "url_name": "core:industry-education"},
         {"label": "restaurant website project for Spice Garden", "url_name": "portfolio:detail", "kwargs": {"slug": "bitecraft-restaurant-website-for-spice-garden"}},
+        {"label": "website development company in Okhla, Delhi", "url_name": "core:local-website-okhla"},
     ],
     "digital-marketing": [
         {"label": "social media growth campaign for a local café", "url_name": "portfolio:detail", "kwargs": {"slug": "social-media-growth-campaign-for-local-cafe"}},
+        {"label": "digital marketing agency in South Delhi", "url_name": "core:local-digital-south-delhi"},
+    ],
+    # Alias key for environments where the service row carries the full
+    # seeded-title slug (see LOCAL_SERVICE_SLUGS note above).
+    "digital-marketing-growth": [
+        {"label": "social media growth campaign for a local café", "url_name": "portfolio:detail", "kwargs": {"slug": "social-media-growth-campaign-for-local-cafe"}},
+        {"label": "digital marketing agency in South Delhi", "url_name": "core:local-digital-south-delhi"},
     ],
     "seo-optimization": [
         {"label": "local SEO optimization for a dental clinic", "url_name": "portfolio:detail", "kwargs": {"slug": "local-seo-optimization-for-dental-clinic"}},
+        {"label": "SEO company in Shaheen Bagh, Okhla", "url_name": "core:local-seo-shaheen"},
     ],
     "ai-whatsapp-automation": [
         {"label": "AI customer support chatbot for e-commerce", "url_name": "portfolio:detail", "kwargs": {"slug": "ai-customer-support-chatbot-for-e-commerce"}},
@@ -50,6 +63,7 @@ SERVICE_CONTEXTUAL_LINKS = {
     "crm-software-development": [
         {"label": "SalesFlow B2B lead management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "salesflow-b2b-lead-management-crm"}},
         {"label": "BrightAcademy school management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "brightacademy-school-management-crm"}},
+        {"label": "CRM software development company in Delhi NCR", "url_name": "core:local-crm-delhi-ncr"},
     ],
     "custom-software-engineering": [
         {"label": "ScholarGrid academic LMS platform", "url_name": "portfolio:detail", "kwargs": {"slug": "scholargrid-symmetric-academic-lms-platform"}},

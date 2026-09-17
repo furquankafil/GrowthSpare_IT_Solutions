@@ -62,7 +62,7 @@
                 <li><a href="/services/ai-whatsapp-automation/" class="hover:text-primary dark:hover:text-accent transition-colors">AI &amp; WhatsApp Automation</a></li>
                 <li><a href="/services/crm-software-development/" class="hover:text-primary dark:hover:text-accent transition-colors">CRM Software Development</a></li>
                 <li><a href="/services/seo-optimization/" class="hover:text-primary dark:hover:text-accent transition-colors">SEO Services</a></li>
-                <li><a href="/services/digital-marketing/" class="hover:text-primary dark:hover:text-accent transition-colors">Digital Marketing &amp; Growth</a></li>
+                <li><a href="{% url 'services:category' category_slug='digital-marketing' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Digital Marketing &amp; Growth</a></li>
                 <li><a href="{% url 'services:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">All Services</a></li>
             </ul>
         </div>
@@ -94,6 +94,15 @@
                     <a href="{% url 'core:location-delhi' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Delhi</a>
                     <a href="{% url 'core:location-noida' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Noida</a>
                     <a href="{% url 'core:location-gurgaon' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Gurugram</a>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/5">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Local Services</span>
+                <div class="mt-2 flex flex-col gap-y-1.5 text-xs font-medium">
+                    <a href="{% url 'core:local-website-okhla' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Website Development in Okhla</a>
+                    <a href="{% url 'core:local-crm-delhi-ncr' %}" class="hover:text-primary dark:hover:text-accent transition-colors">CRM Development in Delhi NCR</a>
+                    <a href="{% url 'core:local-seo-shaheen' %}" class="hover:text-primary dark:hover:text-accent transition-colors">SEO in Shaheen Bagh, Okhla</a>
+                    <a href="{% url 'core:local-digital-south-delhi' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Digital Marketing in South Delhi</a>
                 </div>
             </div>
             <div class="mt-4 pt-4 border-t border-white/5">

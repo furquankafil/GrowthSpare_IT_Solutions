@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse, Http404
@@ -787,6 +788,513 @@ class IndustriesIndexView(TemplateView):
                 ],
             }
         ]
+        return context
+
+
+# ==============================================================================
+# Local Commercial Service Pages (hyper-local SEO landing pages)
+# ==============================================================================
+# Four hand-written commercial pages targeting distinct service + locality
+# intents. Same lightweight pattern as LOCATION_DATA / INDUSTRY_DATA above:
+# one shared shell template + per-page body partials, no new model/migration.
+#
+# Rules enforced here:
+# - FAQs are the single source of truth: rendered visibly in the template AND
+#   mirrored 1:1 into FAQPage schema (never schema for invisible content).
+# - No invented reviews, ratings, awards, stats, offices, or guarantees.
+# - Pricing figures only where verified in seed_database.py / Service defaults:
+#   websites from Rs.4,999, CRM from Rs.24,999, SEO from Rs.3,999/month,
+#   digital marketing from Rs.5,999/month.
+# - Cyber Security is an existing service but is NOT promoted on these pages.
+LOCAL_SERVICE_PAGES = {
+    "website-okhla": {
+        "url_path": "website-development-company-okhla-delhi",
+        "seo_title": "Website Development Company in Okhla Delhi | GrowthSpare",
+        "seo_description": (
+            "GrowthSpare is a website development company in Okhla, Delhi building "
+            "fast, responsive and SEO-friendly websites for local businesses and startups."
+        ),
+        "kicker": "Website Development in Okhla, Delhi",
+        "h1": "Website Development Company in Okhla, Delhi",
+        "intro": (
+            "GrowthSpare IT Solutions is based in Okhla, Delhi, and builds websites "
+            "for the businesses around us — clinics, restaurants, coaching institutes, "
+            "salons, real estate offices, and startups across South Delhi and Delhi NCR. "
+            "Every site we ship is mobile-first, fast-loading, and set up so customers "
+            "can find you on Google and reach you on WhatsApp or phone."
+        ),
+        "service_type": "Website Development",
+        "area_served": ["Okhla", "Shaheen Bagh", "Jamia Nagar", "Jasola", "South Delhi", "New Delhi"],
+        "breadcrumb_parent": {"name": "Services", "url_name": "services:list"},
+        "body_template": "core/local_services/_website_okhla.html",
+        "faqs": [
+            (
+                "How much does a business website cost in Okhla, Delhi?",
+                "Our standard business websites start at \u20b94,999. The final figure "
+                "depends on the number of pages, features such as booking or payment, "
+                "and whether you supply text and photos or need us to prepare them. "
+                "Share your requirements and we will quote an exact figure before any work starts.",
+            ),
+            (
+                "How long does it take to build a website?",
+                "Most standard business websites are delivered in 2\u20134 weeks once "
+                "content is ready. E-commerce stores usually take 4\u20138 weeks. The "
+                "most common delay is content approval on the client's side, so we "
+                "give you a clear checklist on day one.",
+            ),
+            (
+                "I already have a website. Can you redesign it?",
+                "Yes. Redesigns start with an audit of what is wrong — speed, mobile "
+                "layout, outdated content, or missing lead capture — and we rebuild "
+                "only what needs rebuilding, keeping any pages that already rank or convert.",
+            ),
+            (
+                "Will my website show up on Google?",
+                "Every site ships with SEO foundations: semantic markup, unique titles "
+                "and descriptions, a sitemap, mobile-first design, and Google "
+                "Business Profile alignment for local searches. Ongoing ranking work "
+                "is a separate SEO engagement, which we will explain honestly rather "
+                "than promise instant positions.",
+            ),
+            (
+                "Can customers contact me on WhatsApp through the website?",
+                "Yes. WhatsApp click-to-chat, contact forms routed to WhatsApp or "
+                "email, and call buttons are standard on the business sites we build, "
+                "because that is how most local enquiries in Delhi actually arrive.",
+            ),
+            (
+                "Do you meet clients in person in Okhla and South Delhi?",
+                "Yes. Our office is in Shaheen Bagh, Okhla, so in-person meetings "
+                "across Okhla, Shaheen Bagh, Jamia Nagar, Jasola, and South Delhi "
+                "are straightforward to arrange when a project needs them.",
+            ),
+            (
+                "Will I be able to update the website myself?",
+                "Yes. We hand over the site with a walkthrough of how to edit text, "
+                "photos, and routine content, and we remain available on a support "
+                "plan for anything beyond that.",
+            ),
+        ],
+        "related": [
+            {"label": "custom CRM development for Delhi NCR businesses", "url_name": "core:local-crm-delhi-ncr"},
+            {"label": "local SEO services in Shaheen Bagh and Okhla", "url_name": "core:local-seo-shaheen"},
+            {"label": "digital marketing services in South Delhi", "url_name": "core:local-digital-south-delhi"},
+            {"label": "website development services", "url_name": "services:detail", "kwargs": {"slug": "website-development"}},
+            {"label": "our portfolio", "url_name": "portfolio:list"},
+            {"label": "contact us", "url_name": "contact:contact"},
+        ],
+        "articles": [
+            {"title": "Website Development Cost in Delhi: Complete 2026 Guide", "slug": "website-development-cost-in-delhi"},
+            {"title": "Website Development Checklist for Small Businesses in Delhi", "slug": "website-development-checklist-small-business-delhi"},
+            {"title": "How to Choose a Website Development Company in Delhi NCR", "slug": "how-to-choose-a-website-development-company-in-delhi-ncr"},
+        ],
+        "cta_heading": "Get a Website Development Consultation",
+        "cta_text": (
+            "Tell us what your business needs — a new site, a redesign, or an online "
+            "store — and we will scope it with an exact quote. Based in Okhla, serving "
+            "South Delhi and Delhi NCR."
+        ),
+    },
+    "crm-delhi-ncr": {
+        "url_path": "crm-software-development-company-delhi-ncr",
+        "seo_title": "CRM Software Development Company in Delhi NCR | GrowthSpare",
+        "seo_description": (
+            "Build custom CRM software for leads, customers, sales and operations with "
+            "GrowthSpare, a CRM software development company serving businesses across Delhi NCR."
+        ),
+        "kicker": "Custom CRM Software in Delhi NCR",
+        "h1": "CRM Software Development Company in Delhi NCR",
+        "intro": (
+            "GrowthSpare builds custom CRM systems shaped around how your team already "
+            "works — lead capture, assignment, follow-up reminders, sales pipelines, "
+            "customer records, and reports — instead of forcing your process into a "
+            "generic subscription tool. You own the software outright, with no per-seat "
+            "monthly fees, and it is built to fit businesses across Delhi NCR."
+        ),
+        "service_type": "CRM Software Development",
+        "area_served": ["New Delhi", "Noida", "Gurugram", "Faridabad", "Ghaziabad"],
+        "breadcrumb_parent": {"name": "Services", "url_name": "services:list"},
+        "body_template": "core/local_services/_crm_delhi_ncr.html",
+        "faqs": [
+            (
+                "How much does custom CRM software cost in Delhi NCR?",
+                "Our custom CRM builds start from \u20b924,999. The final figure "
+                "depends on the number of user roles, pipeline stages, integrations "
+                "such as WhatsApp or email, and reporting needs. We scope your exact "
+                "workflow first and quote a fixed figure.",
+            ),
+            (
+                "Why build a custom CRM instead of using Zoho, Salesforce, or HubSpot?",
+                "Subscription CRMs charge per user per month and still need "
+                "configuration to match your process. A custom CRM fits your exact "
+                "workflow, has no per-seat fees, and you own it outright. It makes "
+                "sense when your process is specific or your team is large enough "
+                "that subscriptions add up. Our comparison of custom builds versus "
+                "popular SaaS CRMs is linked below.",
+            ),
+            (
+                "How long does it take to build a custom CRM?",
+                "A focused CRM — leads, pipeline, follow-ups, basic reports — "
+                "typically takes 4\u20138 weeks. Larger systems with multiple roles, "
+                "integrations, and custom dashboards are scoped in phases so a "
+                "working version ships first.",
+            ),
+            (
+                "Can the CRM connect to WhatsApp, my website, and my existing tools?",
+                "Yes. We integrate lead capture from your website, WhatsApp-based "
+                "follow-ups and notifications, and REST API connections to tools you "
+                "already use, provided those tools expose an API.",
+            ),
+            (
+                "Who owns the CRM data and code?",
+                "You do. The system is deployed for your business, your data stays "
+                "yours, and there is no subscription lock-in tying you to us. We "
+                "offer maintenance plans, but the software keeps working regardless.",
+            ),
+            (
+                "Can different team members have different access levels?",
+                "Yes. Role-based access is standard: sales staff see their own leads, "
+                "managers see team pipelines, and admins control settings, with every "
+                "action logged against the user who performed it.",
+            ),
+            (
+                "Do you provide training and support after launch?",
+                "Yes. We walk your team through daily workflows at handover and "
+                "provide support and maintenance plans covering fixes, small changes, "
+                "and backups.",
+            ),
+        ],
+        "related": [
+            {"label": "website development services in Okhla", "url_name": "core:local-website-okhla"},
+            {"label": "digital marketing services in South Delhi", "url_name": "core:local-digital-south-delhi"},
+            {"label": "CRM software development services", "url_name": "services:detail", "kwargs": {"slug": "crm-software-development"}},
+            {"label": "our portfolio", "url_name": "portfolio:list"},
+            {"label": "contact us", "url_name": "contact:contact"},
+        ],
+        "articles": [
+            {"title": "How Much Does Custom CRM Software Cost in Delhi NCR?", "slug": "custom-crm-software-cost-in-india"},
+            {"title": "Excel vs Custom CRM: Which Is Better for a Growing Delhi Business?", "slug": "excel-vs-custom-crm-delhi-business"},
+            {"title": "When Should a Business Build a Custom CRM?", "slug": "when-to-build-a-custom-crm"},
+        ],
+        "cta_heading": "Build Your Custom CRM in Delhi NCR",
+        "cta_text": (
+            "Describe your current lead and sales workflow — even if it lives in Excel "
+            "and WhatsApp today — and we will show you what a CRM shaped around it "
+            "looks like, with a fixed quote."
+        ),
+    },
+    "seo-shaheen": {
+        "url_path": "seo-company-shaheen-bagh-okhla",
+        "seo_title": "SEO Company in Shaheen Bagh Okhla | GrowthSpare",
+        "seo_description": (
+            "GrowthSpare is an SEO company serving Shaheen Bagh and Okhla, helping "
+            "local businesses improve Google visibility, local SEO and qualified organic traffic."
+        ),
+        "kicker": "SEO Services in Shaheen Bagh & Okhla",
+        "h1": "SEO Company in Shaheen Bagh, Okhla",
+        "intro": (
+            "GrowthSpare is based in Shaheen Bagh, Okhla, and helps nearby businesses "
+            "get found on Google — Google Business Profile optimization, local SEO, "
+            "technical fixes, and content that answers what your customers actually "
+            "search. We work on visibility you can measure in calls, direction "
+            "requests, and enquiries, not jargon-filled reports."
+        ),
+        "service_type": "Search Engine Optimization",
+        "area_served": ["Shaheen Bagh", "Okhla", "Jamia Nagar", "Jasola", "South Delhi", "New Delhi"],
+        "breadcrumb_parent": {"name": "Services", "url_name": "services:list"},
+        "body_template": "core/local_services/_seo_shaheen.html",
+        "faqs": [
+            (
+                "How long does SEO take to show results?",
+                "Most businesses start seeing meaningful movement in 3\u20136 months, "
+                "with continued growth after that. Local searches around a specific "
+                "area can move faster than competitive city-wide keywords. Anyone "
+                "promising page-one rankings in days is not describing real SEO.",
+            ),
+            (
+                "What does local SEO involve for my business?",
+                "An accurate Google Business Profile, consistent business details "
+                "across directories, location-relevant pages on your website, genuine "
+                "customer reviews, and local content. The exact mix depends on your "
+                "business type and competition nearby.",
+            ),
+            (
+                "Do you guarantee Google rankings?",
+                "No, and you should be cautious of anyone who does. Rankings depend "
+                "on Google's systems, your competition, and your website's history. "
+                "What we commit to is the work — technical fixes, content, local "
+                "optimization — and transparent reporting of impressions, clicks, "
+                "calls, and enquiries.",
+            ),
+            (
+                "My business already has a website. Can you do SEO on it?",
+                "Usually yes. We start with a technical audit of your current site "
+                "and fix what is fixable. If the site itself is the problem — very "
+                "slow, not mobile-friendly, or impossible to edit — we will tell you "
+                "honestly before taking on the SEO work.",
+            ),
+            (
+                "Should I do SEO or Google Ads?",
+                "They do different jobs. Ads bring immediate visibility you pay for "
+                "per click; SEO builds durable visibility that keeps working without "
+                "per-click cost but takes months. Many Delhi businesses use both: "
+                "ads for immediate leads, SEO for long-term cost per lead. Our "
+                "comparison article below explains the trade-off.",
+            ),
+            (
+                "How do you report SEO progress?",
+                "With numbers you can verify: search impressions and clicks, organic "
+                "traffic, Google Business Profile actions such as calls and "
+                "direction requests, indexed pages, and enquiry or conversion counts "
+                "from your site. You see the same data we see.",
+            ),
+            (
+                "Do you work with businesses outside Shaheen Bagh and Okhla?",
+                "Yes. We are based here and meet local clients in person easily, but "
+                "SEO delivery is the same process for businesses anywhere in Delhi "
+                "NCR, and much of it is handled remotely with regular reports.",
+            ),
+        ],
+        "related": [
+            {"label": "website development services in Okhla", "url_name": "core:local-website-okhla"},
+            {"label": "digital marketing services in South Delhi", "url_name": "core:local-digital-south-delhi"},
+            {"label": "custom CRM development for Delhi NCR businesses", "url_name": "core:local-crm-delhi-ncr"},
+            {"label": "SEO services", "url_name": "services:detail", "kwargs": {"slug": "seo-optimization"}},
+            {"label": "our blog", "url_name": "blog:list"},
+            {"label": "contact us", "url_name": "contact:contact"},
+        ],
+        "articles": [
+            {"title": "Local SEO for Businesses in Okhla: A Practical 2026 Guide", "slug": "local-seo-okhla-practical-guide"},
+            {"title": "How to Optimize Google Business Profile for a Delhi Business", "slug": "google-business-profile-seo"},
+            {"title": "How Local Businesses in Shaheen Bagh Can Get More Google Leads", "slug": "shaheen-bagh-local-business-google-leads"},
+            {"title": "SEO vs Google Ads for Delhi Businesses: When Should You Use Each?", "slug": "seo-vs-google-ads"},
+        ],
+        "cta_heading": "Get an SEO Audit",
+        "cta_text": (
+            "We will audit your current Google visibility — profile, website, and "
+            "local presence — and show you exactly what is holding it back, with a "
+            "plain-language plan to fix it."
+        ),
+    },
+    "digital-south-delhi": {
+        "url_path": "digital-marketing-agency-south-delhi",
+        "seo_title": "Digital Marketing Agency in South Delhi | GrowthSpare",
+        "seo_description": (
+            "GrowthSpare is a digital marketing agency in South Delhi offering SEO, "
+            "Google Ads, social media and conversion-focused campaigns for growing businesses."
+        ),
+        "kicker": "Digital Marketing in South Delhi",
+        "h1": "Digital Marketing Agency in South Delhi",
+        "intro": (
+            "GrowthSpare runs digital marketing that connects spending to business "
+            "outcomes — SEO for durable visibility, Google Ads for immediate leads, "
+            "social media for demand, and landing pages built to convert. Based in "
+            "Okhla and working across South Delhi and Delhi NCR, we set up tracking "
+            "first so every rupee is accountable to enquiries, calls, or sales."
+        ),
+        "service_type": "Digital Marketing",
+        "area_served": ["South Delhi", "Okhla", "Greater Kailash", "Lajpat Nagar", "Saket", "New Delhi"],
+        "breadcrumb_parent": {"name": "Services", "url_name": "services:list"},
+        "body_template": "core/local_services/_digital_south_delhi.html",
+        "faqs": [
+            (
+                "How much does digital marketing cost in South Delhi?",
+                "Our digital marketing engagements start at \u20b95,999 per month, "
+                "plus any ad spend you pay directly to Google or Meta. The right "
+                "budget depends on your channels, competition, and how fast you need "
+                "results. We quote scope first, then recommend spend separately.",
+            ),
+            (
+                "Should my business do SEO, Google Ads, or social media?",
+                "It depends on how your customers buy. Urgent, high-intent needs — "
+                "a clinic, a repair service, admissions season — suit Google Ads. "
+                "Long-term visibility suits SEO. Visual, discovery-led businesses "
+                "suit Instagram and Facebook. Most South Delhi small businesses do "
+                "best starting with one primary channel done properly rather than "
+                "three done thinly.",
+            ),
+            (
+                "How do you measure digital marketing results?",
+                "Every engagement starts with conversion tracking: calls, WhatsApp "
+                "clicks, form submissions, and where each came from. You get regular "
+                "reports showing spend, leads, and cost per lead per channel — the "
+                "same numbers we use to decide what to change.",
+            ),
+            (
+                "Do you also build the landing pages for ad campaigns?",
+                "Yes. Sending paid traffic to a slow or generic page wastes budget, "
+                "so we build focused landing pages matched to each campaign's offer "
+                "and audience, with the tracking already wired in.",
+            ),
+            (
+                "How long before I see results?",
+                "Google Ads can produce enquiries within days of launch once "
+                "targeting and landing pages are right, though the first weeks are "
+                "optimization, not peak performance. SEO and social audiences build "
+                "over months. We set expectations per channel before you spend.",
+            ),
+            (
+                "Do I need a big monthly ad budget to start?",
+                "No. Start with a test budget sized to your ticket value and area — "
+                "for many local South Delhi businesses, a modest, tightly targeted "
+                "campaign teaches more in a month than a large scattered one. We "
+                "will tell you if your budget is too small to learn anything useful.",
+            ),
+            (
+                "Can you take over my existing ad accounts and pages?",
+                "Yes. We audit your current campaigns, tracking setup, and social "
+                "pages first, fix measurement gaps, and then restructure or rebuild "
+                "campaigns where the data shows it is warranted.",
+            ),
+        ],
+        "related": [
+            {"label": "local SEO services in Shaheen Bagh and Okhla", "url_name": "core:local-seo-shaheen"},
+            {"label": "website development services in Okhla", "url_name": "core:local-website-okhla"},
+            {"label": "custom CRM development for Delhi NCR businesses", "url_name": "core:local-crm-delhi-ncr"},
+            {"label": "digital marketing services", "url_name": "services:category", "kwargs": {"category_slug": "digital-marketing"}},
+            {"label": "our blog", "url_name": "blog:list"},
+            {"label": "contact us", "url_name": "contact:contact"},
+        ],
+        "articles": [
+            {"title": "SEO vs Google Ads for Delhi Businesses: When Should You Use Each?", "slug": "seo-vs-google-ads"},
+            {"title": "Digital Marketing Strategy for Small Businesses in South Delhi", "slug": "digital-marketing-strategy-small-business-south-delhi"},
+            {"title": "Complete Digital Growth Checklist for Delhi NCR Startups", "slug": "digital-growth-checklist-delhi-ncr-startups"},
+        ],
+        "cta_heading": "Start Your Digital Marketing Campaign in South Delhi",
+        "cta_text": (
+            "Tell us how customers find you today and what a new customer is worth. "
+            "We will recommend the channel mix, the test budget, and the tracking — "
+            "before asking you to spend."
+        ),
+    },
+}
+
+
+class LocalServicePageView(TemplateView):
+    """
+    Renders one of the four hyper-local commercial service pages from
+    LOCAL_SERVICE_PAGES above. One shared shell template + per-page body
+    partials — deliberately not database-backed, matching the existing
+    LocationLandingView / IndustryLandingView pattern.
+
+    Emits a single @graph: ProfessionalService (page business entity) +
+    Service (page offer, provider-linked) + BreadcrumbList (Home > Services >
+    page) + FAQPage (visible FAQs only, 1:1 with template output).
+    """
+    template_name = "core/local_service.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page_slug = kwargs["page_slug"]
+        page = LOCAL_SERVICE_PAGES.get(page_slug)
+        if page is None:
+            raise Http404("Unknown local service page.")
+        context["page"] = page
+        context["seo_title"] = page["seo_title"]
+        context["seo_description"] = page["seo_description"]
+
+        base_url = settings.SITE_URL.rstrip("/")
+        page_url = f"{base_url}/{page['url_path']}/"
+        business_id = f"{base_url}/#localbusiness"
+
+        business_schema = {
+            "@type": "ProfessionalService",
+            "@id": business_id,
+            "name": "GrowthSpare IT Solutions",
+            "url": settings.SITE_URL,
+            "logo": f"{settings.SITE_URL}/static/images/logo.png",
+            "image": f"{settings.SITE_URL}/static/images/logo.png",
+            "description": page["intro"],
+            "email": "growthspareitsolution@gmail.com",
+            "telephone": "+91 9811579273",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "D-50, Shaheen Bagh, Okhla",
+                "addressLocality": "New Delhi",
+                "postalCode": "110025",
+                "addressCountry": "IN",
+            },
+            "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "opens": "09:00",
+                "closes": "19:00",
+            },
+            "sameAs": COMPANY_SAME_AS,
+            "areaServed": page["area_served"],
+        }
+        service_schema = {
+            "@type": "Service",
+            "name": page["h1"],
+            "serviceType": page["service_type"],
+            "description": page["intro"],
+            "url": page_url,
+            "provider": {"@id": business_id},
+            "areaServed": page["area_served"],
+        }
+        parent = page["breadcrumb_parent"]
+        breadcrumb_schema = {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": parent["name"],
+                    "item": f"{base_url}{reverse(parent['url_name'])}",
+                },
+                {"@type": "ListItem", "position": 3, "name": page["h1"], "item": page_url},
+            ],
+        }
+        faq_schema = {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": question,
+                    "acceptedAnswer": {"@type": "Answer", "text": answer},
+                }
+                for question, answer in page["faqs"]
+            ],
+        }
+        context["schema_data"] = [business_schema, service_schema, breadcrumb_schema, faq_schema]
+
+        # Resolve related commercial links + supporting articles to real URLs
+        # here so the template never reasons about url names or slugs.
+        resolved_related = []
+        for link in page["related"]:
+            try:
+                if link.get("kwargs"):
+                    url = reverse(link["url_name"], kwargs=link["kwargs"])
+                else:
+                    url = reverse(link["url_name"])
+            except Exception:
+                continue
+            resolved_related.append({"label": link["label"], "url": url})
+        context["related_links"] = resolved_related
+
+        resolved_articles = []
+        # Only link articles that actually exist and are published in THIS
+        # environment's database. Fresh production deploys seed articles at
+        # boot, but between code deploy and seeding (or on any drifted DB) a
+        # hardcoded link would 404 — so existence-gate every card.
+        wanted_slugs = [article["slug"] for article in page["articles"]]
+        live_slugs = set(
+            BlogPost.objects.filter(slug__in=wanted_slugs, is_published=True).values_list(
+                "slug", flat=True
+            )
+        )
+        for article in page["articles"]:
+            if article["slug"] not in live_slugs:
+                continue
+            try:
+                url = reverse("blog:detail", kwargs={"slug": article["slug"]})
+            except Exception:
+                continue
+            resolved_articles.append({"title": article["title"], "url": url})
+        context["supporting_articles"] = resolved_articles
+
+        context["breadcrumb_parent"] = parent
         return context
 
 

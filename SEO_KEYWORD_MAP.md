@@ -111,3 +111,28 @@ Every article: one H1, real question answered, examples, 2–3 natural internal 
 ## 6. Anchor-text rules
 
 Use natural, varied anchors: "web development services in Delhi", "restaurant website development", "free website audit", "our portfolio", "SEO services". Never repeat the same exact-match anchor sitewide. Never link `?category=` URLs (canonical is `/services/category/<slug>/`).
+
+## 7. Hyper-local commercial pages (added 2026-09-17)
+
+One primary page per service + locality intent. Each has distinct long-form content (no doorway clones), self-referencing canonical, ProfessionalService + Service + BreadcrumbList + FAQPage schema, and a supporting article cluster.
+
+| Keyword cluster | Primary URL (canonical) | Title | H1 | Search intent |
+|-----------------|------------------------|-------|----|---------------|
+| website development company in Okhla, website developer Okhla Delhi, website development Shaheen Bagh | `/website-development-company-okhla-delhi/` | Website Development Company in Okhla Delhi \| GrowthSpare | Website Development Company in Okhla, Delhi | Transactional — hire a nearby developer |
+| CRM software development Delhi NCR, custom CRM Delhi, CRM developer Noida/Gurgaon | `/crm-software-development-company-delhi-ncr/` | CRM Software Development Company in Delhi NCR \| GrowthSpare | CRM Software Development Company in Delhi NCR | Transactional — commission custom CRM |
+| SEO company Shaheen Bagh, SEO services Okhla, local SEO South Delhi | `/seo-company-shaheen-bagh-okhla/` | SEO Company in Shaheen Bagh Okhla \| GrowthSpare | SEO Company in Shaheen Bagh, Okhla | Transactional + informational — local visibility help |
+| digital marketing agency South Delhi, Google Ads South Delhi, social media marketing Delhi | `/digital-marketing-agency-south-delhi/` | Digital Marketing Agency in South Delhi \| GrowthSpare | Digital Marketing Agency in South Delhi | Transactional — hire a marketing partner |
+
+**Cannibalization notes (deliberate differentiation, no deletions):**
+- Homepage (`website development company in Delhi NCR`) keeps the broad NCR commercial intent; the Okhla page owns the hyper-local "near me / in Okhla" intent. Linked bidirectionally with varied anchors.
+- `/locations/web-development-delhi/` keeps the city-service-area intent (Delhi vs Noida vs Gurgaon comparison + hub); the Okhla page owns the neighbourhood-level commercial intent. Locations hub links down to all four local pages.
+- `/services/website-development/`, `/services/crm-software-development/`, `/services/seo-optimization/`, `/services/digital-marketing/` keep the service-capability intent; local pages own the service + locality intent. Service detail pages link to local pages via `SERVICE_CONTEXTUAL_LINKS`.
+- Cyber Security (`/services/cyber-security-solutions/`) is an existing real service but is NOT promoted on the local pages per business rule.
+
+**Content clusters (commercial page <-> supporting articles):**
+- WEBSITE: `website-development-cost-in-delhi` (existing), `website-development-checklist-small-business-delhi` (new), `how-to-choose-a-website-development-company-in-delhi-ncr` (existing) → Okhla page.
+- SEO: `local-seo-for-businesses-in-delhi` (existing), `google-business-profile-seo` (existing), `local-seo-okhla-practical-guide` (new), `shaheen-bagh-local-business-google-leads` (new), `seo-vs-google-ads` (existing) → Shaheen Bagh page.
+- CRM: `custom-crm-software-cost-in-india` (existing), `excel-vs-custom-crm-delhi-business` (new), `when-to-build-a-custom-crm` (existing), `custom-crm-vs-salesforce-hubspot` (existing) → CRM page.
+- MARKETING: `seo-vs-google-ads` (existing), `digital-marketing-strategy-small-business-south-delhi` (new), `digital-growth-checklist-delhi-ncr-startups` (new) → South Delhi page.
+
+Seed script for the 6 new articles: `scripts/seed_local_seo_articles.py` (idempotent, run post-deploy if the production DB lacks them).

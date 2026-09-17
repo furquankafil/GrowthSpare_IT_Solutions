@@ -66,6 +66,15 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="mt-3 pt-3 border-t border-slate-900/10 dark:border-white/10">
+                            <span class="text-[10px] font-bold tracking-wider text-primary dark:text-accent uppercase px-3 block mb-1.5">Local Service Areas</span>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 px-3 pb-1">
+                                <a href="{% url 'core:local-website-okhla' %}" class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Website Development in Okhla</a>
+                                <a href="{% url 'core:local-crm-delhi-ncr' %}" class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">CRM in Delhi NCR</a>
+                                <a href="{% url 'core:local-seo-shaheen' %}" class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">SEO in Shaheen Bagh</a>
+                                <a href="{% url 'core:local-digital-south-delhi' %}" class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-accent transition-colors">Marketing in South Delhi</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endif %}
@@ -115,6 +124,12 @@
         <a href="{% url 'core:home' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Home</a>
         <a href="{% url 'core:about' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">About</a>
         <a href="{% url 'services:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Services Directory</a>
+        <div class="pl-3 space-y-2 border-l border-slate-900/10 dark:border-white/10">
+            <a href="{% url 'core:local-website-okhla' %}" class="block text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-accent">Website Development in Okhla</a>
+            <a href="{% url 'core:local-crm-delhi-ncr' %}" class="block text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-accent">CRM in Delhi NCR</a>
+            <a href="{% url 'core:local-seo-shaheen' %}" class="block text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-accent">SEO in Shaheen Bagh</a>
+            <a href="{% url 'core:local-digital-south-delhi' %}" class="block text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-accent">Marketing in South Delhi</a>
+        </div>
         <a href="{% url 'portfolio:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Portfolio</a>
         <a href="{% url 'blog:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">Insights Blog</a>
         <a href="{% url 'faq:list' %}" class="block text-base font-semibold text-slate-600 dark:text-slate-300 hover:text-accent">FAQs</a>

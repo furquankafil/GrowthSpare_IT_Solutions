@@ -70,6 +70,15 @@ urlpatterns = [
     path("industries/salons/", RedirectView.as_view(pattern_name="core:industry-small-business", permanent=True)),
     path("industries/salon/", RedirectView.as_view(pattern_name="core:industry-small-business", permanent=True)),
 
+    # Local Commercial Service Pages (hyper-local SEO landing pages).
+    # Flat root-level trailing-slash URLs, one TemplateView + shared shell
+    # template driven by LOCAL_SERVICE_PAGES in views.py. Distinct service +
+    # locality intent per page — not doorway pages.
+    path("website-development-company-okhla-delhi/", views.LocalServicePageView.as_view(), {"page_slug": "website-okhla"}, name="local-website-okhla"),
+    path("crm-software-development-company-delhi-ncr/", views.LocalServicePageView.as_view(), {"page_slug": "crm-delhi-ncr"}, name="local-crm-delhi-ncr"),
+    path("seo-company-shaheen-bagh-okhla/", views.LocalServicePageView.as_view(), {"page_slug": "seo-shaheen"}, name="local-seo-shaheen"),
+    path("digital-marketing-agency-south-delhi/", views.LocalServicePageView.as_view(), {"page_slug": "digital-south-delhi"}, name="local-digital-south-delhi"),
+
     # Legal and SLA Compliance Pages
     path("privacy-policy/", views.PrivacyPolicyView.as_view(), name="privacy"),
     path("terms-and-conditions/", views.TermsView.as_view(), name="terms"),
