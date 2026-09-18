@@ -178,7 +178,7 @@ class HomeView(TemplateView):
         }
         local_business_schema = _company_local_business_schema()
         local_business_schema["@id"] = f"{settings.SITE_URL}/#localbusiness"
-        local_business_schema["areaServed"] = ["New Delhi", "Noida", "Gurugram"]
+        local_business_schema["areaServed"] = ["New Delhi", "South Delhi", "Noida", "Gurugram"]
         faq_schema = {
             "@type": "FAQPage",
             "mainEntity": [
@@ -220,6 +220,17 @@ class AboutView(TemplateView):
                 "name": "GrowthSpare IT Solutions",
                 "url": settings.SITE_URL,
                 "logo": f"{settings.SITE_URL}/static/images/logo.png",
+                "description": "Delhi-based team building modern websites, AI automation, CRM software and SEO for startups and growing businesses across Delhi NCR.",
+                "email": "growthspareitsolution@gmail.com",
+                "telephone": "+91 9811579273",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "D-50, Shaheen Bagh, Okhla",
+                    "addressLocality": "New Delhi",
+                    "postalCode": "110025",
+                    "addressCountry": "IN",
+                },
+                "areaServed": ["New Delhi", "South Delhi", "Noida", "Gurugram"],
                 "sameAs": COMPANY_SAME_AS,
             },
             {
@@ -227,6 +238,35 @@ class AboutView(TemplateView):
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
                     {"@type": "ListItem", "position": 2, "name": "About Us", "item": f"{base_url}/about-us/"},
+                ],
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What does GrowthSpare IT Solutions do?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "We design, deploy, and support stable, secure, and production-grade applications that accelerate structural business growth. Our services include website development, AI automation, CRM systems, SEO, digital marketing, and custom software engineering.",
+                        },
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What web development services does GrowthSpare provide?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "We provide custom website development, AI & WhatsApp automation, CRM software, SEO & digital marketing, cyber security solutions, and custom software engineering tailored to business needs.",
+                        },
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What SEO services are offered?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "We offer technical SEO audits, on-page optimization, local SEO, Google Business Profile optimization, keyword research, content strategy, and structured data (Schema.org) implementation.",
+                        },
+                    },
                 ],
             },
         ]

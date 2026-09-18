@@ -208,6 +208,22 @@ class ServiceCategoryView(ListView):
             f"Explore our high-performance suite of {category.name} services, engineered to "
             f"help modern businesses automate workflows and scale faster."
         )
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Services", "item": f"{base_url}{reverse('services:list')}"},
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": category.name,
+                        "item": f"{base_url}{reverse('services:category', kwargs={'category_slug': category.slug})}",
+                    },
+                ],
+            }
+        ]
         return context
 
 
@@ -272,7 +288,8 @@ class ServiceDetailView(DetailView):
             "description": service.overview,
             "url": f"{settings.SITE_URL}{service.get_absolute_url()}",
             "provider": {
-                "@type": "LocalBusiness",
+                "@type": "Organization",
+                "@id": f"{settings.SITE_URL.rstrip('/')}/#organization",
                 "name": "GrowthSpare IT Solutions",
                 "url": settings.SITE_URL,
             },
@@ -331,18 +348,6 @@ class ServiceDetailView(DetailView):
                 ],
             }
             schema_blocks.append(faq_schema)
-
-        website_schema = {
-            "@type": "WebSite",
-            "name": "GrowthSpare IT Solutions",
-            "url": settings.SITE_URL,
-            "description": "Website development, AI automation, CRM software, SEO & digital marketing for startups and SMEs in Delhi NCR.",
-            "publisher": {
-                "@type": "Organization",
-                "name": "GrowthSpare IT Solutions",
-            },
-        }
-        schema_blocks.append(website_schema)
 
         context["schema_data"] = schema_blocks
         return context

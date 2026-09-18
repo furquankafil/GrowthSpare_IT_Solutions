@@ -85,7 +85,7 @@
                     </div>
                     <div>
                         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Primary Contact Desk (Click To Call)</span>
-                        <a href="tel:{{ OFFICIAL_PHONE }}" class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_PHONE }}</a>
+                        <a href="tel:+919811579273" class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white hover:text-primary dark:hover:text-accent transition-colors">{{ OFFICIAL_PHONE }}</a>
                     </div>
                 </div>
                 
@@ -226,6 +226,19 @@
             </form>
         </div>
 
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-6 mt-16 relative z-10" data-aos="fade-up">
+        <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 text-center space-y-4">
+            <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Looking For Something Specific?</span>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <a href="{% url 'core:local-website-okhla' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-accent hover:border-primary/40 transition-all">Website development in Okhla</a>
+                <a href="{% url 'core:local-crm-delhi-ncr' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-accent hover:border-primary/40 transition-all">CRM development in Delhi NCR</a>
+                <a href="{% url 'core:local-seo-shaheen' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-accent hover:border-primary/40 transition-all">SEO in Shaheen Bagh</a>
+                <a href="{% url 'core:local-digital-south-delhi' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-accent hover:border-primary/40 transition-all">Marketing in South Delhi</a>
+                <a href="{% url 'services:list' %}" class="px-5 py-2.5 rounded-xl border border-slate-900/10 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-accent hover:border-primary/40 transition-all">All services</a>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock content %}

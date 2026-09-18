@@ -29,7 +29,7 @@ class ConsultationBookingForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "John Doe"}),
             "email": forms.EmailInput(attrs={"placeholder": "name@company.com"}),
-            "phone": forms.TextInput(attrs={"placeholder": "+91 9811653212"}),
+            "phone": forms.TextInput(attrs={"placeholder": "+91 98115 79273"}),
             "company": forms.TextInput(attrs={"placeholder": "Your Business Name"}),
             "website_url": forms.URLInput(attrs={"placeholder": "https://yourbusiness.com (leave blank if you don't have one yet)"}),
             "industry": forms.TextInput(attrs={"placeholder": "e.g., E-commerce, FinTech, Logistics"}),

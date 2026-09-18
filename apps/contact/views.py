@@ -115,9 +115,12 @@ class ContactView(FormView):
         context["schema_data"] = [
             {
                 "@type": "LocalBusiness",
+                "@id": f"{base_url}/#localbusiness",
                 "name": "GrowthSpare IT Solutions",
                 "url": settings.SITE_URL,
+                "logo": f"{settings.SITE_URL}/static/images/logo.png",
                 "image": f"{settings.SITE_URL}/static/images/logo.png",
+                "description": "Contact GrowthSpare IT Solutions in Okhla, New Delhi for websites, AI automation, CRM and SEO.",
                 "telephone": "+91 9811579273",
                 "email": "growthspareitsolution@gmail.com",
                 "address": {
@@ -133,7 +136,13 @@ class ContactView(FormView):
                     "opens": "09:00",
                     "closes": "19:00",
                 },
-                "areaServed": ["New Delhi", "Noida", "Gurugram"],
+                "areaServed": ["New Delhi", "South Delhi", "Noida", "Gurugram"],
+                # sameAs contains ONLY the official profiles linked in the public footer.
+                "sameAs": [
+                    "https://www.linkedin.com/company/growthspareitsolution/",
+                    "https://www.instagram.com/growthspareitsolution/",
+                    "https://www.facebook.com/profile.php?id=61592462990102",
+                ],
             },
             {
                 "@type": "BreadcrumbList",

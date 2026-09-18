@@ -7,6 +7,8 @@ Updated to correctly prefetch and filter many-to-many categories.
 
 from django.views.generic import ListView, DetailView
 from django.db.models import Prefetch
+from django.conf import settings
+from django.urls import reverse
 from .models import Project, ProjectCategory
 
 
@@ -48,6 +50,16 @@ class PortfolioListView(ListView):
             "Website, CRM, AI automation and SEO projects by GrowthSpare IT Solutions "
             "for restaurants, clinics, real estate and local businesses."
         )
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Portfolio", "item": f"{base_url}{reverse('portfolio:list')}"},
+                ],
+            }
+        ]
         return context
 
 
@@ -109,13 +121,16 @@ class ProjectDetailView(DetailView):
         # Safely extract first category name if available for JSON-LD data
         first_cat = project.categories.first()
         context["schema_type"] = "CreativeWork"
-        context["schema_data"] = {
+        creative_work_schema = {
+            "@type": "CreativeWork",
             "name": project.title,
             "description": project.problem_statement[:150] + "...",
             "category": first_cat.name if first_cat else "General",
             "creator": {
-                "@type": "LocalBusiness",
+                "@type": "Organization",
+                "@id": f"{settings.SITE_URL.rstrip('/')}/#organization",
                 "name": "GrowthSpare IT Solutions",
+                "url": settings.SITE_URL,
             },
         }
         # Only attribute a named client relationship in structured data for
@@ -123,11 +138,21 @@ class ProjectDetailView(DetailView):
         # Organization name to a concept project here would be a false
         # business-relationship claim indexed directly by search engines.
         if not project.is_concept_project:
-            context["schema_data"]["client"] = {
+            creative_work_schema["client"] = {
                 "@type": "Organization",
                 "name": project.client_name,
                 "industry": project.industry,
             }
         else:
-            context["schema_data"]["genre"] = "Concept Project"
+            creative_work_schema["genre"] = "Concept Project"
+        base_url = settings.SITE_URL.rstrip("/")
+        breadcrumb_schema = {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                {"@type": "ListItem", "position": 2, "name": "Portfolio", "item": f"{base_url}{reverse('portfolio:list')}"},
+                {"@type": "ListItem", "position": 3, "name": project.title, "item": f"{base_url}{project.get_absolute_url()}"},
+            ],
+        }
+        context["schema_data"] = [creative_work_schema, breadcrumb_schema]
         return context

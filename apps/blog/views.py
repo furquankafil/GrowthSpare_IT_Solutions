@@ -62,6 +62,16 @@ class BlogListView(ListView):
             # Only search/filter combos are noindex; plain pagination page 1 stays indexable
             if context["search_query"] or context["active_category"]:
                 context["seo_robots"] = "noindex, follow"
+        base_url = settings.SITE_URL.rstrip("/")
+        context["schema_data"] = [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                    {"@type": "ListItem", "position": 2, "name": "Insights", "item": f"{base_url}{reverse('blog:list')}"},
+                ],
+            }
+        ]
         return context
 
 
@@ -112,7 +122,8 @@ class BlogPostDetailView(DetailView):
 
         # Article dynamic metadata structured block mapping
         context["schema_type"] = "Article"
-        schema_data = {
+        article_schema = {
+            "@type": "Article",
             "headline": post.title,
             "author": {
                 "@type": "Person",
@@ -120,6 +131,7 @@ class BlogPostDetailView(DetailView):
             },
             "publisher": {
                 "@type": "Organization",
+                "@id": f"{settings.SITE_URL.rstrip('/')}/#organization",
                 "name": "GrowthSpare IT Solutions",
                 "logo": {
                     "@type": "ImageObject",
@@ -133,12 +145,29 @@ class BlogPostDetailView(DetailView):
             "keywords": post.tags,
         }
         if post.featured_image:
-            schema_data["image"] = post.featured_image.url
+            try:
+                img_url = post.featured_image.url
+            except Exception:
+                img_url = getattr(post.featured_image, "name", "")
+            if img_url and not img_url.startswith("http"):
+                base = settings.SITE_URL.rstrip("/")
+                img_url = f"{base}{img_url}" if img_url.startswith("/") else f"{base}/{img_url}"
+            if img_url:
+                article_schema["image"] = img_url
         if post.published_at:
-            schema_data["datePublished"] = post.published_at.isoformat()
+            article_schema["datePublished"] = post.published_at.isoformat()
         if post.updated_at:
-            schema_data["dateModified"] = post.updated_at.isoformat()
-        context["schema_data"] = schema_data
+            article_schema["dateModified"] = post.updated_at.isoformat()
+        base_url = settings.SITE_URL.rstrip("/")
+        breadcrumb_schema = {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base_url}/"},
+                {"@type": "ListItem", "position": 2, "name": "Insights", "item": f"{base_url}{reverse('blog:list')}"},
+                {"@type": "ListItem", "position": 3, "name": post.title, "item": f"{base_url}{post.get_absolute_url()}"},
+            ],
+        }
+        context["schema_data"] = [article_schema, breadcrumb_schema]
         return context
 
 
