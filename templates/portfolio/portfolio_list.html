@@ -81,7 +81,7 @@
                             <img src="{{ project.featured_image }}" 
                                 alt="{{ project.title }}" 
                                 class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" 
-                                loading="lazy">
+                                loading="lazy" decoding="async">
                             {% else %}
                                 <div class="w-full h-full bg-gradient-to-tr from-primary/20 to-accent/20 flex items-center justify-center">
                                     <i class="fas fa-image text-3xl text-slate-500"></i>
@@ -161,6 +161,11 @@
                 Load More Projects
             </button>
         </div>
+
+        <!-- Server-rendered pagination links: crawlable discoverability for
+             ?page=N beyond the first page (progressive enhancement — the
+             JS filter/load-more UX above is unchanged). -->
+        {% include 'components/pagination.html' %}
 
     </div>
 </section>

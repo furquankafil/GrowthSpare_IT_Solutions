@@ -106,7 +106,7 @@
                         <div class="swiper-wrapper">
                             {% for img in project.gallery_images.all %}
                                 <div class="swiper-slide relative aspect-video flex flex-col justify-end">
-                                    <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+                                    <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover">
                                     {% if img.caption %}
                                         <div class="relative z-10 bg-slate-950/80 p-4 border-t border-white/5 backdrop-blur-md text-xs text-white font-medium font-poppins">
                                             {{ img.caption }}
@@ -180,6 +180,22 @@
                     </div>
                 </div>
 
+                <!-- Related services (forward links reusing the approved
+                     service->portfolio relationships — rendered only when
+                     this project is genuinely referenced by a service page) -->
+                {% if related_services %}
+                <div class="space-y-4 border-t border-slate-900/10 dark:border-white/5 pt-6">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Related Services</span>
+                    <div class="flex flex-wrap gap-2">
+                        {% for svc in related_services %}
+                            <a href="{{ svc.url }}" class="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase bg-primary/10 text-primary dark:text-accent font-poppins hover:bg-primary/20 transition-colors">
+                                {{ svc.label }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
                 <!-- CTA trigger elements -->
                 <div class="space-y-3 pt-6 border-t border-slate-900/10 dark:border-white/5">
                     {% if project.live_url %}
@@ -216,7 +232,7 @@
                         <div>
                             <div class="relative aspect-video overflow-hidden bg-slate-900">
                                 {% if related.featured_image %}
-                                    <img src="{{ related.featured_image }}" alt="{{ related.title }}" class="w-full h-full object-cover opacity-80" loading="lazy">
+                                    <img src="{{ related.featured_image }}" alt="{{ related.title }}" class="w-full h-full object-cover opacity-80" loading="lazy" decoding="async">
                                 {% endif %}
                                 <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
                                     {% for category in related.categories.all|slice:":1" %}

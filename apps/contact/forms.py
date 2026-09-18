@@ -18,7 +18,7 @@ class ContactForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "John Doe"}),
             "email": forms.EmailInput(attrs={"placeholder": "name@company.com"}),
-            "phone": forms.TextInput(attrs={"placeholder": "+91 9811653212"}),
+            "phone": forms.TextInput(attrs={"placeholder": "+91 98115 79273"}),
             "company": forms.TextInput(attrs={"placeholder": "GrowthSpare IT Solutions"}),
             "message": forms.Textarea(
                 attrs={

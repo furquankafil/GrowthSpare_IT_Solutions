@@ -89,6 +89,41 @@ class ProjectDetailView(DetailView):
             .distinct()[:3]
         )
 
+        # Forward internal links to genuinely related service pages. The
+        # approved service->portfolio relationships live in
+        # SERVICE_CONTEXTUAL_LINKS (apps/services/views.py); inverting that
+        # map here reuses exactly those relationships in the reverse
+        # direction — no new/invented associations, no model changes. Each
+        # candidate is verified against an active Service row so the link
+        # can never 404.
+        context["related_services"] = []
+        try:
+            from apps.services.views import SERVICE_CONTEXTUAL_LINKS
+            from apps.services.models import Service as ServiceModel
+
+            for service_slug, links in SERVICE_CONTEXTUAL_LINKS.items():
+                for link in links:
+                    if link.get("url_name") != "portfolio:detail":
+                        continue
+                    if (link.get("kwargs") or {}).get("slug") != project.slug:
+                        continue
+                    service = ServiceModel.objects.filter(
+                        slug=service_slug, is_active=True
+                    ).first()
+                    if service is not None and all(
+                        s["url"] != service.get_absolute_url()
+                        for s in context["related_services"]
+                    ):
+                        context["related_services"].append(
+                            {
+                                "label": service.title,
+                                "url": service.get_absolute_url(),
+                            }
+                        )
+                    break
+        except Exception:
+            context["related_services"] = []
+
         # SEO configurations
         context["seo_title"] = (
             project.meta_title
