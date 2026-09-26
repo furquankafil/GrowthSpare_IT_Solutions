@@ -159,6 +159,53 @@ class Project(models.Model):
         """Auxiliary utility splittings to decouple parsing within templating contexts."""
         return [t.strip() for t in self.tags.split(",") if t.strip()]
 
+    # ------------------------------------------------------------------
+    # Project visibility status (computed — no database migration needed).
+    # ------------------------------------------------------------------
+    # Live/public work carries a live_url. Internal or in-development work
+    # carries no public URL and is marked via reserved tag tokens
+    # ("private-project", "prototype", "in-development") set at seed time.
+    # Anything else keeps the legacy concept/client distinction.
+    STATUS_MARKER_TAGS = frozenset({"private-project", "prototype", "in-development"})
+
+    STATUS_LABELS = {
+        "live": "Live Project",
+        "private": "Private Project",
+        "prototype": "Prototype / In Development",
+        "client": "Client Project",
+        "concept": "Concept Project",
+    }
+
+    @property
+    def display_status(self):
+        """One of live/private/prototype/client/concept for badges and CTAs."""
+        if self.live_url:
+            return "live"
+        markers = {t.strip().lower() for t in (self.tags or "").split(",")}
+        if "prototype" in markers or "in-development" in markers:
+            return "prototype"
+        if "private-project" in markers:
+            return "private"
+        return "client" if not self.is_concept_project else "concept"
+
+    @property
+    def display_status_label(self):
+        """Human-readable status badge text."""
+        return self.STATUS_LABELS.get(self.display_status, "Concept Project")
+
+    @property
+    def is_publicly_viewable(self):
+        """True only when a real public URL exists — never render a broken link."""
+        return bool(self.live_url)
+
+    def get_feature_list(self):
+        """Tags minus internal status-marker tokens, for the Key Features list."""
+        return [
+            t.strip()
+            for t in (self.tags or "").split(",")
+            if t.strip() and t.strip().lower() not in self.STATUS_MARKER_TAGS
+        ]
+
 
 class ProjectImage(models.Model):
     """Dynamic structural project screenshots and visual asset galleries."""

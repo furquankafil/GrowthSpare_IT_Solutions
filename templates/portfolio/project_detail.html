@@ -19,9 +19,34 @@
 
     <!-- Increased container max-width to 1400px -->
     <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
-        <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
-            <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
-            <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">Case Study Showcase</span>
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <a href="{% url 'portfolio:list' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Our Work</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">{{ project.title }}</span>
+        </nav>
+
+        <div class="inline-flex flex-wrap items-center justify-center gap-2">
+            <span class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+                <span class="text-xs font-bold font-poppins uppercase tracking-wider text-primary dark:text-accent">
+                    {% for category in project.categories.all %}{{ category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </span>
+            </span>
+            {% if project.display_status == "live" %}
+            <span class="inline-flex items-center space-x-2 bg-success/10 border border-success/20 px-4 py-1.5 rounded-full">
+                <span class="text-xs font-bold font-poppins uppercase tracking-wider text-success">Live Project</span>
+            </span>
+            {% elif project.display_status == "private" %}
+            <span class="inline-flex items-center space-x-2 bg-slate-500/10 border border-slate-500/20 px-4 py-1.5 rounded-full">
+                <span class="text-xs font-bold font-poppins uppercase tracking-wider text-slate-500">Private Project — Internal CRM Project</span>
+            </span>
+            {% elif project.display_status == "prototype" %}
+            <span class="inline-flex items-center space-x-2 bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 rounded-full">
+                <span class="text-xs font-bold font-poppins uppercase tracking-wider text-amber-600 dark:text-amber-400">Prototype / In Development</span>
+            </span>
+            {% endif %}
         </div>
         
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
@@ -29,10 +54,10 @@
         </h1>
         
         <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest font-poppins">
-            Client Profile: {{ project.client_name }} — Industry Sector: {{ project.industry }}
+            {{ project.client_name }} — {{ project.industry }}
         </p>
 
-        {% if project.is_concept_project %}
+        {% if project.is_concept_project and project.display_status == "concept" %}
         <div class="inline-flex items-center space-x-2 bg-success/10 border border-success/20 px-4 py-1.5 rounded-full">
             <span class="text-xs font-bold font-poppins uppercase tracking-wider text-success">Concept Project — illustrative example, not a verified client engagement</span>
         </div>
@@ -46,7 +71,13 @@
 <section class="py-12 border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10 backdrop-blur-md">
     <div class="max-w-[1400px] mx-auto px-6 text-center">
         <div class="inline-flex flex-col items-center space-y-3">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins block">{% if project.is_concept_project %}Illustrative Target Outcome{% else %}Verified Outcome Metric{% endif %}</span>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-poppins block">
+                {% if project.display_status == "live" %}Delivery Summary
+                {% elif project.display_status == "private" %}Internal Project — Delivery Summary
+                {% elif project.display_status == "prototype" %}Prototype Status
+                {% elif project.is_concept_project %}Illustrative Target Outcome
+                {% else %}Verified Outcome Metric{% endif %}
+            </span>
             <div class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-success font-poppins uppercase tracking-wide leading-none">
                 <i class="fas fa-chart-line mr-2"></i>{{ project.results_statement }}
             </div>
@@ -68,7 +99,7 @@
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
                 <div class="flex items-center space-x-3 text-red-500">
                     <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center"><i class="fas fa-triangle-exclamation"></i></div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">1. The Strategic Bottleneck</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Project Description</h2>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                     {{ project.problem_statement }}
@@ -79,28 +110,75 @@
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
                 <div class="flex items-center space-x-3 text-primary dark:text-accent">
                     <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary dark:text-accent"><i class="fas fa-screwdriver-wrench"></i></div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">2. Our Engineering Action</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Project Overview</h2>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                     {{ project.solution_statement }}
                 </p>
             </div>
 
+            <!-- Key features block (tags minus internal status markers) -->
+            {% if project.get_feature_list %}
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div class="flex items-center space-x-3 text-accent">
+                    <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent"><i class="fas fa-list-check"></i></div>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">
+                        {% if project.display_status == "prototype" %}Prototype Scope (In Development)
+                        {% elif project.display_status == "private" %}Platform Capabilities
+                        {% else %}Key Features{% endif %}
+                    </h2>
+                </div>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {% for feature in project.get_feature_list %}
+                    <li class="flex items-start space-x-2.5 bg-slate-500/5 rounded-xl p-3.5">
+                        <i class="fas fa-circle-check text-success mt-0.5 shrink-0 text-xs"></i>
+                        <span class="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">{{ feature }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% if project.display_status == "prototype" %}
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Listed scope reflects the prototype's intended experience areas. Features are under active development — nothing here is claimed as launched, live, or in public use.
+                </p>
+                {% endif %}
+            </div>
+            {% endif %}
+
             <!-- Outcome results statement block -->
             <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
                 <div class="flex items-center space-x-3 text-success">
                     <div class="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center text-success"><i class="fas fa-circle-check"></i></div>
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">3. Commercial Growth Outcomes{% if project.is_concept_project %} <span class="text-xs font-medium text-slate-400 normal-case">(illustrative target, not a measured result)</span>{% endif %}</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">
+                        {% if project.display_status == "live" %}Delivery Summary
+                        {% elif project.display_status == "private" %}Internal Project Status
+                        {% elif project.display_status == "prototype" %}Prototype Status
+                        {% else %}Commercial Growth Outcomes{% endif %}{% if project.is_concept_project and project.display_status == "concept" %} <span class="text-xs font-medium text-slate-400 normal-case">(illustrative target, not a measured result)</span>{% endif %}
+                    </h2>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                     {{ project.results_statement }}
                 </p>
             </div>
 
+            <!-- Development approach block (standard GrowthSpare workflow) -->
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <div class="flex items-center space-x-3 text-primary dark:text-accent">
+                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary dark:text-accent"><i class="fas fa-diagram-project"></i></div>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Development Approach</h2>
+                </div>
+                <ol class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium list-none">
+                    <li class="flex items-start space-x-2.5"><span class="font-bold text-primary dark:text-accent shrink-0">1.</span><span>Understand the business, its customers, and what the website or system must do.</span></li>
+                    <li class="flex items-start space-x-2.5"><span class="font-bold text-primary dark:text-accent shrink-0">2.</span><span>Plan the pages, sections, and conversion paths before any code is written.</span></li>
+                    <li class="flex items-start space-x-2.5"><span class="font-bold text-primary dark:text-accent shrink-0">3.</span><span>Design a clean, mobile-first experience matched to the brand.</span></li>
+                    <li class="flex items-start space-x-2.5"><span class="font-bold text-primary dark:text-accent shrink-0">4.</span><span>Build, test across devices, and refine with feedback.</span></li>
+                    <li class="flex items-start space-x-2.5"><span class="font-bold text-primary dark:text-accent shrink-0">5.</span><span>Launch, connect contact channels, and support after go-live.</span></li>
+                </ol>
+            </div>
+
             <!-- Dynamic Multi-Image Gallery Slider -->
             {% if project.gallery_images.all %}
                 <div class="space-y-4">
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Interface Screen Captures</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Interface Screen Captures</h2>
                     
                     <div class="swiper project-gallery-slider w-full rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-xl bg-slate-900">
                         <div class="swiper-wrapper">
@@ -123,7 +201,7 @@
             <!-- Embedded Dynamic Video Demo -->
             {% if project.video_url %}
                 <div class="space-y-4">
-                    <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Dynamic Action walkthrough</h3>
+                    <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4">Dynamic Action walkthrough</h2>
                     
                     <div class="aspect-video w-full rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-xl bg-slate-950 relative">
                         <iframe class="w-full h-full" 
@@ -135,6 +213,21 @@
                         </iframe>
                     </div>
                 </div>
+            {% endif %}
+
+            <!-- Related reading: genuinely related published guides -->
+            {% if related_articles %}
+            <div class="glassmorphism p-8 rounded-3xl border border-slate-900/10 dark:border-white/5 space-y-4">
+                <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white">Related Reading</h2>
+                <div class="space-y-3">
+                    {% for article in related_articles %}
+                    <a href="{{ article.get_absolute_url }}" class="flex items-center justify-between gap-4 bg-slate-500/5 rounded-xl p-4 hover:border-primary/30 border border-transparent transition-all group">
+                        <span class="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:text-primary dark:group-hover:text-accent leading-snug">{{ article.title }}</span>
+                        <i class="fas fa-chevron-right text-[10px] text-slate-400 shrink-0"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
             {% endif %}
 
         </div>
@@ -149,6 +242,10 @@
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block font-poppins">Development profile</span>
                     
                     <ul class="space-y-3.5 text-xs text-slate-600 dark:text-slate-300 font-medium">
+                        <li class="flex items-center justify-between py-1 border-b border-slate-900/10 dark:border-white/5">
+                            <span class="text-slate-400">Project Status</span>
+                            <span class="font-semibold text-slate-900 dark:text-white">{{ project.display_status_label }}</span>
+                        </li>
                         <li class="flex items-center justify-between py-1 border-b border-slate-900/10 dark:border-white/5">
                             <span class="text-slate-400">Industry Sector</span>
                             <span class="font-semibold text-slate-900 dark:text-white">{{ project.industry }}</span>
@@ -198,12 +295,23 @@
 
                 <!-- CTA trigger elements -->
                 <div class="space-y-3 pt-6 border-t border-slate-900/10 dark:border-white/5">
-                    {% if project.live_url %}
-                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer nofollow" 
-                       class="block w-full text-center py-3.5 rounded-xl bg-success text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-90 shadow-md shadow-success/10 transition-all hover:scale-[1.01] inline-flex items-center justify-center space-x-2">
+                    {% if project.is_publicly_viewable %}
+                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer"
+                       class="block w-full text-center py-3.5 rounded-xl bg-success text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-90 shadow-md shadow-success/10 transition-all hover:scale-[1.01] inline-flex items-center justify-center space-x-2"
+                       aria-label="Visit the live website for {{ project.title }} (opens in a new tab)">
                         <i class="fas fa-arrow-up-right-from-square"></i>
                         <span>Visit Live Website</span>
                     </a>
+                    {% elif project.display_status == "private" %}
+                    <span class="block w-full text-center py-3.5 rounded-xl border border-slate-500/30 text-slate-500 text-xs font-bold font-poppins uppercase tracking-wider inline-flex items-center justify-center space-x-2">
+                        <i class="fas fa-lock"></i>
+                        <span>Private Project — No Public URL</span>
+                    </span>
+                    {% elif project.display_status == "prototype" %}
+                    <span class="block w-full text-center py-3.5 rounded-xl border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold font-poppins uppercase tracking-wider inline-flex items-center justify-center space-x-2">
+                        <i class="fas fa-flask"></i>
+                        <span>Prototype / In Development</span>
+                    </span>
                     {% endif %}
                     <a href="{% url 'consultation:book' %}" 
                        class="block w-full text-center py-3.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-xs font-bold font-poppins uppercase tracking-wider hover:opacity-95 shadow-md shadow-primary/10 transition-all hover:scale-[1.01]">
@@ -224,7 +332,7 @@
     <section class="py-24 border-t border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
         <!-- Increased container max-width to 1400px -->
         <div class="max-w-[1400px] mx-auto px-6 space-y-12">
-            <h3 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4 text-center">Similar Technical Deployments</h3>
+            <h2 class="text-lg font-bold font-poppins text-slate-900 dark:text-white pl-4 text-center">Similar Technical Deployments</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {% for related in related_projects %}

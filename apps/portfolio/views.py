@@ -45,10 +45,10 @@ class PortfolioListView(ListView):
             context["seo_robots"] = "noindex, follow"
         
         # SEO attributes
-        context["seo_title"] = "Portfolio & Case Studies"
+        context["seo_title"] = "Website Development Portfolio | GrowthSpare IT Solutions"
         context["seo_description"] = (
-            "Website, CRM, AI automation and SEO projects by GrowthSpare IT Solutions "
-            "for restaurants, clinics, real estate and local businesses."
+            "Explore websites, web applications, CRM systems and digital projects "
+            "developed by GrowthSpare IT Solutions for businesses and brands."
         )
         base_url = settings.SITE_URL.rstrip("/")
         context["schema_data"] = [
@@ -124,6 +124,33 @@ class ProjectDetailView(DetailView):
         except Exception:
             context["related_services"] = []
 
+        # Honest blog cross-links: each slug below is a real published article
+        # (resolved against the DB so a missing/renamed post simply drops out
+        # instead of 404ing). Website builds point at the website-cost guide,
+        # the CRM entry at the CRM-cost guide, the creative-agency build at a
+        # digital-marketing guide.
+        context["related_articles"] = []
+        try:
+            from apps.blog.models import BlogPost
+
+            PROJECT_ARTICLE_SLUGS = {
+                "bake-wonders": ["website-development-cost-in-delhi"],
+                "social-frame-creative": [
+                    "digital-marketing-strategy-small-business-south-delhi",
+                    "website-development-cost-in-delhi",
+                ],
+                "mac-interio": ["website-development-cost-in-delhi"],
+                "furniture-studio-by-akdas": ["website-development-cost-in-delhi"],
+                "growthspare-custom-crm": ["custom-crm-software-cost-in-india"],
+                "browser-gaming-tournament-platform": ["website-vs-web-application"],
+            }
+            for slug in PROJECT_ARTICLE_SLUGS.get(project.slug, []):
+                post = BlogPost.objects.filter(slug=slug, is_published=True).first()
+                if post is not None:
+                    context["related_articles"].append(post)
+        except Exception:
+            context["related_articles"] = []
+
         # SEO configurations
         context["seo_title"] = (
             project.meta_title
@@ -155,32 +182,64 @@ class ProjectDetailView(DetailView):
         # Dynamic Schema JSON-LD structure mapping
         # Safely extract first category name if available for JSON-LD data
         first_cat = project.categories.first()
-        context["schema_type"] = "CreativeWork"
-        creative_work_schema = {
-            "@type": "CreativeWork",
-            "name": project.title,
-            "description": project.problem_statement[:150] + "...",
-            "category": first_cat.name if first_cat else "General",
-            "creator": {
-                "@type": "Organization",
-                "@id": f"{settings.SITE_URL.rstrip('/')}/#organization",
-                "name": "GrowthSpare IT Solutions",
-                "url": settings.SITE_URL,
-            },
+        base_url = settings.SITE_URL.rstrip("/")
+        org_ref = {
+            "@type": "Organization",
+            "@id": f"{base_url}/#organization",
+            "name": "GrowthSpare IT Solutions",
+            "url": settings.SITE_URL,
         }
-        # Only attribute a named client relationship in structured data for
-        # verified, non-concept engagements — attaching a fabricated
-        # Organization name to a concept project here would be a false
-        # business-relationship claim indexed directly by search engines.
-        if not project.is_concept_project:
-            creative_work_schema["client"] = {
-                "@type": "Organization",
-                "name": project.client_name,
-                "industry": project.industry,
+        status = project.display_status
+        if status == "live":
+            # Genuine public website build — WebSite entity pointing at the
+            # real live URL. No ratings, reviews, offers or prices invented.
+            context["schema_type"] = "WebSite"
+            main_schema = {
+                "@type": "WebSite",
+                "name": project.title,
+                "url": project.live_url,
+                "description": project.problem_statement[:200],
+                "creator": org_ref,
+                "publisher": org_ref,
+                "inLanguage": "en",
+            }
+        elif status in ("private", "prototype"):
+            # Genuine software work (internal CRM / gaming prototype) —
+            # SoftwareApplication without any fabricated ratings or offers.
+            context["schema_type"] = "SoftwareApplication"
+            main_schema = {
+                "@type": "SoftwareApplication",
+                "name": project.title,
+                "description": project.problem_statement[:200],
+                "applicationCategory": (
+                    "GameApplication"
+                    if project.categories.filter(slug="gaming").exists()
+                    else "BusinessApplication"
+                ),
+                "operatingSystem": "Web",
+                "author": org_ref,
             }
         else:
-            creative_work_schema["genre"] = "Concept Project"
-        base_url = settings.SITE_URL.rstrip("/")
+            context["schema_type"] = "CreativeWork"
+            main_schema = {
+                "@type": "CreativeWork",
+                "name": project.title,
+                "description": project.problem_statement[:150] + "...",
+                "category": first_cat.name if first_cat else "General",
+                "creator": org_ref,
+            }
+            # Only attribute a named client relationship in structured data for
+            # verified, non-concept engagements — attaching a fabricated
+            # Organization name to a concept project here would be a false
+            # business-relationship claim indexed directly by search engines.
+            if not project.is_concept_project:
+                main_schema["client"] = {
+                    "@type": "Organization",
+                    "name": project.client_name,
+                    "industry": project.industry,
+                }
+            else:
+                main_schema["genre"] = "Concept Project"
         breadcrumb_schema = {
             "@type": "BreadcrumbList",
             "itemListElement": [
@@ -189,5 +248,5 @@ class ProjectDetailView(DetailView):
                 {"@type": "ListItem", "position": 3, "name": project.title, "item": f"{base_url}{project.get_absolute_url()}"},
             ],
         }
-        context["schema_data"] = [creative_work_schema, breadcrumb_schema]
+        context["schema_data"] = [main_schema, breadcrumb_schema]
         return context

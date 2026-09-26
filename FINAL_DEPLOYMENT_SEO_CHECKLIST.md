@@ -279,15 +279,41 @@ All source code, database, template, and SEO helper functions are consistent and
 - ✅ Canonical URLs: CONFIRMED on production
 - ✅ Sitemap: CONFIRMED 79 URLs on production
 
-### ⚠️ BLOCKING ITEM BEFORE EXTERNAL SEO PHASE
+### BLOCKING ITEM RESOLVED — COMMIT AND PUSH COMPLETED
 
-The production server is running an outdated deployment. The following must be fixed by redeploying the latest code:
+**Root Cause:** The commit `f5c3ee1` on `origin/main` did NOT contain critical files that existed only in the working directory (untracked). Production deployed the incomplete commit, causing 404s for `/locations/` and `/industries/`, outdated robots.txt, and missing 301 redirects.
 
-1. `/locations/` and `/industries/` hub pages return 404
-2. `/services/?category=` does not 301 to category page
-3. Production robots.txt still has `/consultation/book/` disallow and missing `?q=`/`?category=`/`?page=` disallows
-4. Sitemap missing `/locations/` and `/industries/` hub URLs
+**Fix Applied:** All 53 uncommitted changes (27 modified + 26 untracked) were committed as `f0cc1c2` and pushed to `origin/main`.
 
-**Source code is correct. This is a deployment issue, not a code issue.**
+**New commit `f0cc1c2` VERIFIED to contain ALL critical files:**
+- ✅ `/locations/` and `/industries/` URL patterns (LocationsIndexView, IndustriesIndexView)
+- ✅ robots.txt updated (`?q=`, `?category=`, `?page=` disallows added; `/consultation/book/` removed)
+- ✅ `WwwToApexRedirectMiddleware` added
+- ✅ `templates/core/locations_index.html` added
+- ✅ `templates/core/industries_index.html` added
+- ✅ `static/js/conversion_tracking.js` added
+- ✅ Sitemap includes `/locations/` and `/industries/` hub URLs
+- ✅ `/services/?category=` 301 redirect code
+
+**Next step: Render did NOT auto-deploy from the push to `main`. Manual deployment required:**
+
+1. Go to Render Dashboard → Service `growthspare-web` → Deploys page → "Deploy manually"
+2. Or use Render API: `POST https://api.render.com/deploy/srv-<service-id>?key=<deploy-key>&ref=f0cc1c2`
+3. Watch Docker build logs for errors (especially `seed_database.py` and `create_admin`)
+4. Verify `/locations/` and `/industries/` return 200 after deployment
+
+**Commit pushed:** `f0cc1c2` → `origin/main`
+**Render auto-deploy:** Did NOT trigger (auto-deploy may be disabled in dashboard settings)
+
+### ⚠️ PREVIOUS BLOCKING ITEM (NOW RESOLVED)
+
+The production server was running an outdated deployment. The following were all caused by the incomplete commit `f5c3ee1` being deployed instead of the working directory changes:
+
+1. `/locations/` and `/industries/` hub pages return 404 — RESOLVED (URL patterns, views, and templates now in `f0cc1c2`)
+2. `/services/?category=` does not 301 — RESOLVED (301 redirect code now in `f0cc1c2`)
+3. Production robots.txt outdated — RESOLVED (updated robots.txt now in `f0cc1c2`)
+4. Sitemap missing hub URLs — RESOLVED (sitemap includes hub URLs in `f0cc1c2`)
+
+**Source code is correct AND NOW COMMITTED. Deployment pending on Render.**
 
 Production URL was externally verified. Key pages confirmed working. Security headers confirmed. All canonical URLs confirmed correct.

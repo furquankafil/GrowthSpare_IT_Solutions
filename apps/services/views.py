@@ -40,6 +40,10 @@ SERVICE_CONTEXTUAL_LINKS = {
         {"label": "real estate website development", "url_name": "core:industry-real-estate"},
         {"label": "education website development", "url_name": "core:industry-education"},
         {"label": "restaurant website project for Spice Garden", "url_name": "portfolio:detail", "kwargs": {"slug": "bitecraft-restaurant-website-for-spice-garden"}},
+        {"label": "bakery website for Bake Wonders", "url_name": "portfolio:detail", "kwargs": {"slug": "bake-wonders"}},
+        {"label": "creative agency website for Social Frame Creative", "url_name": "portfolio:detail", "kwargs": {"slug": "social-frame-creative"}},
+        {"label": "furniture manufacturer website for MAC INTERIO", "url_name": "portfolio:detail", "kwargs": {"slug": "mac-interio"}},
+        {"label": "custom furniture studio website for Furniture Studio by Akdas", "url_name": "portfolio:detail", "kwargs": {"slug": "furniture-studio-by-akdas"}},
         {"label": "website development company in Okhla, Delhi", "url_name": "core:local-website-okhla"},
     ],
     "digital-marketing": [
@@ -61,11 +65,14 @@ SERVICE_CONTEXTUAL_LINKS = {
         {"label": "WhatsApp lead collection bot for a local retailer", "url_name": "portfolio:detail", "kwargs": {"slug": "whatsapp-lead-collection-bot-for-local-retailer"}},
     ],
     "crm-software-development": [
+        {"label": "GrowthSpare Custom CRM (private internal project)", "url_name": "portfolio:detail", "kwargs": {"slug": "growthspare-custom-crm"}},
         {"label": "SalesFlow B2B lead management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "salesflow-b2b-lead-management-crm"}},
         {"label": "BrightAcademy school management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "brightacademy-school-management-crm"}},
         {"label": "CRM software development company in Delhi NCR", "url_name": "core:local-crm-delhi-ncr"},
     ],
     "custom-software-engineering": [
+        {"label": "GrowthSpare Custom CRM (private internal project)", "url_name": "portfolio:detail", "kwargs": {"slug": "growthspare-custom-crm"}},
+        {"label": "browser gaming & tournament platform (prototype)", "url_name": "portfolio:detail", "kwargs": {"slug": "browser-gaming-tournament-platform"}},
         {"label": "ScholarGrid academic LMS platform", "url_name": "portfolio:detail", "kwargs": {"slug": "scholargrid-symmetric-academic-lms-platform"}},
         {"label": "TechVibe subscription content publisher", "url_name": "portfolio:detail", "kwargs": {"slug": "techvibe-subscription-content-media-publisher"}},
     ],

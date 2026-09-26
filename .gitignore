@@ -160,6 +160,19 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+.env.production
+.env.staging
+
+# Production database migration safety (Render -> Supabase).
+# Dump files, SQL exports, local backup copies and secret material must
+# NEVER be committed. Connection strings are passed via environment only.
+*.dump
+*.dump.gz
+*.sql
+migration/backups/
+*.pem
+*.key
+secrets/
 
 # Ad-hoc developer/seed manipulation scripts (not part of the application)
 add_seed_meta.py

@@ -30,12 +30,17 @@
 
     <!-- Increased max-width to 1400px -->
     <div class="relative z-10 max-w-[1400px] mx-auto px-6 text-center space-y-6" data-aos="fade-up">
-        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Case Studies</span>
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <a href="{% url 'core:home' %}" class="hover:text-primary dark:hover:text-accent transition-colors">Home</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-slate-600 dark:text-slate-300">Our Work</span>
+        </nav>
+        <span class="text-xs font-bold text-primary dark:text-accent uppercase tracking-widest font-poppins block">Our Work</span>
         <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white font-poppins">
-            Featured Projects Showcase
+            Our Work
         </h1>
         <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
-            Explore a collection of professional websites, CRM systems, AI automation solutions, and digital marketing projects designed to help businesses grow.
+            Explore selected websites, web applications, CRM systems and digital experiences developed by GrowthSpare IT Solutions.
         </p>
     </div>
 </section>
@@ -78,26 +83,45 @@
                         <!-- Project Image Frame with checking capabilities -->
                         <div class="relative aspect-video overflow-hidden bg-slate-900">
                             {% if project.featured_image %}
-                            <img src="{{ project.featured_image }}" 
-                                alt="{{ project.title }}" 
-                                class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" 
-                                loading="lazy" decoding="async">
+                            <img src="{{ project.featured_image }}"
+                                alt="{{ project.title }}"
+                                class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700"
+                                loading="lazy" decoding="async" width="800" height="450">
                             {% else %}
-                                <div class="w-full h-full bg-gradient-to-tr from-primary/20 to-accent/20 flex items-center justify-center">
-                                    <i class="fas fa-image text-3xl text-slate-500"></i>
+                                <div class="w-full h-full bg-gradient-to-tr from-primary/30 via-secondary to-accent/30 flex flex-col items-center justify-center space-y-2" role="img" aria-label="{{ project.title }} — project visual placeholder">
+                                    <span class="text-5xl font-extrabold text-white/90 font-poppins">{{ project.title|first }}</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-white/70 font-poppins px-4 text-center">{{ project.industry }}</span>
                                 </div>
                             {% endif %}
-                            
-                            <!-- Category and Demo Project Badges -->
-                            <div class="absolute top-4 left-4 flex flex-col space-y-2">
+
+                            <!-- Category and project-status badges -->
+                            <div class="absolute top-4 left-4 flex flex-col items-start space-y-2">
                                 <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
                                     {% for category in project.categories.all|slice:":1" %}
                                         {{ category.name }}
                                     {% endfor %}
                                 </span>
+                                {% if project.display_status == "live" %}
                                 <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
-                                    {% if project.is_concept_project %}Concept Project{% else %}Client Project{% endif %}
+                                    Live Project
                                 </span>
+                                {% elif project.display_status == "private" %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-slate-600 text-white shadow-md font-poppins">
+                                    Private Project
+                                </span>
+                                {% elif project.display_status == "prototype" %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-amber-500 text-white shadow-md font-poppins">
+                                    Prototype / In Development
+                                </span>
+                                {% elif project.display_status == "client" %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
+                                    Client Project
+                                </span>
+                                {% else %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
+                                    Concept Project
+                                </span>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -129,12 +153,20 @@
                         <a href="{{ project.get_absolute_url }}" class="px-3 py-2 rounded-xl bg-primary text-white text-[10px] font-bold font-poppins uppercase tracking-wider hover:bg-accent transition-all inline-flex items-center space-x-1.5 shadow-md">
                             <span>View Details</span> <i class="fas fa-chevron-right text-[8px]"></i>
                         </a>
-                        {% if project.live_url %}
+                        {% if project.is_publicly_viewable %}
                             <div class="flex items-center space-x-2">
-                                <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer nofollow" class="px-3 py-2 rounded-xl border border-success/30 text-success text-[10px] font-bold font-poppins uppercase tracking-wider hover:bg-success/10 transition-all inline-flex items-center space-x-1.5" title="Visit the live client website">
-                                    <span>Live Site</span> <i class="fas fa-arrow-up-right-from-square text-[8px]"></i>
+                                <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl border border-success/30 text-success text-[10px] font-bold font-poppins uppercase tracking-wider hover:bg-success/10 transition-all inline-flex items-center space-x-1.5" title="Visit the live website for {{ project.title }}" aria-label="View live website for {{ project.title }} (opens in a new tab)">
+                                    <span>View Live Website</span> <i class="fas fa-arrow-up-right-from-square text-[8px]"></i>
                                 </a>
                             </div>
+                        {% elif project.display_status == "private" %}
+                            <span class="px-3 py-2 rounded-xl border border-slate-500/30 text-slate-500 text-[10px] font-bold font-poppins uppercase tracking-wider inline-flex items-center space-x-1.5">
+                                <i class="fas fa-lock text-[8px]"></i><span>Private Project</span>
+                            </span>
+                        {% elif project.display_status == "prototype" %}
+                            <span class="px-3 py-2 rounded-xl border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[10px] font-bold font-poppins uppercase tracking-wider inline-flex items-center space-x-1.5">
+                                <i class="fas fa-flask text-[8px]"></i><span>Prototype / In Development</span>
+                            </span>
                         {% elif project.video_url %}
                             <div class="flex items-center space-x-2">
                                 <!-- Live Demo redirection link -->
@@ -175,9 +207,9 @@
      ============================================================================== -->
 <section class="py-24 bg-gradient-to-br from-primary/10 via-secondary to-darkBackground border-t border-slate-900/10 dark:border-white/5 text-center space-y-8 relative z-10">
     <div class="max-w-4xl mx-auto px-6 space-y-6" data-aos="zoom-in">
-        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-poppins">Want to achieve similar scalability results?</h2>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-poppins">Have a similar project in mind?</h2>
         <p class="text-sm text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
-            Get in touch to arrange an analysis of your tech stack, outline required CRM structures, or launch campaign strategies directly with our Delhi offices.
+            Get in touch to discuss a website, web application, CRM system or online presence for your business with our Delhi team.
         </p>
         <a href="{% url 'consultation:book' %}" class="px-8 py-4 rounded-xl bg-primary text-white font-extrabold text-xs tracking-wider uppercase hover:bg-accent transition-all shadow-lg shadow-primary/20 inline-block font-poppins">
             Book Scoping Audit

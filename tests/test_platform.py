@@ -292,3 +292,169 @@ class ContactAntiSpamTestCase(TestCase):
         self.assertEqual(fetched.name, "Legacy Lead")
         # get_budget_display must not raise for values outside current choices.
         self.assertTrue(str(fetched.get_budget_display()))
+
+
+class RealPortfolioProjectsTestCase(TestCase):
+    """Verifies the six genuine GrowthSpare portfolio projects: statuses,
+    exact live URLs, honest CTAs, unique SEO, schema without fabricated
+    claims, sitemap inclusion, and service-page internal linking."""
+
+    LIVE_PROJECTS = {
+        "bake-wonders": "https://endearing-piroshki-508bdd.netlify.app/",
+        "social-frame-creative": "https://socialcreatives.in/",
+        "mac-interio": "https://mac-interio.netlify.app/",
+        "furniture-studio-by-akdas": "https://furniture-studio-akdas.netlify.app/",
+    }
+    PRIVATE_SLUG = "growthspare-custom-crm"
+    PROTOTYPE_SLUG = "browser-gaming-tournament-platform"
+
+    BANNED_PHRASES = [
+        "500%", "10x ROI", "100K users", "Top-rated", "Best in Delhi",
+        "300% conversions", "aggregateRating", "reviewCount",
+    ]
+
+    @classmethod
+    def setUpTestData(cls):
+        from django.core.management import call_command
+        call_command("seed_real_projects", verbosity=0)
+
+    def test_statuses_and_urls_are_honest(self):
+        for slug, url in self.LIVE_PROJECTS.items():
+            with self.subTest(project=slug):
+                project = Project.objects.get(slug=slug)
+                self.assertEqual(project.display_status, "live")
+                self.assertEqual(project.live_url, url)
+                self.assertTrue(project.is_publicly_viewable)
+        crm = Project.objects.get(slug=self.PRIVATE_SLUG)
+        self.assertEqual(crm.display_status, "private")
+        self.assertIsNone(crm.live_url)
+        self.assertFalse(crm.is_publicly_viewable)
+        gaming = Project.objects.get(slug=self.PROTOTYPE_SLUG)
+        self.assertEqual(gaming.display_status, "prototype")
+        self.assertIsNone(gaming.live_url)
+        self.assertFalse(gaming.is_publicly_viewable)
+
+    def test_portfolio_list_seo_and_badges(self):
+        html = self.client.get(reverse("portfolio:list")).content.decode()
+        self.assertEqual(self.client.get(reverse("portfolio:list")).status_code, 200)
+        self.assertIn(
+            "<title>Website Development Portfolio | GrowthSpare IT Solutions</title>",
+            html,
+        )
+        self.assertIn("Explore websites, web applications, CRM systems", html)
+        self.assertIn('rel="canonical"', html)
+        self.assertIn("<h1", html)
+        self.assertIn("Our Work", html)
+        for url in self.LIVE_PROJECTS.values():
+            self.assertIn(url, html)
+        self.assertIn("Private Project", html)
+        self.assertIn("Prototype / In Development", html)
+        self.assertIn('target="_blank"', html)
+        self.assertIn('rel="noopener noreferrer"', html)
+
+    def test_detail_pages_ctas_and_metadata(self):
+        seen_titles = set()
+        for slug in list(self.LIVE_PROJECTS) + [self.PRIVATE_SLUG, self.PROTOTYPE_SLUG]:
+            with self.subTest(project=slug):
+                response = self.client.get(
+                    reverse("portfolio:detail", kwargs={"slug": slug})
+                )
+                self.assertEqual(response.status_code, 200)
+                html = response.content.decode()
+                self.assertEqual(html.lower().count("<h1"), 1)
+                self.assertIn('rel="canonical"', html)
+                self.assertIn("Home", html)
+                self.assertIn("Our Work", html)
+                m = re.search(r'<meta name="description" content="([^"]+)"', html)
+                self.assertIsNotNone(m)
+                seen_titles.add(response.context["seo_title"])
+                if slug in self.LIVE_PROJECTS:
+                    self.assertIn("Visit Live Website", html)
+                    self.assertIn(self.LIVE_PROJECTS[slug], html)
+                    self.assertIn('target="_blank"', html)
+                elif slug == self.PRIVATE_SLUG:
+                    self.assertIn("Private Project", html)
+                    self.assertNotIn("Visit Live Website", html)
+                else:
+                    self.assertIn("Prototype / In Development", html)
+                    self.assertNotIn("Visit Live Website", html)
+        self.assertEqual(len(seen_titles), 6)
+
+    def test_no_fake_claims_in_portfolio_html(self):
+        pages = [reverse("portfolio:list")] + [
+            reverse("portfolio:detail", kwargs={"slug": slug})
+            for slug in list(self.LIVE_PROJECTS)
+            + [self.PRIVATE_SLUG, self.PROTOTYPE_SLUG]
+        ]
+        for url in pages:
+            with self.subTest(page=url):
+                html = self.client.get(url).content.decode()
+                for phrase in self.BANNED_PHRASES:
+                    self.assertNotIn(phrase, html)
+
+    def test_schema_has_no_fabricated_ratings(self):
+        for slug in list(self.LIVE_PROJECTS) + [self.PRIVATE_SLUG, self.PROTOTYPE_SLUG]:
+            with self.subTest(project=slug):
+                html = self.client.get(
+                    reverse("portfolio:detail", kwargs={"slug": slug})
+                ).content.decode()
+                scripts = re.findall(
+                    r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
+                )
+                self.assertTrue(scripts)
+                types = []
+                for script in scripts:
+                    data = json.loads(script.replace("&quot;", '"'))
+                    for block in data.get("@graph", [data]):
+                        types.append(block.get("@type"))
+                        self.assertNotIn("aggregateRating", block)
+                        self.assertNotIn("review", block)
+                self.assertIn("BreadcrumbList", types)
+
+    def test_sitemap_includes_new_projects(self):
+        sitemap = self.client.get("/sitemap.xml").content.decode()
+        for slug in list(self.LIVE_PROJECTS) + [self.PRIVATE_SLUG, self.PROTOTYPE_SLUG]:
+            self.assertIn(slug, sitemap)
+
+    def test_service_pages_link_to_new_projects(self):
+        from apps.services.models import Service
+        # The test DB is migration-only (seed_database.py never runs here):
+        # migration 0004 creates "custom-software-engineering", the other two
+        # service rows are created below. All are set active for the test.
+        for slug, title in (("website-development", "Website Development"),
+                            ("crm-software-development", "CRM Software Development")):
+            service, _ = Service.objects.update_or_create(
+                slug=slug,
+                defaults={
+                    "title": title,
+                    "overview": f"{title}.",
+                    "detailed_description": f"<p>{title}.</p>",
+                    "features": "Capability A",
+                    "benefits": "Outcome B",
+                    "process_steps": "Step C",
+                    "technologies": "HTML",
+                    "is_active": True,
+                },
+            )
+            service.is_active = True
+            service.save()
+        service = Service.objects.filter(slug="custom-software-engineering").first()
+        self.assertIsNotNone(service)
+        service.is_active = True
+        service.save()
+        html = self.client.get("/services/website-development/").content.decode()
+        for slug in ("bake-wonders", "social-frame-creative", "mac-interio",
+                     "furniture-studio-by-akdas"):
+            self.assertIn(f"/portfolio/{slug}/", html)
+        html = self.client.get("/services/crm-software-development/").content.decode()
+        self.assertIn("/portfolio/growthspare-custom-crm/", html)
+        html = self.client.get("/services/custom-software-engineering/").content.decode()
+        self.assertIn("/portfolio/growthspare-custom-crm/", html)
+        self.assertIn("/portfolio/browser-gaming-tournament-platform/", html)
+
+    def test_homepage_features_real_projects(self):
+        html = self.client.get(reverse("core:home")).content.decode()
+        for name in ("Bake Wonders", "Social Frame Creative", "MAC INTERIO",
+                     "Furniture Studio by Akdas", "GrowthSpare Custom CRM",
+                     "Browser Gaming"):
+            self.assertIn(name, html)

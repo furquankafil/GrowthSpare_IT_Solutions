@@ -38,6 +38,7 @@ class ProjectAdmin(admin.ModelAdmin):
         "title",
         "client_name",
         "get_categories",  # Custom helper displaying mapped classifications cleanly
+        "display_status_label",
         "is_featured",
         "is_concept_project",
         "live_url",

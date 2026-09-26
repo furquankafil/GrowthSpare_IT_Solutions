@@ -312,23 +312,40 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {% for project in featured_projects|slice:":3" %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in featured_projects|slice:":6" %}
                 <div class="glassmorphism rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 flex flex-col justify-between hover:scale-[1.01] hover:border-primary/20 transition-all duration-300 shadow-xl" data-aos="fade-up">
                     <div>
                         <!-- Project Banner image frame with remote / local fallback checks -->
                         <div class="relative aspect-video overflow-hidden bg-slate-900">
                             {% if project.featured_image %}
-                                <img src="{{ project.featured_image }}" 
-                                     alt="{{ project.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                                <img src="{{ project.featured_image }}"
+                                      alt="{{ project.title }}" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" width="800" height="450">
+                            {% else %}
+                                <div class="w-full h-full bg-gradient-to-tr from-primary/30 via-secondary to-accent/30 flex flex-col items-center justify-center space-y-2" role="img" aria-label="{{ project.title }} — project visual placeholder">
+                                    <span class="text-5xl font-extrabold text-white/90 font-poppins">{{ project.title|first }}</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-white/70 font-poppins px-4 text-center">{{ project.industry }}</span>
+                                </div>
                             {% endif %}
-                            <div class="absolute top-4 left-4 flex flex-col space-y-2">
+                            <div class="absolute top-4 left-4 flex flex-col items-start space-y-2">
                                 <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
                                     {% for category in project.categories.all|slice:":1" %}
                                         {{ category.name }}
                                     {% endfor %}
                                 </span>
-                                {% if project.is_concept_project %}
+                                {% if project.display_status == "live" %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
+                                    Live Project
+                                </span>
+                                {% elif project.display_status == "private" %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-slate-600 text-white shadow-md font-poppins">
+                                    Private Project
+                                </span>
+                                {% elif project.display_status == "prototype" %}
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-amber-500 text-white shadow-md font-poppins">
+                                    Prototype / In Development
+                                </span>
+                                {% elif project.is_concept_project %}
                                 <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-success text-white shadow-md font-poppins">
                                     Concept Project
                                 </span>

@@ -1,0 +1,30 @@
+# Canonical table list for Render -> Supabase row-count baselines.
+# One table per line. Lines starting with # are ignored.
+# (Django default table names: <app_label>_<model> + M2M through tables.)
+accounts_user
+accounts_userprofile
+core_newslettersubscriber
+core_clientlogo
+services_servicecategory
+services_service
+services_service_categories
+services_servicefaq
+portfolio_projectcategory
+portfolio_project
+portfolio_project_categories
+portfolio_projectimage
+blog_blogcategory
+blog_blogpost
+blog_blogcomment
+contact_contactmessage
+consultation_consultationbooking
+faq_faqcategory
+faq_faqitem
+testimonials_testimonial
+dashboard_systemannouncement
+django_migrations
+django_session
+django_admin_log
+django_content_type
+auth_permission
+auth_group
