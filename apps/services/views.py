@@ -66,6 +66,7 @@ SERVICE_CONTEXTUAL_LINKS = {
     ],
     "crm-software-development": [
         {"label": "GrowthSpare Custom CRM (private internal project)", "url_name": "portfolio:detail", "kwargs": {"slug": "growthspare-custom-crm"}},
+        {"label": "Social Media CRM (private internal project)", "url_name": "portfolio:detail", "kwargs": {"slug": "social-media-crm"}},
         {"label": "SalesFlow B2B lead management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "salesflow-b2b-lead-management-crm"}},
         {"label": "BrightAcademy school management CRM", "url_name": "portfolio:detail", "kwargs": {"slug": "brightacademy-school-management-crm"}},
         {"label": "CRM software development company in Delhi NCR", "url_name": "core:local-crm-delhi-ncr"},

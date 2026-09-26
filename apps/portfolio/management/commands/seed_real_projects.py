@@ -1,26 +1,42 @@
 """
-Seeds the six genuine GrowthSpare portfolio projects.
+Seeds the genuine GrowthSpare portfolio projects plus honest self-hosted visuals.
 
-Idempotent: safe to re-run (upserts by slug, resets category links).
+Idempotent: safe to re-run (upserts by slug, resets category links, repairs
+legacy Unsplash/blank visuals by slug — never creates duplicates).
 
 Honesty rules enforced here (see PORTFOLIO_IMPLEMENTATION_REPORT.md):
 - The four live sites were verified against their live HTML on 2026-09-26
   (content sections) and their HTML source (technology stack). Only
   verified facts are stored — no metrics, reviews, ratings or awards.
-- The CRM entry has NO public URL and only lists capabilities already
+- The CRM entries have NO public URL and only list capabilities already
   present in this workspace (contact lead capture, consultation pipeline
   with triage statuses, role-based dashboards, team directory, role
-  announcements). It is tagged "private-project".
+  announcements). They are tagged "private-project".
 - The gaming entry has NO public URL and every listed area is framed as
   intended prototype scope, never as launched. Tagged "prototype".
-- featured_image is intentionally left empty: with no permission to reuse
-  the businesses' photography, cards render an honest CSS monogram
-  placeholder instead of a fake screenshot.
+- Repository audit (2026-09-26): no dedicated "Social Media CRM" module,
+  model, migration, or history was found anywhere in the codebase. The
+  "Social Media CRM" entry below is therefore scoped STRICTLY to the same
+  workspace-present CRM capabilities as the Custom CRM (leads arriving via
+  social/WhatsApp/website channels triaged in one pipeline). It claims no
+  Meta API sync, no auto-posting, no sentiment analysis, no public URL,
+  no users and no metrics. Status: Private Project / In Development.
+- featured_image values are self-hosted SVG portfolio artwork under
+  /static/images/portfolio/<slug>.svg (stylised mockups labelled
+  "Illustrative portfolio visual" inside the artwork — never presented
+  as live screenshots). No Unsplash hotlinks, no reused image across
+  unrelated projects.
+
+Uses Django's configured database (Supabase/Postgres in production via
+DATABASE_URL) — no hardcoded SQLite anywhere.
 """
 
 from django.core.management.base import BaseCommand
 
 from apps.portfolio.models import Project, ProjectCategory
+
+
+VISUAL_BASE = "https://growthspareitsolutions.com/static/images/portfolio"
 
 
 def _get_or_create_category(name, slug):
@@ -38,7 +54,7 @@ PROJECTS = [
         "slug": "bake-wonders",
         "title": "Bake Wonders",
         "category_slugs": ["website-development"],
-        "featured_image": "",
+        "featured_image": f"{VISUAL_BASE}/bake-wonders.svg",
         "video_url": None,
         "live_url": "https://endearing-piroshki-508bdd.netlify.app/",
         "client_name": "Bake Wonders",
@@ -89,7 +105,7 @@ PROJECTS = [
         "slug": "social-frame-creative",
         "title": "Social Frame Creative",
         "category_slugs": ["website-development"],
-        "featured_image": "",
+        "featured_image": f"{VISUAL_BASE}/social-frame-creative.svg",
         "video_url": None,
         "live_url": "https://socialcreatives.in/",
         "client_name": "Social Frame Creative",
@@ -142,7 +158,7 @@ PROJECTS = [
         "slug": "mac-interio",
         "title": "MAC INTERIO",
         "category_slugs": ["website-development"],
-        "featured_image": "",
+        "featured_image": f"{VISUAL_BASE}/mac-interio.svg",
         "video_url": None,
         "live_url": "https://mac-interio.netlify.app/",
         "client_name": "MAC INTERIO / Little Star",
@@ -195,7 +211,7 @@ PROJECTS = [
         "slug": "furniture-studio-by-akdas",
         "title": "Furniture Studio by Akdas",
         "category_slugs": ["website-development"],
-        "featured_image": "",
+        "featured_image": f"{VISUAL_BASE}/furniture-studio-by-akdas.svg",
         "video_url": None,
         "live_url": "https://furniture-studio-akdas.netlify.app/",
         "client_name": "Furniture Studio by Akdas",
@@ -247,7 +263,7 @@ PROJECTS = [
         "slug": "growthspare-custom-crm",
         "title": "GrowthSpare Custom CRM",
         "category_slugs": ["crm-saas-solutions"],
-        "featured_image": "",
+        "featured_image": f"{VISUAL_BASE}/growthspare-custom-crm.svg",
         "video_url": None,
         "live_url": None,
         "client_name": "GrowthSpare IT Solutions",
@@ -297,7 +313,7 @@ PROJECTS = [
         "slug": "browser-gaming-tournament-platform",
         "title": "Browser Gaming & Tournament Platform",
         "category_slugs": ["gaming", "web-applications"],
-        "featured_image": "",
+        "featured_image": f"{VISUAL_BASE}/browser-gaming-tournament-platform.svg",
         "video_url": None,
         "live_url": None,
         "client_name": "GrowthSpare IT Solutions",
@@ -340,15 +356,156 @@ PROJECTS = [
             "leaderboards."
         ),
     },
+    # ------------------------------------------------------------------
+    # 7. Social Media CRM — private internal project (NO public URL)
+    # ------------------------------------------------------------------
+    # No dedicated Social Media CRM module exists in this repository
+    # (verified: no model, migration, view, or history). This entry is
+    # therefore scoped STRICTLY to workspace-present capabilities shared
+    # with the Custom CRM — it organises enquiries arriving via social,
+    # WhatsApp and website channels into one triage pipeline. It claims
+    # no platform API sync, no auto-posting, no analytics integrations,
+    # no public URL, no users and no metrics.
+    # ------------------------------------------------------------------
+    {
+        "slug": "social-media-crm",
+        "title": "Social Media CRM",
+        "category_slugs": ["crm-saas-solutions", "digital-marketing"],
+        "featured_image": f"{VISUAL_BASE}/social-media-crm.svg",
+        "video_url": None,
+        "live_url": None,
+        "client_name": "GrowthSpare IT Solutions",
+        "industry": "Internal Tools / Social CRM",
+        "problem_statement": (
+            "GrowthSpare receives enquiries from several directions — website "
+            "contact forms, consultation bookings, WhatsApp messages and "
+            "social profiles such as Instagram. Without one place to triage "
+            "them, follow-ups depend on whoever happened to see each message "
+            "first."
+        ),
+        "solution_statement": (
+            "The Social Media CRM is being developed as a private internal "
+            "workspace on GrowthSpare's standard Django stack that brings "
+            "social, WhatsApp and website enquiries into the same pipeline "
+            "used by the Custom CRM. It builds only on capabilities already "
+            "present in this workspace: enquiry and lead capture with budget "
+            "and service routing, a consultation booking pipeline with triage "
+            "statuses (pending, scheduled, completed, cancelled), role-based "
+            "dashboards showing lead and booking activity with recent items, "
+            "a team and client directory with role-based access, and "
+            "role-targeted announcements. There is no public URL; the "
+            "workspace is used internally while in development."
+        ),
+        "results_statement": (
+            "Private internal project, in development. No public launch, no "
+            "public URL, and no performance, user or revenue metrics are claimed."
+        ),
+        "technology_stack": "Python, Django, PostgreSQL, HTML, Tailwind CSS, JavaScript",
+        "project_duration": "In Development",
+        "tags": (
+            "Social Lead Management, Conversations Inbox, Triage Pipeline, "
+            "Lead Management, Booking Scheduling, Team Directory, "
+            "Role-Based Access, Dashboards, Announcements, private-project"
+        ),
+        # Not featured on the homepage rotation (which shows the six
+        # established entries) while private/in-development; fully listed
+        # in /portfolio/, filters, sitemap and search.
+        "is_featured": False,
+        "is_concept_project": True,
+        "meta_title": "Social Media CRM Software Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "Social Media CRM is a private internal project by GrowthSpare IT "
+            "Solutions bringing social, WhatsApp and website enquiries into "
+            "one triage pipeline with dashboards and role-based access."
+        ),
+    },
 ]
 
 
+# ----------------------------------------------------------------------
+# Legacy visual repair map: every portfolio slug gets its self-hosted
+# project-specific SVG. Applied idempotently to rows seeded earlier by
+# seed_database.py (Unsplash hotlinks) or left blank — only the
+# featured_image column is touched, and only when it is empty or still
+# points at Unsplash. No other field is modified, no rows are created.
+# ----------------------------------------------------------------------
+LEGACY_VISUAL_REPAIR = {
+    "bake-wonders": f"{VISUAL_BASE}/bake-wonders.svg",
+    "social-frame-creative": f"{VISUAL_BASE}/social-frame-creative.svg",
+    "mac-interio": f"{VISUAL_BASE}/mac-interio.svg",
+    "furniture-studio-by-akdas": f"{VISUAL_BASE}/furniture-studio-by-akdas.svg",
+    "growthspare-custom-crm": f"{VISUAL_BASE}/growthspare-custom-crm.svg",
+    "browser-gaming-tournament-platform": (
+        f"{VISUAL_BASE}/browser-gaming-tournament-platform.svg"
+    ),
+    "social-media-crm": f"{VISUAL_BASE}/social-media-crm.svg",
+    "bitecraft-restaurant-website-for-spice-garden": (
+        f"{VISUAL_BASE}/bitecraft-restaurant-website-for-spice-garden.svg"
+    ),
+    "smilecare-professional-dental-clinic-website": (
+        f"{VISUAL_BASE}/smilecare-professional-dental-clinic-website.svg"
+    ),
+    "ironpulse-modern-gym-fitness-website": (
+        f"{VISUAL_BASE}/ironpulse-modern-gym-fitness-website.svg"
+    ),
+    "urbannest-real-estate-agency-website": (
+        f"{VISUAL_BASE}/urbannest-real-estate-agency-website.svg"
+    ),
+    "vibeevents-ticket-booking-event-platform": (
+        f"{VISUAL_BASE}/vibeevents-ticket-booking-event-platform.svg"
+    ),
+    "scholargrid-symmetric-academic-lms-platform": (
+        f"{VISUAL_BASE}/scholargrid-symmetric-academic-lms-platform.svg"
+    ),
+    "grandvista-hotel-reservation-pms-platform": (
+        f"{VISUAL_BASE}/grandvista-hotel-reservation-pms-platform.svg"
+    ),
+    "swiftdrop-logistics-tracking-mobile-app-backend": (
+        f"{VISUAL_BASE}/swiftdrop-logistics-tracking-mobile-app-backend.svg"
+    ),
+    "safeinspected-property-inspection-mobile-compliance": (
+        f"{VISUAL_BASE}/safeinspected-property-inspection-mobile-compliance.svg"
+    ),
+    "indobulk-wholesale-procurement-portal-system": (
+        f"{VISUAL_BASE}/indobulk-wholesale-procurement-portal-system.svg"
+    ),
+    "techvibe-subscription-content-media-publisher": (
+        f"{VISUAL_BASE}/techvibe-subscription-content-media-publisher.svg"
+    ),
+    "whatsapp-lead-collection-bot-for-local-retailer": (
+        f"{VISUAL_BASE}/whatsapp-lead-collection-bot-for-local-retailer.svg"
+    ),
+    "ai-customer-support-chatbot-for-e-commerce": (
+        f"{VISUAL_BASE}/ai-customer-support-chatbot-for-e-commerce.svg"
+    ),
+    "brightacademy-school-management-crm": (
+        f"{VISUAL_BASE}/brightacademy-school-management-crm.svg"
+    ),
+    "salesflow-b2b-lead-management-crm": (
+        f"{VISUAL_BASE}/salesflow-b2b-lead-management-crm.svg"
+    ),
+    "social-media-growth-campaign-for-local-cafe": (
+        f"{VISUAL_BASE}/social-media-growth-campaign-for-local-cafe.svg"
+    ),
+    "local-seo-optimization-for-dental-clinic": (
+        f"{VISUAL_BASE}/local-seo-optimization-for-dental-clinic.svg"
+    ),
+    "elevate-workforce-international-recruitment-job-board-platform": (
+        f"{VISUAL_BASE}/elevate-workforce-international-recruitment-job-board-platform.svg"
+    ),
+    "heartland-hills-farm-farm-land-showcase-site-visit-landing-site": (
+        f"{VISUAL_BASE}/heartland-hills-farm-farm-land-showcase-site-visit-landing-site.svg"
+    ),
+}
+
+
 class Command(BaseCommand):
-    help = "Seeds the six genuine GrowthSpare portfolio projects (idempotent)."
+    help = "Seeds the genuine GrowthSpare portfolio projects (idempotent)."
 
     def handle(self, *args, **options):
         _get_or_create_category("Website Development", "website-development")
         _get_or_create_category("CRM & SaaS Solutions", "crm-saas-solutions")
+        _get_or_create_category("Digital Marketing", "digital-marketing")
         _get_or_create_category("Gaming", "gaming")
         _get_or_create_category("Web Applications", "web-applications")
 
@@ -368,6 +525,18 @@ class Command(BaseCommand):
                 f"[{project.display_status_label}] "
                 f"live_url={project.live_url or 'NONE'}"
             )
+
+        repaired = 0
+        for slug, visual_url in LEGACY_VISUAL_REPAIR.items():
+            project = Project.objects.filter(slug=slug).first()
+            if project is None:
+                continue
+            current = (project.featured_image or "").strip()
+            if not current or "images.unsplash.com" in current:
+                project.featured_image = visual_url
+                project.save(update_fields=["featured_image", "updated_at"])
+                repaired += 1
+        self.stdout.write(f"Repaired legacy visuals: {repaired}")
 
         self.stdout.write(
             self.style.SUCCESS(

@@ -446,7 +446,7 @@ def seed_all_data():
         {
             "title": "BiteCraft - Restaurant Website for Spice Garden",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/bitecraft-restaurant-website-for-spice-garden.svg",
             "client_name": "Spice Garden",
             "industry": "Hospitality & Food Service",
             "problem_statement": "The restaurant lost online table reservations to third-party aggregators charging high commissions, and their PDF menu loaded slowly on mobile devices.",
@@ -462,7 +462,7 @@ def seed_all_data():
         {
             "title": "SmileCare - Professional Dental Clinic Website",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/smilecare-professional-dental-clinic-website.svg",
             "client_name": "SmileCare Dental",
             "industry": "Healthcare & Dentistry",
             "problem_statement": "The dental clinic faced operational overhead because patients booked appointments solely over manual phone calls, leading to scheduling friction.",
@@ -478,7 +478,7 @@ def seed_all_data():
         {
             "title": "IronPulse - Modern Gym & Fitness Website",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/ironpulse-modern-gym-fitness-website.svg",
             "client_name": "IronPulse Fitness",
             "industry": "Fitness & Health",
             "problem_statement": "IronPulse Gym required a high-converting, modern website to showcase class schedules, trainer profiles, and simplify membership plans.",
@@ -494,7 +494,7 @@ def seed_all_data():
         {
             "title": "UrbanNest - Real Estate Agency Website",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/urbannest-real-estate-agency-website.svg",
             "client_name": "UrbanNest Realty",
             "industry": "Real Estate / Brokerage",
             "problem_statement": "The agency struggled to display properties beautifully with clear locations, which resulted in low lead volumes on mobile devices.",
@@ -510,7 +510,7 @@ def seed_all_data():
         {
             "title": "VibeEvents - Ticket Booking & Event Platform",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/vibeevents-ticket-booking-event-platform.svg",
             "client_name": "VibeEvents Group",
             "industry": "Entertainment & Events",
             "problem_statement": "VibeEvents needed an accessible ticketing application capable of processing thousands of ticket sales during event launches.",
@@ -526,7 +526,7 @@ def seed_all_data():
         {
             "title": "ScholarGrid - Symmetric Academic LMS Platform",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/scholargrid-symmetric-academic-lms-platform.svg",
             "client_name": "ScholarGrid Academics",
             "industry": "EdTech / Education",
             "problem_statement": "ScholarGrid needed a responsive learning management system to host video assets and track student progress without system halts.",
@@ -542,7 +542,7 @@ def seed_all_data():
         {
             "title": "GrandVista - Hotel Reservation PMS Platform",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/grandvista-hotel-reservation-pms-platform.svg",
             "client_name": "GrandVista Resorts",
             "industry": "Hospitality & Tourism",
             "problem_statement": "GrandVista needed a booking portal to coordinate reservations across 5 properties in a unified panel.",
@@ -558,7 +558,7 @@ def seed_all_data():
         {
             "title": "SwiftDrop - Logistics Tracking Mobile App Backend",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/swiftdrop-logistics-tracking-mobile-app-backend.svg",
             "client_name": "SwiftDrop Logistics",
             "industry": "Logistics & Delivery",
             "problem_statement": "SwiftDrop needed a mobile tracking system to connect customers, dispatchers, and drivers with real-time location coordinate updates.",
@@ -574,7 +574,7 @@ def seed_all_data():
         {
             "title": "SafeInspected - Property Inspection Mobile Compliance",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1512403754473-278556139b6a?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/safeinspected-property-inspection-mobile-compliance.svg",
             "client_name": "SafeInspected Corp",
             "industry": "Real Estate / Compliance",
             "problem_statement": "Inspectors struggled to log compliance checklists offline while auditing remote properties.",
@@ -590,7 +590,7 @@ def seed_all_data():
         {
             "title": "IndoBulk - Wholesale Procurement Portal System",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/indobulk-wholesale-procurement-portal-system.svg",
             "client_name": "IndoBulk Traders",
             "industry": "Manufacturing / Logistics",
             "problem_statement": "IndoBulk managed bulk wholesale orders manually via spreadsheets, causing coordination bottlenecks and delayed order processing.",
@@ -606,7 +606,7 @@ def seed_all_data():
         {
             "title": "TechVibe - Subscription Content Media Publisher",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/techvibe-subscription-content-media-publisher.svg",
             "client_name": "TechVibe Media",
             "industry": "Media & Publishing",
             "problem_statement": "The publisher needed a fast-loading platform to restrict high-value articles behind a secure paywall.",
@@ -624,7 +624,7 @@ def seed_all_data():
         {
             "title": "WhatsApp Lead Collection Bot for Local Retailer",
             "cat_obj": cat_ai,
-            "featured_image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/whatsapp-lead-collection-bot-for-local-retailer.svg",
             "client_name": "Vanguard Supplies",
             "industry": "Retail / Wholesale",
             "problem_statement": "The business processed bulk order requests manually over chat, leading to missed client briefs and slow quotation times.",
@@ -640,7 +640,7 @@ def seed_all_data():
         {
             "title": "AI Customer Support Chatbot for E-Commerce",
             "cat_obj": cat_ai,
-            "featured_image": "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/ai-customer-support-chatbot-for-e-commerce.svg",
             "client_name": "ShopHub Retail",
             "industry": "E-Commerce",
             "problem_statement": "ShopHub faced high ticket volumes, causing their technical support staff to spend 50% of their time resolving repetitive, basic shipping status queries.",
@@ -658,7 +658,7 @@ def seed_all_data():
         {
             "title": "BrightAcademy - School Management CRM",
             "cat_obj": cat_crm,
-            "featured_image": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/brightacademy-school-management-crm.svg",
             "client_name": "BrightAcademy Schools",
             "industry": "Education / EdTech",
             "problem_statement": "BrightAcademy faced system errors and manual delay when coordinating student registers, marksheets, and parent feedback schedules.",
@@ -674,7 +674,7 @@ def seed_all_data():
         {
             "title": "SalesFlow - B2B Lead Management CRM",
             "cat_obj": cat_crm,
-            "featured_image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/salesflow-b2b-lead-management-crm.svg",
             "client_name": "SalesFlow Solutions",
             "industry": "B2B Sales",
             "problem_statement": "The sales team manually tracked 5,000 active pipeline leads over scattered spreadsheets, causing missing follow-ups and lost revenue.",
@@ -692,7 +692,7 @@ def seed_all_data():
         {
             "title": "Social Media Growth Campaign for Local Cafe",
             "cat_obj": cat_growth,
-            "featured_image": "https://images.unsplash.com/photo-1554134678-e076c223a692?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/social-media-growth-campaign-for-local-cafe.svg",
             "client_name": "MochaVibe Cafe",
             "industry": "Hospitality & PR",
             "problem_statement": "MochaVibe Cafe struggled to attract local customers during weekdays, relying heavily on low-margin aggregator discounts.",
@@ -710,7 +710,7 @@ def seed_all_data():
         {
             "title": "Local SEO Optimization for Dental Clinic",
             "cat_obj": cat_seo,
-            "featured_image": "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/local-seo-optimization-for-dental-clinic.svg",
             "client_name": "SmileDent Clinic",
             "industry": "Healthcare & Dentistry",
             "problem_statement": "SmileDent was spending heavily on Google Ads for local patients because their organic ranking was non-existent on Google Maps.",
@@ -731,7 +731,7 @@ def seed_all_data():
             "title": "Elevate Workforce - International Recruitment & Job Board Platform",
             "cat_obj": cat_saas,
             "extra_cats": [cat_web],
-            "featured_image": "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/elevate-workforce-international-recruitment-job-board-platform.svg",
             "live_url": "https://elevate-workforce-hpkt.onrender.com/",
             "client_name": "Elevate Workforce LLC",
             "industry": "Recruitment & HR Tech",
@@ -747,7 +747,7 @@ def seed_all_data():
         {
             "title": "Heartland Hills Farm - Farm Land Showcase & Site Visit Landing Site",
             "cat_obj": cat_web,
-            "featured_image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80",
+            "featured_image": "https://growthspareitsolutions.com/static/images/portfolio/heartland-hills-farm-farm-land-showcase-site-visit-landing-site.svg",
             "live_url": "https://lustrous-frangollo-5c6722.netlify.app/",
             "client_name": "Heartland Hills Farm",
             "industry": "Real Estate / Farm Land",

@@ -66,8 +66,34 @@
 </section>
 
 <!-- ==============================================================================
-     2. PERFORMANCE METRIC STATS OVERVIEW BAR
+     1b. PROJECT VISUAL HERO (self-hosted illustrative portfolio artwork —
+     stylised mockup representing the project type, never a live screenshot)
      ============================================================================== -->
+{% if project.featured_image %}
+<section class="border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10">
+    <div class="max-w-[1400px] mx-auto px-6 py-10">
+        <figure class="rounded-3xl overflow-hidden border border-slate-900/10 dark:border-white/5 shadow-xl bg-slate-900" data-aos="fade-up">
+            <div class="relative aspect-video overflow-hidden">
+                <img src="{{ project.featured_image }}"
+                     alt="Portfolio visual for {{ project.title }} — {{ project.industry }}"
+                     title="{{ project.title }} ({{ project.display_status_label }})"
+                     class="w-full h-full object-cover"
+                     loading="eager" decoding="async" width="800" height="450" fetchpriority="high">
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
+                    {% for category in project.categories.all|slice:":1" %}{{ category.name }}{% endfor %}
+                </span>
+            </div>
+            <figcaption class="px-6 py-3 text-[11px] text-slate-400 dark:text-slate-500 font-medium font-poppins bg-slate-950/60 border-t border-white/5">
+                Illustrative portfolio visual for {{ project.title }} — a stylised {{ project.industry }} mockup, not a live screenshot.
+            </figcaption>
+        </figure>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==============================================================================
+      2. PERFORMANCE METRIC STATS OVERVIEW BAR
+      ============================================================================== -->
 <section class="py-12 border-b border-slate-900/10 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/40 relative z-10 backdrop-blur-md">
     <div class="max-w-[1400px] mx-auto px-6 text-center">
         <div class="inline-flex flex-col items-center space-y-3">
@@ -340,7 +366,7 @@
                         <div>
                             <div class="relative aspect-video overflow-hidden bg-slate-900">
                                 {% if related.featured_image %}
-                                    <img src="{{ related.featured_image }}" alt="{{ related.title }}" class="w-full h-full object-cover opacity-80" loading="lazy" decoding="async">
+                                    <img src="{{ related.featured_image }}" alt="Portfolio visual for {{ related.title }} — {{ related.industry }}" class="w-full h-full object-cover opacity-90" loading="lazy" decoding="async" width="800" height="450">
                                 {% endif %}
                                 <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary text-white shadow-md font-poppins">
                                     {% for category in related.categories.all|slice:":1" %}

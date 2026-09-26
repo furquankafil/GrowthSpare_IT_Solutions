@@ -142,6 +142,7 @@ class ProjectDetailView(DetailView):
                 "mac-interio": ["website-development-cost-in-delhi"],
                 "furniture-studio-by-akdas": ["website-development-cost-in-delhi"],
                 "growthspare-custom-crm": ["custom-crm-software-cost-in-india"],
+                "social-media-crm": ["custom-crm-software-cost-in-india"],
                 "browser-gaming-tournament-platform": ["website-vs-web-application"],
             }
             for slug in PROJECT_ARTICLE_SLUGS.get(project.slug, []):

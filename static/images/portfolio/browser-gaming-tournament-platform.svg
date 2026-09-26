@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t-browser-gaming-tournament-platform d-browser-gaming-tournament-platform">
+<title id="t-browser-gaming-tournament-platform">Browser Gaming &amp; Tournament Platform — portfolio visual</title>
+<desc id="d-browser-gaming-tournament-platform">Illustrative portfolio artwork for Browser Gaming &amp; Tournament Platform (Gaming / Web Application). Stylised mockup, not a live screenshot.</desc>
+<defs>
+<linearGradient id="bg-browser-gaming-tournament-platform" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b1023"/><stop offset="1" stop-color="#4c1d95"/>
+</linearGradient>
+<linearGradient id="acc-browser-gaming-tournament-platform" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0.55"/>
+</linearGradient>
+</defs>
+<rect width="800" height="450" fill="url(#bg-browser-gaming-tournament-platform)"/>
+<circle cx="700" cy="80" r="150" fill="#ffffff" opacity="0.06"/>
+<circle cx="120" cy="420" r="120" fill="#ffffff" opacity="0.05"/>
+<text x="740" y="400" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="150" font-weight="800" fill="#ffffff" opacity="0.10" text-anchor="middle">G</text>
+<rect x="0" y="0" width="800" height="54" fill="rgba(10,12,24,0.55)"/>
+<circle cx="28" cy="27" r="6" fill="#ff5f57"/><circle cx="48" cy="27" r="6" fill="#febc2e"/><circle cx="68" cy="27" r="6" fill="#28c840"/>
+<rect x="96" y="14" width="330" height="26" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.25)"/>
+<text x="112" y="31" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#ffffff" opacity="0.9">prototype • in development</text>
+<rect x="700" y="14" width="72" height="26" rx="13" fill="#22d3ee"/>
+<text x="736" y="31" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle">GROWTH</text>
+<text x="48" y="108" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="800" letter-spacing="2" fill="#22d3ee">GAMING PROTOTYPE</text>
+<text x="48" y="150" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="30" font-weight="800" fill="#ffffff">Browser Gaming &amp;</text><text x="48" y="184" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="30" font-weight="800" fill="#ffffff">Tournament Platform</text>
+<text x="48" y="226" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#ffffff" opacity="0.75">Gaming / Web Application</text>
+<g><rect x="48" y="240" width="108" height="26" rx="13" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.35)"/><text x="102" y="257" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Django</text></g><g><rect x="166" y="240" width="108" height="26" rx="13" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.35)"/><text x="220" y="257" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">JavaScript</text></g><g><rect x="284" y="240" width="108" height="26" rx="13" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.35)"/><text x="338" y="257" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">HTML</text></g>
+<g><rect x="48" y="292" width="170" height="34" rx="10" fill="#22d3ee"/>
+<text x="133" y="314" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">VIEW CASE STUDY</text></g>
+<g>
+<rect x="420" y="90" width="332" height="300" rx="16" fill="#0b1023" stroke="#22d3ee" stroke-opacity="0.6"/>
+<text x="440" y="378" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" font-weight="800" fill="#22d3ee">PROTOTYPE — no live players or prizes</text>
+<g><rect x="440" y="110" width="140" height="76" rx="12" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.3)"/><circle cx="462" cy="132" r="12" fill="#22d3ee"/><rect x="482" y="126" width="80" height="10" rx="5" fill="#fff" opacity="0.7"/><rect x="482" y="140" width="60" height="8" rx="4" fill="#fff" opacity="0.35"/><rect x="440" y="158" width="140" height="20" rx="10" fill="#22d3ee" opacity="0.35"/></g><g><rect x="590" y="110" width="140" height="76" rx="12" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.3)"/><circle cx="612" cy="132" r="12" fill="#22d3ee"/><rect x="632" y="126" width="80" height="10" rx="5" fill="#fff" opacity="0.7"/><rect x="632" y="140" width="60" height="8" rx="4" fill="#fff" opacity="0.35"/><rect x="590" y="158" width="140" height="20" rx="10" fill="#22d3ee" opacity="0.35"/></g><g><rect x="440" y="196" width="140" height="76" rx="12" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.3)"/><circle cx="462" cy="218" r="12" fill="#22d3ee"/><rect x="482" y="212" width="80" height="10" rx="5" fill="#fff" opacity="0.7"/><rect x="482" y="226" width="60" height="8" rx="4" fill="#fff" opacity="0.35"/><rect x="440" y="244" width="140" height="20" rx="10" fill="#22d3ee" opacity="0.35"/></g><g><rect x="590" y="196" width="140" height="76" rx="12" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.3)"/><circle cx="612" cy="218" r="12" fill="#22d3ee"/><rect x="632" y="212" width="80" height="10" rx="5" fill="#fff" opacity="0.7"/><rect x="632" y="226" width="60" height="8" rx="4" fill="#fff" opacity="0.35"/><rect x="590" y="244" width="140" height="20" rx="10" fill="#22d3ee" opacity="0.35"/></g>
+<rect x="440" y="350" width="120" height="14" rx="7" fill="#22d3ee"/>
+<rect x="568" y="350" width="164" height="14" rx="7" fill="#fff" opacity="0.2"/>
+</g>
+<g><rect x="0" y="418" width="800" height="32" fill="rgba(10,12,24,0.55)"/>
+<text x="48" y="438" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#ffffff" opacity="0.8">Illustrative portfolio visual — stylised mockup, not a live screenshot.</text>
+<text x="752" y="438" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#ffffff" opacity="0.8" text-anchor="end">800 × 450 SVG</text></g>
+</svg>

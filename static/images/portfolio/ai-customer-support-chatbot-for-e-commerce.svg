@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="t-ai-customer-support-chatbot-for-e-commerce d-ai-customer-support-chatbot-for-e-commerce">
+<title id="t-ai-customer-support-chatbot-for-e-commerce">AI Support Chatbot — portfolio visual</title>
+<desc id="d-ai-customer-support-chatbot-for-e-commerce">Illustrative portfolio artwork for AI Support Chatbot (E-Commerce). Stylised mockup, not a live screenshot.</desc>
+<defs>
+<linearGradient id="bg-ai-customer-support-chatbot-for-e-commerce" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#1e1b4b"/><stop offset="1" stop-color="#6d28d9"/>
+</linearGradient>
+<linearGradient id="acc-ai-customer-support-chatbot-for-e-commerce" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0.55"/>
+</linearGradient>
+</defs>
+<rect width="800" height="450" fill="url(#bg-ai-customer-support-chatbot-for-e-commerce)"/>
+<circle cx="700" cy="80" r="150" fill="#ffffff" opacity="0.06"/>
+<circle cx="120" cy="420" r="120" fill="#ffffff" opacity="0.05"/>
+<text x="740" y="400" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="150" font-weight="800" fill="#ffffff" opacity="0.10" text-anchor="middle">A</text>
+<rect x="0" y="0" width="800" height="54" fill="rgba(10,12,24,0.55)"/>
+<circle cx="28" cy="27" r="6" fill="#ff5f57"/><circle cx="48" cy="27" r="6" fill="#febc2e"/><circle cx="68" cy="27" r="6" fill="#28c840"/>
+<rect x="96" y="14" width="330" height="26" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.25)"/>
+<text x="112" y="31" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#ffffff" opacity="0.9">shophub • support agent</text>
+<rect x="700" y="14" width="72" height="26" rx="13" fill="#a78bfa"/>
+<text x="736" y="31" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle">GROWTH</text>
+<text x="48" y="108" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="800" letter-spacing="2" fill="#a78bfa">AI AUTOMATION</text>
+<text x="48" y="150" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="30" font-weight="800" fill="#ffffff">AI Support Chatbot</text>
+<text x="48" y="192" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" fill="#ffffff" opacity="0.75">E-Commerce</text>
+<g><rect x="48" y="206" width="108" height="26" rx="13" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.35)"/><text x="102" y="223" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">OpenAI</text></g><g><rect x="166" y="206" width="108" height="26" rx="13" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.35)"/><text x="220" y="223" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">LangChain</text></g><g><rect x="284" y="206" width="108" height="26" rx="13" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.35)"/><text x="338" y="223" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Celery</text></g>
+<g><rect x="48" y="258" width="170" height="34" rx="10" fill="#a78bfa"/>
+<text x="133" y="280" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">VIEW CASE STUDY</text></g>
+<g>
+<rect x="420" y="90" width="150" height="300" rx="20" fill="#0f172a" stroke="rgba(255,255,255,0.35)"/>
+<rect x="436" y="106" width="118" height="22" rx="11" fill="#a78bfa" opacity="0.9"/>
+<rect x="436" y="138" width="100" height="34" rx="10" fill="rgba(255,255,255,0.9)"/>
+<rect x="452" y="182" width="100" height="34" rx="10" fill="#a78bfa"/>
+<rect x="436" y="226" width="100" height="34" rx="10" fill="rgba(255,255,255,0.9)"/>
+<rect x="436" y="270" width="118" height="28" rx="14" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)"/>
+<text x="452" y="288" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#fff">Type a reply…</text>
+<rect x="590" y="90" width="162" height="300" rx="16" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.3)"/>
+<text x="606" y="118" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="800" fill="#fff">AUTOMATION FLOW</text>
+<rect x="606" y="130" width="130" height="30" rx="8" fill="#a78bfa" opacity="0.9"/>
+<rect x="606" y="168" width="130" height="30" rx="8" fill="rgba(255,255,255,0.85)"/>
+<rect x="606" y="206" width="130" height="30" rx="8" fill="rgba(255,255,255,0.85)"/>
+<rect x="606" y="244" width="130" height="44" rx="8" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)"/>
+<text x="606" y="356" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#fff" opacity="0.7">Human handoff built in.</text>
+</g>
+<g><rect x="0" y="418" width="800" height="32" fill="rgba(10,12,24,0.55)"/>
+<text x="48" y="438" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#ffffff" opacity="0.8">Illustrative portfolio visual — stylised mockup, not a live screenshot.</text>
+<text x="752" y="438" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#ffffff" opacity="0.8" text-anchor="end">800 × 450 SVG</text></g>
+</svg>
