@@ -76,7 +76,8 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ping || exit 1
 
 # Launch production application container using WSGI engine binding
-# Run migrations, seed database, seed editorial articles (idempotent upserts;
-# author guaranteed by seed_database/create_admin above), create admin user
-# from env vars, collect static, then start gunicorn
-CMD sh -c "python manage.py migrate && python seed_database.py && python scripts/seed_phase3a_articles.py && python scripts/seed_local_seo_articles.py && python manage.py create_admin && python manage.py collectstatic --noinput && gunicorn --config deployment/gunicorn/gunicorn.conf.py config.wsgi:application"
+# Run migrations, seed database, seed the six genuine portfolio projects
+# (idempotent upserts; safe to re-run on every deploy), seed editorial
+# articles (idempotent upserts; author guaranteed by seed_database/create_admin
+# above), create admin user from env vars, collect static, then start gunicorn
+CMD sh -c "python manage.py migrate && python seed_database.py && python manage.py seed_real_projects && python scripts/seed_phase3a_articles.py && python scripts/seed_local_seo_articles.py && python manage.py create_admin && python manage.py collectstatic --noinput && gunicorn --config deployment/gunicorn/gunicorn.conf.py config.wsgi:application"
