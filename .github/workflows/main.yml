@@ -10,6 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # CI-only dummy values so `manage.py check` can boot settings without a
+    # local .env. These never reach production or the Render environment.
+    env:
+      DATABASE_URL: sqlite:///db.sqlite3
+      SECRET_KEY: django-insecure-ci-dummy-key-not-for-production
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
