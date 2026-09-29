@@ -427,9 +427,10 @@ B2B_API_KEY = os.getenv("B2B_API_KEY", "")
 # ==============================================================================
 # Contact Form Anti-Spam Throttling (server-side, env-configurable)
 # Limits repeated submissions per contact identity (email/phone) plus a
-# best-effort per-IP counter via Django's cache. Duplicate detection
-# (same email + phone within CONTACT_DUPLICATE_WINDOW_SECONDS) rejects
-# repeated identical requests without creating extra records.
+# per-IP counter via Django's cache. Duplicate detection
+# (same identity / copy-pasted message within CONTACT_DUPLICATE_WINDOW_SECONDS)
+# flags repeats as Spam instead of entering the lead pipeline. A hidden
+# honeypot field plus a signed render timestamp reject bot-speed submissions.
 # ==============================================================================
 
 CONTACT_RATE_LIMIT_COUNT = int(os.getenv("CONTACT_RATE_LIMIT_COUNT", "3"))
@@ -438,15 +439,48 @@ CONTACT_RATE_LIMIT_WINDOW_SECONDS = int(
     os.getenv("CONTACT_RATE_LIMIT_WINDOW_SECONDS", "3600")
 )
 
+# Per-IP window cap. Deliberately higher than the per-identity limit so
+# offices/NATs where several legitimate people share one IP are not throttled
+# by colleague volume.
+CONTACT_RATE_LIMIT_IP_COUNT = int(os.getenv("CONTACT_RATE_LIMIT_IP_COUNT", "10"))
+
 CONTACT_DUPLICATE_WINDOW_SECONDS = int(
     os.getenv("CONTACT_DUPLICATE_WINDOW_SECONDS", "86400")
 )
+
+# Minimum realistic time between the form being rendered and submitted.
+CONTACT_MIN_SUBMIT_SECONDS = int(os.getenv("CONTACT_MIN_SUBMIT_SECONDS", "3"))
+
+# Signed render timestamps older than this are rejected (a visitor who left
+# the tab open for days simply reloads the page).
+CONTACT_FORM_MAX_AGE_SECONDS = int(os.getenv("CONTACT_FORM_MAX_AGE_SECONDS", "604800"))
 
 CONTACT_RATE_LIMIT_MESSAGE = os.getenv(
     "CONTACT_RATE_LIMIT_MESSAGE",
     "Too many submissions from this contact information. "
     "Please wait before submitting again.",
 )
+
+
+# ==============================================================================
+# Reverse proxy trust (client-IP extraction for abuse controls)
+# Only enabled where the app sits behind the platform proxy chain
+# (Cloudflare -> Render ingress), which production.py switches on to mirror
+# the SECURE_PROXY_SSL_HEADER configuration for the same proxies. When False
+# (local development, tests) forwarded headers are ignored entirely and
+# REMOTE_ADDR is used, so arbitrary X-Forwarded-For headers are never trusted
+# in environments that are not proxied.
+# ==============================================================================
+
+TRUST_PROXY_HEADERS = (
+    os.getenv("TRUST_PROXY_HEADERS", "False").strip().lower()
+    in ("true", "1", "yes", "on")
+)
+
+# django-ratelimit key="ip" uses this callable instead of raw REMOTE_ADDR,
+# so rate limits key on the real client IP behind the proxy rather than on
+# the shared proxy address (which would throttle every visitor together).
+RATELIMIT_IP_META_KEY = "apps.contact.throttling.get_client_ip"
 
 
 # ==============================================================================

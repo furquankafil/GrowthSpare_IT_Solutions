@@ -5,13 +5,44 @@ and corporate layout rendering engines.
 
 from django import forms
 from .models import ContactMessage
+from .throttling import make_form_timestamp
 
 
 class ContactForm(forms.ModelForm):
     """
     Client inquiry capture form, configured with explicit choices and help hints
     to collect cleanly structured B2B leads.
+
+    `website` is a hidden honeypot field (real visitors never see or fill it)
+    and `form_timestamp` is a signed render timestamp used server-side to reject
+    submissions posted unrealistically fast after the page loaded. Both are
+    non-model fields, so they never touch the database.
     """
+
+    website = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                # Off-screen rather than display:none so scraping bots still
+                # see and fill it, while humans never interact with it.
+                "style": (
+                    "position:absolute!important;left:-9999px;top:-9999px;"
+                    "height:1px;width:1px;overflow:hidden;opacity:0;"
+                ),
+                "tabindex": "-1",
+                "autocomplete": "off",
+                "aria-hidden": "true",
+            }
+        ),
+    )
+
+    form_timestamp = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.HiddenInput(),
+    )
+
     class Meta:
         model = ContactMessage
         fields = ["name", "email", "phone", "company", "budget", "service", "message"]
@@ -28,6 +59,14 @@ class ContactForm(forms.ModelForm):
                 }
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.is_bound:
+            # Every freshly rendered form carries a signed timestamp proving
+            # when the page was served; on POST the posted value wins over
+            # initial data, so retries keep the original render time.
+            self.initial.setdefault("form_timestamp", make_form_timestamp())
 
     def clean_phone(self):
         """Sanitizes telephone digits to prevent simple form injections."""

@@ -3,6 +3,8 @@ Class-based views managing lead capturing pipelines, form validations,
 SLA messages feedback, and asynchronous administrative alert dispatches.
 """
 
+import logging
+
 from django.contrib import messages
 from django.conf import settings
 from django.urls import reverse_lazy
@@ -13,7 +15,17 @@ from django_ratelimit.decorators import ratelimit
 from apps.core.utils import send_mail_background
 
 from .forms import ContactForm
-from .throttling import check_submission_allowed
+from .models import ContactMessage
+from .throttling import (
+    find_duplicate,
+    get_client_ip,
+    honeypot_triggered,
+    is_blocked,
+    is_rate_limited,
+    submission_too_fast,
+)
+
+logger = logging.getLogger(__name__)
 
 
 @method_decorator(
@@ -30,21 +42,59 @@ class ContactView(FormView):
     form_class = ContactForm
     success_url = reverse_lazy("contact:contact")
 
+    # Generic copy shown for every anti-spam rejection: readable for a human,
+    # but reveals none of the specific rules that triggered it.
+    REJECTION_MESSAGE = (
+        "We could not process this submission right now. "
+        "Please wait a moment and try again."
+    )
+
     def form_valid(self, form):
 
-        # Server-side anti-spam gate: duplicate or over-limit submissions are
-        # rejected with an inline form error and NO database record is created.
-        allowed, _reason = check_submission_allowed(
-            self.request,
-            email=form.cleaned_data.get("email", ""),
-            phone=form.cleaned_data.get("phone", ""),
-        )
-        if not allowed:
+        client_ip = get_client_ip(self.request)
+        email = form.cleaned_data.get("email", "")
+        phone = form.cleaned_data.get("phone", "")
+        company = form.cleaned_data.get("company", "")
+        body = form.cleaned_data.get("message", "")
+
+        # Layer 1-2: honeypot + submission speed. Silent rejection — no record,
+        # no rule-specific feedback, nothing that helps an automated client
+        # learn what tripped the check.
+        if honeypot_triggered(form) or submission_too_fast(
+            form.cleaned_data.get("form_timestamp", "")
+        ):
+            logger.info("Contact form submission rejected by spam heuristics")
+            return self.form_invalid(form)
+
+        # Layer 3: identifiers explicitly blocked by staff in the admin panel.
+        if is_blocked(email, phone, client_ip):
+            logger.info("Contact form submission from a blocked identifier")
+            form.add_error(None, self.REJECTION_MESSAGE)
+            return self.form_invalid(form)
+
+        # Layer 4: duplicates. The first repeat is stored flagged as Spam for
+        # admin review instead of entering the lead pipeline; later repeats are
+        # dropped so hammering the form cannot grow the table.
+        duplicate = find_duplicate(email, phone, body, company)
+        if duplicate is not None:
+            if not (
+                duplicate.status == ContactMessage.STATUS_SPAM
+                and duplicate.spam_reason == ContactMessage.REASON_DUPLICATE
+            ):
+                self.save_spam_record(form, client_ip, ContactMessage.REASON_DUPLICATE)
+                logger.info("Duplicate contact submission flagged as spam")
             form.add_error(None, settings.CONTACT_RATE_LIMIT_MESSAGE)
             return self.form_invalid(form)
 
-        # Save model data to database
-        contact_message = form.save()
+        # Layer 5: identity/IP rate window — rejected outright, no record.
+        if is_rate_limited(self.request, email, phone):
+            form.add_error(None, settings.CONTACT_RATE_LIMIT_MESSAGE)
+            return self.form_invalid(form)
+
+        # Clean submission: save model data with source IP for admin forensics.
+        contact_message = form.save(commit=False)
+        contact_message.ip_address = client_ip or None
+        contact_message.save()
 
         # Send email in background (does not delay response)
         self.send_lead_alert_email(contact_message)
@@ -56,6 +106,23 @@ class ContactView(FormView):
         )
 
         return super().form_valid(form)
+
+
+    def save_spam_record(self, form, client_ip, reason):
+        """Persist a submission flagged as Spam (pipeline-excluded, admin reviewable)."""
+        data = form.cleaned_data
+        return ContactMessage.objects.create(
+            name=data.get("name", ""),
+            email=data.get("email", ""),
+            phone=data.get("phone", ""),
+            company=data.get("company", "") or "",
+            budget=data.get("budget", ""),
+            service=data.get("service", ""),
+            message=data.get("message", ""),
+            status=ContactMessage.STATUS_SPAM,
+            spam_reason=reason,
+            ip_address=client_ip or None,
+        )
 
 
     def form_invalid(self, form):

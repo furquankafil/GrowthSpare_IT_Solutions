@@ -147,6 +147,11 @@
             <form method="POST" action="{% url 'contact:contact' %}" class="space-y-6">
                 {% csrf_token %}
 
+                <!-- Anti-spam: off-screen honeypot humans never interact with,
+                     plus a signed timestamp of when this form was rendered -->
+                {{ form.website }}
+                {{ form.form_timestamp }}
+
                 {% if form.non_field_errors %}
                     <div role="alert" class="px-4 py-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium space-y-1">
                         {% for error in form.non_field_errors %}

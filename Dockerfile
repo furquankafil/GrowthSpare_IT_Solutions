@@ -71,13 +71,19 @@ USER djangouser
 # Expose standard default web server port mapping
 EXPOSE 8000
 
-# Perform container health checks via curl endpoint ping
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/ping || exit 1
+# Perform container health checks via curl endpoint ping.
+# Uses $PORT (Render injects it at runtime, e.g. 10000) with local fallback 8000.
+# start-period is generous because migrations + idempotent seeds run before gunicorn binds.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+    CMD sh -c "curl -f http://localhost:${PORT:-8000}/ping || exit 1"
 
 # Launch production application container using WSGI engine binding
 # Run migrations, seed database, seed the six genuine portfolio projects
 # (idempotent upserts; safe to re-run on every deploy), seed editorial
 # articles (idempotent upserts; author guaranteed by seed_database/create_admin
 # above), create admin user from env vars, collect static, then start gunicorn
-CMD sh -c "python manage.py migrate && python seed_database.py && python manage.py seed_real_projects && python scripts/seed_phase3a_articles.py && python scripts/seed_local_seo_articles.py && python manage.py create_admin && python manage.py collectstatic --noinput && gunicorn --config deployment/gunicorn/gunicorn.conf.py config.wsgi:application"
+# NOTE: Render's Docker Command field must stay empty so this CMD is used.
+# Explicit --bind guarantees 0.0.0.0:$PORT even if the conf file is ever bypassed
+# (CLI flags override gunicorn.conf.py). ${PORT:-8000} falls back locally when
+# $PORT is unset. `exec` makes gunicorn PID 1 for correct signal handling.
+CMD ["sh", "-c", "python manage.py migrate && python seed_database.py && python manage.py seed_real_projects && python scripts/seed_phase3a_articles.py && python scripts/seed_local_seo_articles.py && python manage.py create_admin && python manage.py collectstatic --noinput && exec gunicorn --config deployment/gunicorn/gunicorn.conf.py --bind 0.0.0.0:${PORT:-8000} config.wsgi:application"]

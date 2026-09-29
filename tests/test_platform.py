@@ -17,6 +17,7 @@ from apps.services.models import Service, ServiceFAQ
 from apps.portfolio.models import Project, ProjectCategory
 from apps.blog.models import BlogPost, BlogCategory
 from apps.contact.models import ContactMessage
+from apps.contact.throttling import make_form_timestamp
 from apps.consultation.models import ConsultationBooking
 
 User = get_user_model()
@@ -79,6 +80,7 @@ class ServicesTestCase(TestCase):
         self.assertEqual(self.service.get_tech_list(), ["Python", "Django", "WhatsApp Cloud API"])
 
 
+@override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
 class ContactTestCase(TestCase):
     """Verifies client inquiry forms pipeline integration and database tracking."""
 
@@ -98,7 +100,9 @@ class ContactTestCase(TestCase):
             "company": "Enterprise Partner",
             "budget": "75k_1l",
             "service": "ai_automation",
-            "message": "We need custom WhatsApp lead routing scripts written in Python."
+            "message": "We need custom WhatsApp lead routing scripts written in Python.",
+            # Aged render timestamp passes the human-speed gate.
+            "form_timestamp": make_form_timestamp(age_seconds=60),
         }
         
         response = client.post(contact_url, post_data)
@@ -181,6 +185,7 @@ class LocalServicePagesTestCase(TestCase):
         self.assertIn("Disallow: /admin/", robots)
 
 
+@override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
 class ContactAntiSpamTestCase(TestCase):
     """Verifies contact-form rate limiting, duplicate protection, and budget options."""
 
@@ -204,6 +209,8 @@ class ContactAntiSpamTestCase(TestCase):
             "budget": budget,
             "service": service,
             "message": message,
+            # Aged render timestamp passes the human-speed gate.
+            "form_timestamp": make_form_timestamp(age_seconds=60),
         })
 
     def test_normal_submission_succeeds(self):
@@ -238,18 +245,29 @@ class ContactAntiSpamTestCase(TestCase):
 
     def test_duplicate_submission_rejected(self):
         self.assertEqual(self._post_lead().status_code, 302)
-        # Same email + phone with a different message is still a duplicate.
+        # Same email + phone with a different message is a duplicate: the first
+        # repeat is kept as a flagged Spam row (visibility for staff), later
+        # repeats would be dropped entirely.
         response = self._post_lead(message="Same person writing again.")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.BLOCKED_MESSAGE)
-        self.assertEqual(ContactMessage.objects.count(), 1)
+        self.assertEqual(ContactMessage.objects.count(), 2)
+        spam = ContactMessage.objects.filter(status=ContactMessage.STATUS_SPAM).get()
+        self.assertEqual(spam.spam_reason, ContactMessage.REASON_DUPLICATE)
+        self.assertFalse(spam.is_processed)
 
     def test_duplicate_matches_phone_format_variants(self):
         self.assertEqual(self._post_lead(phone="+91 9811000001").status_code, 302)
         response = self._post_lead(phone="9811000001")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.BLOCKED_MESSAGE)
-        self.assertEqual(ContactMessage.objects.count(), 1)
+        self.assertEqual(ContactMessage.objects.count(), 2)
+        self.assertEqual(
+            ContactMessage.objects.filter(
+                status=ContactMessage.STATUS_SPAM
+            ).count(),
+            1,
+        )
 
     def test_different_users_not_blocked(self):
         for i in range(3):

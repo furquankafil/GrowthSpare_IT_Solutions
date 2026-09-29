@@ -100,6 +100,12 @@ SECURE_PROXY_SSL_HEADER = (
     "https",
 )
 
+# Production runs behind the platform proxy chain (Cloudflare -> Render
+# ingress), so forwarded headers may be consulted for real client IPs used by
+# contact-form abuse controls. Same proxy the SECURE_PROXY_SSL_HEADER above
+# is configured for. Set TRUST_PROXY_HEADERS=False to disable.
+TRUST_PROXY_HEADERS = _env_bool("TRUST_PROXY_HEADERS", default=True)
+
 
 SECURE_SSL_REDIRECT = _env_bool("SECURE_SSL_REDIRECT", default=True)
 

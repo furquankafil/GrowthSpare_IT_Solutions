@@ -77,12 +77,17 @@ class DashboardIndexView(LoginRequiredMixin, TemplateView):
             # Aggregate system-wide analytics for operations and management teams
             context["is_staff_dashboard"] = True
             context["total_accounts"] = User.objects.count()
-            context["total_leads"] = ContactMessage.objects.count()
+            context["total_leads"] = ContactMessage.objects.exclude(
+                status=ContactMessage.STATUS_SPAM
+            ).count()
             context["pending_bookings"] = ConsultationBooking.objects.filter(status="PENDING").count()
             context["total_bookings"] = ConsultationBooking.objects.count()
             
-            # Feed real-time pipeline list tables
-            context["recent_leads"] = ContactMessage.objects.all().order_by("-created_at")[:5]
+            # Feed real-time pipeline list tables (spam-flagged rows stay in the
+            # admin only, never in the sales pipeline view)
+            context["recent_leads"] = ContactMessage.objects.exclude(
+                status=ContactMessage.STATUS_SPAM
+            ).order_by("-created_at")[:5]
             context["recent_bookings"] = ConsultationBooking.objects.all().order_by("-created_at")[:5]
             
         else:
