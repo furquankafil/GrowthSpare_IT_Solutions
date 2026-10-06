@@ -313,7 +313,7 @@ class ContactAntiSpamTestCase(TestCase):
 
 
 class RealPortfolioProjectsTestCase(TestCase):
-    """Verifies the six genuine GrowthSpare portfolio projects: statuses,
+    """Verifies the genuine GrowthSpare portfolio projects: statuses,
     exact live URLs, honest CTAs, unique SEO, schema without fabricated
     claims, sitemap inclusion, and service-page internal linking."""
 
@@ -322,6 +322,17 @@ class RealPortfolioProjectsTestCase(TestCase):
         "social-frame-creative": "https://socialcreatives.in/",
         "mac-interio": "https://mac-interio.netlify.app/",
         "furniture-studio-by-akdas": "https://furniture-studio-akdas.netlify.app/",
+    }
+    # Seven live business-website demos added to the same portfolio system
+    # (all under the existing "website-development" category).
+    NEW_LIVE_PROJECTS = {
+        "world-of-fragrance": "https://world-of-fragrance.netlify.app/",
+        "vip-furniture-interior": "https://vip-furniture-interio.netlify.app/",
+        "gp-beauty-hub": "https://gp-buety-hub.netlify.app/",
+        "wm-sofa-maker": "https://wm-sofa-maker.netlify.app/",
+        "qs-furniture-house": "https://qs-furniture.netlify.app/",
+        "five-star-sofa-solution": "https://five-star-s.netlify.app/",
+        "sm-car-customs": "https://leafy-mochi-527dc3.netlify.app/",
     }
     PRIVATE_SLUG = "growthspare-custom-crm"
     PROTOTYPE_SLUG = "browser-gaming-tournament-platform"
@@ -353,22 +364,56 @@ class RealPortfolioProjectsTestCase(TestCase):
         self.assertFalse(gaming.is_publicly_viewable)
 
     def test_portfolio_list_seo_and_badges(self):
-        html = self.client.get(reverse("portfolio:list")).content.decode()
-        self.assertEqual(self.client.get(reverse("portfolio:list")).status_code, 200)
+        # The list paginates (paginate_by = 9), so gather every page before
+        # asserting catalogue-wide expectations.
+        list_url = reverse("portfolio:list")
+        pages_html = []
+        page_number = 1
+        while True:
+            response = self.client.get(list_url, {"page": page_number})
+            self.assertEqual(response.status_code, 200)
+            pages_html.append(response.content.decode())
+            if page_number >= response.context["paginator"].num_pages:
+                break
+            page_number += 1
+        html = "\n".join(pages_html)
         self.assertIn(
             "<title>Website Development Portfolio | GrowthSpare IT Solutions</title>",
-            html,
+            pages_html[0],
         )
-        self.assertIn("Explore websites, web applications, CRM systems", html)
-        self.assertIn('rel="canonical"', html)
-        self.assertIn("<h1", html)
-        self.assertIn("Our Work", html)
-        for url in self.LIVE_PROJECTS.values():
+        self.assertIn("Explore websites, web applications, CRM systems", pages_html[0])
+        self.assertIn('rel="canonical"', pages_html[0])
+        self.assertIn("<h1", pages_html[0])
+        self.assertIn("Our Work", pages_html[0])
+        for url in list(self.LIVE_PROJECTS.values()) + list(self.NEW_LIVE_PROJECTS.values()):
             self.assertIn(url, html)
         self.assertIn("Private Project", html)
         self.assertIn("Prototype / In Development", html)
         self.assertIn('target="_blank"', html)
         self.assertIn('rel="noopener noreferrer"', html)
+
+    def test_new_demo_projects_are_live_and_linked(self):
+        """The seven added business-website demos render as Live Projects
+        with exact demo URLs, detail pages, badges and sitemap entries."""
+        sitemap = self.client.get("/sitemap.xml").content.decode()
+        for slug, url in self.NEW_LIVE_PROJECTS.items():
+            with self.subTest(project=slug):
+                project = Project.objects.get(slug=slug)
+                self.assertEqual(project.display_status, "live")
+                self.assertEqual(project.live_url, url)
+                self.assertTrue(project.is_publicly_viewable)
+                self.assertIn("website-development", [c.slug for c in project.categories.all()])
+                response = self.client.get(
+                    reverse("portfolio:detail", kwargs={"slug": slug})
+                )
+                self.assertEqual(response.status_code, 200)
+                detail_html = response.content.decode()
+                self.assertIn("Visit Live Website", detail_html)
+                self.assertIn(url, detail_html)
+                self.assertIn('target="_blank"', detail_html)
+                self.assertIn("Live Project", detail_html)
+                self.assertEqual(detail_html.lower().count("<h1"), 1)
+                self.assertIn(slug, sitemap)
 
     def test_detail_pages_ctas_and_metadata(self):
         seen_titles = set()
