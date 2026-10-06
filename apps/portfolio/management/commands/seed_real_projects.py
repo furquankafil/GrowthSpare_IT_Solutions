@@ -419,6 +419,338 @@ PROJECTS = [
             "one triage pipeline with dashboards and role-based access."
         ),
     },
+    # ------------------------------------------------------------------
+    # 8. World of Fragrance — live perfume & attar business website
+    # (verified live 2026-10-06: title "World of Fragrance | Perfumes &
+    # Attar in Okhla, Delhi"; WhatsApp ordering and map embeds present
+    # in page source)
+    # ------------------------------------------------------------------
+    {
+        "slug": "world-of-fragrance",
+        "title": "World of Fragrance",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/world-of-fragrance.svg",
+        "video_url": None,
+        "live_url": "https://world-of-fragrance.netlify.app/",
+        "client_name": "World of Fragrance",
+        "industry": "Perfume / Attar Business",
+        "problem_statement": (
+            "World of Fragrance is a wholesale and retail fragrance business "
+            "in Batla House, Okhla, New Delhi, selling Indian attars and "
+            "imported perfumes. It needed a premium website that presents its "
+            "collections and brand story and lets customers order directly "
+            "over WhatsApp."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium fragrance business "
+            "website presenting Indian attars, imported perfumes and curated "
+            "collections alongside the brand story, with direct WhatsApp "
+            "ordering and map-based store location for the Okhla outlet."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium perfume and attar business website "
+            "covering collections, brand story and WhatsApp ordering. No "
+            "performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Perfume Website, Attar, E-Commerce, Business Website, "
+            "WhatsApp Ordering, Okhla"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Perfume & Attar Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "World of Fragrance is a live perfume and attar business website "
+            "by GrowthSpare IT Solutions covering collections, brand story "
+            "and WhatsApp ordering."
+        ),
+    },
+    # ------------------------------------------------------------------
+    # 9. VIP Furniture & Interior — live custom furniture website
+    # (verified live 2026-10-06: title "VIP Furniture & Interior |
+    # Custom Furniture & Interior Work | Pan India"; Tailwind, gallery
+    # and WhatsApp enquiry present in page source)
+    # ------------------------------------------------------------------
+    {
+        "slug": "vip-furniture-interior",
+        "title": "VIP Furniture & Interior",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/vip-furniture-interior.svg",
+        "video_url": None,
+        "live_url": "https://vip-furniture-interio.netlify.app/",
+        "client_name": "Suraj Sharma - VIP Furniture & Interior",
+        "industry": "Custom Furniture / Interiors",
+        "problem_statement": (
+            "VIP Furniture & Interior is a custom furniture and interior "
+            "contractor serving customers pan India. It needed a premium "
+            "business website that presents its modular kitchens, bedroom "
+            "interiors, wardrobes, TV units, shop and office interiors, and "
+            "converts visitors into project enquiries."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium contractor website "
+            "presenting custom furniture and interior service lines — modular "
+            "kitchens, bedroom interiors, wardrobes, TV units, shop and "
+            "office interiors — with a work gallery and WhatsApp, phone and "
+            "form-based enquiry conversion."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium furniture and interior contractor "
+            "website covering services, gallery and enquiry conversion. No "
+            "performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, Tailwind CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Furniture Website, Interior Design, Modular Kitchen, Wardrobes, "
+            "Custom Furniture, Pan India"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Furniture & Interior Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "VIP Furniture & Interior is a live custom furniture and interior "
+            "website by GrowthSpare IT Solutions covering modular kitchens, "
+            "wardrobes and enquiry conversion."
+        ),
+    },
+    # ------------------------------------------------------------------
+    # 10. GP Beauty Hub — live ladies salon website
+    # (verified live 2026-10-06: title "GP Beauty Hub | Ladies Beauty
+    # Salon in Madipur, Delhi"; Tailwind, gallery and map embeds
+    # present in page source)
+    # ------------------------------------------------------------------
+    {
+        "slug": "gp-beauty-hub",
+        "title": "GP Beauty Hub",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/gp-beauty-hub.svg",
+        "video_url": None,
+        "live_url": "https://gp-buety-hub.netlify.app/",
+        "client_name": "GP Beauty Hub",
+        "industry": "Ladies Beauty Salon",
+        "problem_statement": (
+            "GP Beauty Hub is a ladies beauty salon in Madipur, West Delhi, "
+            "focused on hair transformation services. It needed a premium "
+            "website that presents hair smoothing, keratin, straightening, "
+            "hair color, bridal makeup, nail art and mehndi, and converts "
+            "visitors into bookings."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium salon website "
+            "presenting hair transformation services — smoothing, keratin, "
+            "straightening and color — plus bridal makeup, nail art and "
+            "mehndi, with a services gallery, map-based salon location and "
+            "phone/form booking conversion."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium beauty salon website covering "
+            "hair services, bridal and nail art, gallery and booking "
+            "conversion. No performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, Tailwind CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Salon Website, Beauty Salon, Hair Smoothing, Keratin, Bridal "
+            "Makeup, Madipur"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Beauty Salon Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "GP Beauty Hub is a live ladies beauty salon website by "
+            "GrowthSpare IT Solutions covering hair services, bridal makeup "
+            "and booking conversion."
+        ),
+    },
+    # ------------------------------------------------------------------
+    # 11. WM Sofa Maker — live sofa manufacturer website
+    # (verified live 2026-10-06: title "WM Sofa Maker | Designer &
+    # Custom Sofas in Moradabad"; Tailwind, gallery and WhatsApp
+    # enquiry present in page source)
+    # ------------------------------------------------------------------
+    {
+        "slug": "wm-sofa-maker",
+        "title": "WM Sofa Maker",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/wm-sofa-maker.svg",
+        "video_url": None,
+        "live_url": "https://wm-sofa-maker.netlify.app/",
+        "client_name": "WM Sofa Maker",
+        "industry": "Furniture / Sofa Manufacturing",
+        "problem_statement": (
+            "WM Sofa Maker is a furniture manufacturer in Moradabad, Uttar "
+            "Pradesh, building designer and custom sofas. It needed a premium "
+            "website that presents its sofa collections and craftsmanship and "
+            "converts visitors into customer enquiries."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium manufacturer website "
+            "presenting designer sofas and custom sofa solutions with "
+            "collections, craftsmanship and gallery sections, plus WhatsApp, "
+            "phone and form-based enquiry conversion."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium sofa manufacturer website covering "
+            "collections, craftsmanship, gallery and enquiry conversion. No "
+            "performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, Tailwind CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Sofa Manufacturer, Designer Sofas, Custom Sofas, Furniture "
+            "Website, Moradabad"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Sofa Manufacturer Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "WM Sofa Maker is a live sofa manufacturer website by GrowthSpare "
+            "IT Solutions covering designer sofas, custom builds and enquiry "
+            "conversion."
+        ),
+    },
+    # ------------------------------------------------------------------
+    # 12. QS Furniture House — live furniture business website
+    # (verified live 2026-10-06: title "QS Furniture House | Premium
+    # Furniture in Bareilly"; page reachable, HTTP 200)
+    # ------------------------------------------------------------------
+    {
+        "slug": "qs-furniture-house",
+        "title": "QS Furniture House",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/qs-furniture-house.svg",
+        "video_url": None,
+        "live_url": "https://qs-furniture.netlify.app/",
+        "client_name": "QS Furniture House",
+        "industry": "Furniture / Interiors",
+        "problem_statement": (
+            "QS Furniture House is a premium furniture business in Bareilly. "
+            "It needed a business website that presents its furniture "
+            "products and collections and gives customers clear enquiry "
+            "options."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium furniture business "
+            "website presenting furniture products and collections with "
+            "straightforward business enquiry contact options."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium furniture business website "
+            "covering products, collections and enquiry options. No "
+            "performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Furniture Website, Furniture Business, Collections, Enquiry, "
+            "Bareilly"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Furniture Business Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "QS Furniture House is a live furniture business website by "
+            "GrowthSpare IT Solutions covering products, collections and "
+            "enquiry options."
+        ),
+    },
+    # ------------------------------------------------------------------
+    # 13. Five Star Sofa Solution — live sofa & furniture website
+    # (verified live 2026-10-06: title "Five Star Sofa Solution |
+    # Premium Sofas, Beds & Furniture in Shalimar Garden, Ghaziabad";
+    # gallery, WhatsApp and map embeds present in page source)
+    # ------------------------------------------------------------------
+    {
+        "slug": "five-star-sofa-solution",
+        "title": "Five Star Sofa Solution",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/five-star-sofa-solution.svg",
+        "video_url": None,
+        "live_url": "https://five-star-s.netlify.app/",
+        "client_name": "Five Star Sofa Solution",
+        "industry": "Furniture / Sofas & Beds",
+        "problem_statement": (
+            "Five Star Sofa Solution is a furniture business in Shalimar "
+            "Garden, Ghaziabad, selling sofas, beds and furniture solutions. "
+            "It needed a premium website with strong visual product "
+            "presentation and an enquiry-focused customer journey."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium furniture website "
+            "presenting sofas, beds and furniture solutions with visual "
+            "product sections, a gallery and WhatsApp, phone and form-based "
+            "enquiry conversion."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium furniture website covering sofas, "
+            "beds, product presentation and enquiry conversion. No "
+            "performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Sofa Website, Furniture Website, Beds, Product Showcase, "
+            "Ghaziabad"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Sofa & Furniture Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "Five Star Sofa Solution is a live furniture website by "
+            "GrowthSpare IT Solutions covering sofas, beds and enquiry "
+            "conversion."
+        ),
+    },
+    # ------------------------------------------------------------------
+    # 14. SM Car Customs — live car modification website
+    # (verified live 2026-10-06: title "SM Car Customs | Car
+    # Modification & Detailing in Rohini Delhi"; Tailwind, gallery,
+    # WhatsApp and map embeds present in page source)
+    # ------------------------------------------------------------------
+    {
+        "slug": "sm-car-customs",
+        "title": "SM Car Customs",
+        "category_slugs": ["website-development"],
+        "featured_image": f"{VISUAL_BASE}/sm-car-customs.svg",
+        "video_url": None,
+        "live_url": "https://leafy-mochi-527dc3.netlify.app/",
+        "client_name": "SM Car Customs",
+        "industry": "Automotive / Car Modification",
+        "problem_statement": (
+            "SM Car Customs is a car modification, customization and "
+            "detailing business in Rohini, Delhi. It needed a premium website "
+            "with a strong visual identity that presents its services and "
+            "converts visitors into enquiries."
+        ),
+        "solution_statement": (
+            "GrowthSpare designed and built a premium automotive website "
+            "presenting car modification, customization and detailing services "
+            "with a visual gallery, map-based workshop location and WhatsApp, "
+            "phone and form-based enquiry conversion."
+        ),
+        "results_statement": (
+            "Delivered and live: a premium automotive website covering "
+            "modification services, gallery and enquiry conversion. No "
+            "performance metrics are claimed."
+        ),
+        "technology_stack": "HTML, CSS, Tailwind CSS, JavaScript, Netlify",
+        "project_duration": "Delivered",
+        "tags": (
+            "Automotive Website, Car Modification, Car Detailing, "
+            "Customization, Rohini"
+        ),
+        "is_featured": False,
+        "is_concept_project": False,
+        "meta_title": "Car Modification Website Project | GrowthSpare IT Solutions",
+        "meta_description": (
+            "SM Car Customs is a live automotive website by GrowthSpare IT "
+            "Solutions covering car modification, detailing and enquiry "
+            "conversion."
+        ),
+    },
 ]
 
 
